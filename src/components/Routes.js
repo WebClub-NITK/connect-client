@@ -9,12 +9,17 @@ import Home from './Home'
 import Blogs from './Blogs/Blogs'
 import ResourceHub from './ResourceHub'
 import UserProfile from './UserProfile'
+import Login from './Connect/Login'
+import Signup from './Connect/Signup'
 
 const Routes = () => {
 
     return (
       <Router>
         <Switch>
+          <Route path="/" exact>
+            <Home />
+          </Route>
           <Route path="/blogs">
             <Blogs />
           </Route>
@@ -24,8 +29,11 @@ const Routes = () => {
           <Route path="/profile">
             <UserProfile />
           </Route>
-          <Route path="/">
-            <Home />
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/signup" exact>
+            <Signup />
           </Route>
         </Switch>
       </Router>   
