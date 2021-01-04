@@ -1,10 +1,11 @@
 import React from 'react'
 import {Link, useRouteMatch} from 'react-router-dom'
+import styles from './blogStyles'
 
 const BlogTile = ({details}) => {
     let match = useRouteMatch();
     return (
-        <div style={{margin: '20px', padding: '20px', border: '1px solid #ccc', borderRadius: '10px' }}>
+        <div style={styles.blogTile}>
             <h2>
                 <Link to={`${match.path}/${details._id}`}>{details.title}</Link>
             </h2>
