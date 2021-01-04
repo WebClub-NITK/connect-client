@@ -14,10 +14,10 @@ const Blogs = () => {
     return (
         <div>
             <h1>Blogs</h1>
-            <Link to='/blogs/idea/new'>
+            <Link to='/blogs/new'>
                 <button>Share an Idea</button>
             </Link>
-            {blogs ? blogs.map(blog => <BlogTile details={blog} />) : <p>No blogs to display</p>}
+            {blogs ? blogs.map(blog => <BlogTile key={blog._id} details={blog} />) : <p>No blogs to display</p>}
         </div>
     )
 }

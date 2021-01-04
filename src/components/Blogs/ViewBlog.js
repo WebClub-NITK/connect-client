@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import {useParams} from 'react-router-dom'
 import { getBlogById } from '../../services/blogsService';
 import EditorJs from 'react-editor-js';
 import {tools} from './editorConfig'
@@ -6,7 +7,7 @@ import {tools} from './editorConfig'
 const ViewBlog = () => {
     const [blog, setBlog] = useState(null)
     const [loaded, setLoaded] = useState(false)
-    let blogId = '5ff3041b3effc10ea2c533b8'
+    let { blogId } = useParams();
 
     useEffect(async () => {
         const blog = await getBlogById(blogId)
