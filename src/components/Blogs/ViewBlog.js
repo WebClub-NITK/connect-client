@@ -3,6 +3,7 @@ import {useParams} from 'react-router-dom'
 import { getBlogById } from '../../services/blogsService';
 import EditorJs from 'react-editor-js';
 import {tools} from './editorConfig'
+import styles from './blogStyles'
 
 const ViewBlog = () => {
     const [blog, setBlog] = useState(null)
@@ -33,7 +34,7 @@ const ViewBlog = () => {
         <div>
             <div style={{textAlign:'center'}}>
                 <h1>{blog.title}</h1>
-                <p>{blog.tags.map((tag, index) => <span key={index} style={{padding: '2px 5px', border: '1px solid black', borderRadius: '5px', fontSize: '0.8em', margin: '2px'}}>{tag}</span>)}</p>
+                <p>{blog.tags.map((tag, index) => <span key={index} style={styles.tag}>{tag}</span>)}</p>
                 <p>Updated On: {Date(blog.updatedAt).slice(0,10).replace(/-/g,"")}</p>
             </div>
             <EditorJs

@@ -3,6 +3,7 @@ import EditorJs from 'react-editor-js';
 import {tools} from './editorConfig'
 import {saveBlog} from '../../services/blogsService'
 import {useHistory} from 'react-router-dom'
+import styles from './blogStyles'
 
 const NewBlog = () => {
     let history = useHistory();
@@ -31,15 +32,15 @@ const NewBlog = () => {
         <div>
             <h1 style={{textAlign:'center'}}>Post a new Blog</h1>
             <div style={{display: 'flex', flexDirection: 'column'}}>
-                <input id='title' placeholder='A catchy title' value={title} onChange={({target}) => setTitle(target.value)} style={{margin: 'auto', padding: '15px', fontSize: '2em', border: 0, textAlign: 'center', outlineWidth: 0}}></input>
-                <input id='tags' placeholder='Tags, comma spaced values' value={tags} onChange={({target}) => setTags(target.value)} style={{margin: 'auto', padding: '10px', border: 0, textAlign: 'center', outlineWidth: 0}}></input>
+                <input id='title' placeholder='A catchy title' value={title} onChange={({target}) => setTitle(target.value)} style={styles.titleInput}></input>
+                <input id='tags' placeholder='Tags, comma spaced values' value={tags} onChange={({target}) => setTags(target.value)} style={styles.tagsInput}></input>
                 <EditorJs
                     instanceRef={(instance) => (instanceRef.current = instance)}
                     tools={tools}
                     placeholder='Share something interesting!'
                     logLevel='WARN'
                 />
-                <button onClick={handleClick} style={{padding: '10px', background: 'none', width: '150px', margin: 'auto'}}>Post</button>
+                <button onClick={handleClick} style={styles.saveBlogButton}>Post</button>
             </div>
         </div>
     )
