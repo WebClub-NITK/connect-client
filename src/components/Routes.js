@@ -6,7 +6,7 @@ import {
 } from "react-router-dom"
   
 import Home from './Home'
-import Blogs from './Blogs/Blogs'
+import BlogsRouter from './Blogs/BlogsRouter'
 import ResourceHub from './ResourceHub'
 import UserProfile from './UserProfile'
 
@@ -16,7 +16,7 @@ const Routes = () => {
       <Router>
         <Switch>
           <Route path="/blogs">
-            <Blogs />
+            <BlogsRouter />
           </Route>
           <Route path="/resourcehub">
             <ResourceHub />

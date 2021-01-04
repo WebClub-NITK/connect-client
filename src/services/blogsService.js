@@ -7,6 +7,23 @@ const getAllBlogs = async () => {
     return blogs.data
 }
 
+const saveBlog = async ({title, body, tags}) => {
+    const savedBlog = await axios.post(url, {title, body, tags})
+    return savedBlog.data
+}
+
+const getBlogById = async (id) => {
+    try{
+        const blog = await axios.get(`${url}/${id}`)
+        return blog.data
+    }catch(err){
+        console.log(err)
+        return null
+    }
+}
+
 export {
-    getAllBlogs
+    saveBlog,
+    getAllBlogs,
+    getBlogById
 }
