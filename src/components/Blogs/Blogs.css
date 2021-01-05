@@ -1,0 +1,36 @@
+.title{
+    margin:0;
+}
+
+.nav_blogs{
+    padding: 0.85rem;
+    background-color: #0f3057;
+    color: white;
+    margin-bottom: 0.6rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.search_input{
+    padding: 0.4rem;
+    border-radius: 15px;
+    border: none;
+    text-align: center;
+}
+
+.search_input:focus{
+    outline: none;
+}
+
+.search_button:focus{
+    outline: none;
+}
+
+
+.search_button{
+    padding: 0.35rem;
+    margin-left: 0.3rem;
+    border-radius: 10px;
+    border: none;
+}
