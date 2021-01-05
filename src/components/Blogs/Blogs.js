@@ -11,15 +11,23 @@ const Blogs = () => {
         setBlogs(blogs)
     }, [])
 
+    function getDescription(blog){
+        const data = JSON.parse(blog.body)
+        return data.blocks;
+    }
+
     return (
         <div>
-            <h1>Blogs</h1>
+            <header>
+                <h1>Blogs</h1>
+            </header>
             <Link to='/blogs/new'>
                 <button>Share an Idea</button>
             </Link>
-            {blogs ? blogs.map(blog => <BlogTile key={blog._id} details={blog} />) : <p>No blogs to display</p>}
+            {blogs ? blogs.map(blog => <BlogTile key={blog._id} details={blog} description={getDescription(blog)} />) : <p>No blogs to display</p>}
         </div>
     )
 }
 
 export default Blogs
+
