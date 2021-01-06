@@ -8,7 +8,9 @@ import {
   
 import Blogs from './Blogs'
 import NewBlog from './NewBlog'
+import SearchBlog from './SearchBlog'
 import ViewBlog from './ViewBlog'
+
 
 const BlogsRouter = () => {
 
@@ -19,6 +21,9 @@ const BlogsRouter = () => {
         <Switch>
           <Route path={`${match.path}/new`}>
             <NewBlog />
+          </Route>
+          <Route path={`${match.path}/title/:title`}>
+           <SearchBlog/>
           </Route>
           <Route path={`${match.path}/:blogId`}>
             <ViewBlog />
