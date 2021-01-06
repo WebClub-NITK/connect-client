@@ -1,33 +1,44 @@
 import React, { useEffect, useState } from "react";
 import BlogTile from "./BlogTile";
-import { getAllBlogs } from "../../services/blogsService";
-import { Link } from "react-router-dom";
+import { getAllBlogs} from "../../services/blogsService";
+import { Link, useHistory } from "react-router-dom";
 import "./Blogs.css";
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState(null);
+  const [blogTitle, setBlogTitle] = useState("");
+  let history = useHistory();
 
   useEffect(async () => {
     const blogs = await getAllBlogs();
     setBlogs(blogs);
   }, []);
 
-  function getDescription(blog) {
-    const data = JSON.parse(blog.body);
-    return data.blocks;
-  }
+  const handleChange = (e) => {
+    const blogTitle = e.target.value;
+    setBlogTitle(blogTitle);
+  };
 
-  const handleClick = (e) => {
-   e.preventDefault();
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const searchTitle = blogTitle;
+    history.push(`/blogs/title/${searchTitle}`);
+  };
 
   return (
     <div>
       <header className="nav_blogs">
         <h2 className="title">Blogs</h2>
-        <form onSubmit={handleClick}>
-          <input className='search_input' placeholder='search for blogs'></input>
-          <button className='search_button' type='submit'>search</button>
+        <form onSubmit={handleSubmit}>
+          <input
+            onChange={handleChange}
+            value={blogTitle}
+            className="search_input"
+            placeholder="search for blogs"
+          ></input>
+          <button className="search_button" type="submit">
+            search
+          </button>
         </form>
       </header>
       <Link to="/blogs/new">
@@ -38,7 +49,7 @@ const Blogs = () => {
           <BlogTile
             key={blog._id}
             details={blog}
-            description={getDescription(blog)}
+            description={JSON.parse(blog.body).blocks}
           />
         ))
       ) : (

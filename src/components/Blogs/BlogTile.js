@@ -3,22 +3,23 @@ import { Link, useRouteMatch } from "react-router-dom";
 import styles from "./blogStyles";
 
 const BlogTile = (props) => {
-  let match = useRouteMatch();
+  let blogDate = new Date(props.details.createdAt);
   return (
     <div style={styles.blogTile}>
       <h2>
-        <Link to={`${match.path}/${props.details._id}`}>
-          {props.details.title}
-        </Link>
+        <Link to={`/blogs/${props.details._id}`}>{props.details.title}</Link>
       </h2>
+      <p>{blogDate.toLocaleDateString()}</p>
       {props.details.tags.map((tag, index) => (
         <span key={index} style={styles.tag}>
           {tag}
         </span>
       ))}
-      {props.description.map((blog, index) => (
-        <p key={index}>{blog.data.text}</p>
-      ))}
+      <ul>
+        {props.description.map((blog, index) => (
+          <li key={index}>{blog.data.text}</li>
+        ))}
+      </ul>
     </div>
   );
 };
