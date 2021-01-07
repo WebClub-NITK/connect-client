@@ -8,7 +8,6 @@ const Blogs = () => {
   const [blogs, setBlogs] = useState(null);
   const [blogTitle, setBlogTitle] = useState("");
   let history = useHistory();
-
   useEffect(async () => {
     const blogs = await getAllBlogs();
     setBlogs(blogs);
