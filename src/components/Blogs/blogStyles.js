@@ -4,7 +4,8 @@ const styles = {
         border: '1px solid black',
         borderRadius: '5px',
         fontSize: '0.8em',
-        margin: '2px'
+        margin: '2px',
+        cursor:'pointer'
     },
     blogTile: {
         margin: '20px',

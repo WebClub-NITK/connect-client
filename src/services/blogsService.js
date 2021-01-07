@@ -32,4 +32,14 @@ const getBlogsByTitle = async (title) => {
   }
 };
 
-export { saveBlog, getAllBlogs, getBlogById, getBlogsByTitle };
+const getBlogsByTags = async (tag) => {
+  try{
+  const blogs = await axios.get(`${url}/tag/${tag}`);
+  return blogs.data;
+  }catch(err){
+    console.log(err);
+    return null;
+  }
+}
+
+export { saveBlog, getAllBlogs, getBlogById, getBlogsByTitle, getBlogsByTags };

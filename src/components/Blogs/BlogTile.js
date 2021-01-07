@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Link, useRouteMatch } from "react-router-dom";
+import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import styles from "./blogStyles";
 
 const BlogTile = (props) => {
   let blogDate = new Date(props.details.createdAt);
+  let history = useHistory();
+
+  const handleClick = (e) => {
+     const tag = e.target.innerHTML;
+     history.push(`/blogs/tag/${tag}`)
+  }
+
   return (
     <div style={styles.blogTile}>
       <h2>
@@ -11,7 +18,7 @@ const BlogTile = (props) => {
       </h2>
       <p>{blogDate.toLocaleDateString()}</p>
       {props.details.tags.map((tag, index) => (
-        <span key={index} style={styles.tag}>
+        <span onClick={handleClick} key={index} style={styles.tag}>
           {tag}
         </span>
       ))}
