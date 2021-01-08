@@ -15,7 +15,7 @@ const Tags = () => {
     if (tagBlogs) {
       setBlogs(tagBlogs);
     }
-  }, []);
+  });
 
   if (!loaded) {
     return <h1>Loading</h1>;
