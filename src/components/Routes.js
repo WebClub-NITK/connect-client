@@ -8,7 +8,7 @@ import {
 import Home from './Home'
 import Blogs from './Blogs/Blogs'
 import ResourceHub from './ResourceHub'
-import UserProfile from './UserProfile'
+import UserProfile from './Connect/Profile'
 import Login from './Connect/Login'
 import Signup from './Connect/Signup'
 
@@ -26,9 +26,9 @@ const Routes = () => {
           <Route path="/resourcehub">
             <ResourceHub />
           </Route>
-          <Route path="/profile">
-            <UserProfile />
-          </Route>
+          <Route path="/profile"
+              component={props => <UserProfile {...props} />}
+          />
           <Route path="/login">
             <Login />
           </Route>

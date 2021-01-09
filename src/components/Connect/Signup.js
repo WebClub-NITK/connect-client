@@ -23,7 +23,11 @@ const Signup = ()  => {
 
   if(signupstate) 
   {
-    return <Redirect to="/profile" />
+    return <Redirect to={{
+                  pathname: '/profile',
+                  props: { name: 'ABef' }
+              }}
+            />
   }
   else
   {
