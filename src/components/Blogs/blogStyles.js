@@ -11,7 +11,12 @@ const styles = {
         margin: '20px',
         padding: '20px',
         border: '1px solid #ccc',
-        borderRadius: '10px'
+        borderRadius: '10px',
+        display:'flex',
+        flexDirection:'row'
+    },
+    subBlog:{
+     display:'flex'
     },
     titleInput: {
         margin: 'auto',
@@ -33,7 +38,24 @@ const styles = {
         background: 'none',
         width: '150px',
         margin: 'auto'
-    }
+    },
+    link:{
+        textDecoration:'none',
+        color:'black'
+    },
+    title:{
+        marginTop:0,
+        marginBottom:'0.5rem',
+    },
+    blogImage:{
+        width:'auto',
+        height:'10rem',
+        marginRight:'2rem',
+        alignSelf:'center'
+    },
+    date:{
+        opacity:'0.8'
+    },
 }
 
 export default styles
