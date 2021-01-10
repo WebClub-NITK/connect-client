@@ -12,6 +12,7 @@ import NewBlog from "./NewBlog";
 import SearchBlog from "./SearchBlog";
 import Tags from "./Tags";
 import ViewBlog from "./ViewBlog";
+import UpdateBlog from "./UpdateBlog";
 
 const BlogsRouter = () => {
   let match = useRouteMatch();
@@ -21,7 +22,10 @@ const BlogsRouter = () => {
       <Switch>
         <Route path={`${match.path}/new`}>
           <NewBlog />
-        </Route>  
+        </Route> 
+        <Route path={`${match.path}/update/:blogId`}>
+          <UpdateBlog />
+        </Route> 
         <Route path={`${match.path}/title/:title`}>
           <SearchBlog />
         </Route>

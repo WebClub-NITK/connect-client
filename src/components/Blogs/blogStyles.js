@@ -56,6 +56,10 @@ const styles = {
     date:{
         opacity:'0.8'
     },
+    option:{
+        textDecoration:'none',
+        color:'black'
+    }
 }
 
 export default styles
