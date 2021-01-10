@@ -43,9 +43,6 @@ const Blogs = () => {
       <Link to="/blogs/new">
         <button>Share an Idea</button>
       </Link>
-      <Link to="/blogs/update">
-        <button>Share an Idea</button>
-      </Link>
       {blogs ? (
         blogs.map((blog) => (
           <BlogTile
