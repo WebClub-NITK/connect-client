@@ -48,6 +48,7 @@ const Blogs = () => {
           <BlogTile
             key={blog._id}
             details={blog}
+            profile={false}
             description={JSON.parse(blog.body).blocks}
           />
         ))
