@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import BlogTile from "./BlogTile";
-import { getAllBlogs} from "../../services/blogsService";
+import { getAllBlogs } from "../../services/blogsService";
 import { Link, useHistory } from "react-router-dom";
 import "./Blogs.css";
 
@@ -21,7 +21,7 @@ const Blogs = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const searchTitle = blogTitle;
-    history.push(`/blogs/title/${searchTitle}`);
+    history.push(`/blogs/search?title=${searchTitle}`);
   };
 
   return (
