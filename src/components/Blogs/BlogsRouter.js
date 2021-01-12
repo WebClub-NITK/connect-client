@@ -9,10 +9,10 @@ import {
 
 import Blogs from "./Blogs";
 import NewBlog from "./NewBlog";
-import SearchBlog from "./SearchBlog";
 import Tags from "./Tags";
 import ViewBlog from "./ViewBlog";
 import UpdateBlog from "./UpdateBlog";
+import Search from "./Search";
 
 const BlogsRouter = () => {
   let match = useRouteMatch();
@@ -22,15 +22,15 @@ const BlogsRouter = () => {
       <Switch>
         <Route path={`${match.path}/new`}>
           <NewBlog />
-        </Route> 
+        </Route>
+        <Route path={`${match.path}/search`}>
+          <Search />
+        </Route>
         <Route path={`${match.path}/update/:blogId`}>
           <UpdateBlog />
-        </Route> 
-        <Route path={`${match.path}/title/:title`}>
-          <SearchBlog />
         </Route>
         <Route path={`${match.path}/tag/:tag`}>
-          <Tags/>
+          <Tags />
         </Route>
         <Route path={`${match.path}/:blogId`}>
           <ViewBlog />

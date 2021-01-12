@@ -22,15 +22,15 @@ const getBlogById = async (id) => {
   }
 };
 
-const getBlogsByTitle = async (title) => {
+const getSearchBlogs = async (title) => {
   try{
-    const blogs = await axios.get(`${url}/title/${title}`);
-    return blogs.data;
+   const blogs = await axios.get(`${url}/search?title=${title}`);
+   return blogs.data;
   }catch(err){
-   console.log(err);
-   return null;
+    console.log(err);
+    return null;
   }
-};
+}
 
 const getBlogsByTags = async (tag) => {
   try{
@@ -42,4 +42,4 @@ const getBlogsByTags = async (tag) => {
   }
 }
 
-export { saveBlog, getAllBlogs, getBlogById, getBlogsByTitle, getBlogsByTags };
+export { saveBlog, getAllBlogs, getBlogById, getBlogsByTags,getSearchBlogs };
