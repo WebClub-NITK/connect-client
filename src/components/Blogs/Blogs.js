@@ -3,6 +3,7 @@ import BlogTile from "./BlogTile";
 import { getAllBlogs } from "../../services/blogsService";
 import { Link, useHistory } from "react-router-dom";
 import "./Blogs.css";
+import Header from "./Header";
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState(null);
@@ -26,20 +27,11 @@ const Blogs = () => {
 
   return (
     <div>
-      <header className="nav_blogs">
-        <h2 className="title">Blogs</h2>
-        <form onSubmit={handleSubmit}>
-          <input
-            onChange={handleChange}
-            value={blogTitle}
-            className="search_input"
-            placeholder="search for blogs"
-          ></input>
-          <button className="search_button" type="submit">
-            search
-          </button>
-        </form>
-      </header>
+      <Header
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+        value={blogTitle}
+      />
       <Link to="/blogs/new">
         <button>Share an Idea</button>
       </Link>
