@@ -30,17 +30,21 @@ const NewBlog = () => {
 
     return (
         <div>
-            <h1 style={{textAlign:'center'}}>Post a new Blog</h1>
-            <div style={{display: 'flex', flexDirection: 'column'}}>
-                <input id='title' placeholder='A catchy title' value={title} onChange={({target}) => setTitle(target.value)} style={styles.titleInput}></input>
-                <input id='tags' placeholder='Tags, comma spaced values' value={tags} onChange={({target}) => setTags(target.value)} style={styles.tagsInput}></input>
-                <EditorJs
-                    instanceRef={(instance) => (instanceRef.current = instance)}
-                    tools={tools}
-                    placeholder='Share something interesting!'
-                    logLevel='WARN'
-                />
-                <button onClick={handleClick} style={styles.saveBlogButton}>Post</button>
+            <div style={{background:'lightgray', padding: '50px'}}>
+                <div style={{width:'50vw', margin: '10px auto', padding: '50px', background: 'white', borderRadius: '10px'}}>
+                    <div style={{}}>
+                        <button style={{background: 'white', padding: '10px', display: 'block'}}>Add a cover image</button>
+                        <input id='title' placeholder='Add a catchy title' style={{...styles.titleInput, textAlign: 'left', fontWeight: 'bold', padding: '0', margin: '20px 0', display: 'block'}}></input>
+                        <input id='tags' placeholder='Tags, comma, spaced, values' style={{...styles.titleInput, fontSize: '1em', width: '100%', textAlign: 'left', fontWeight: 'lighter', padding: '0', margin: '20px 0', display: 'block'}}></input>
+                    </div>
+                    <EditorJs
+                        instanceRef={(instance) => (instanceRef.current = instance)}
+                        tools={tools}
+                        placeholder='Share something interesting!'
+                        logLevel='WARN'
+                    />
+                    <button onClick={handleClick} style={styles.saveBlogButton}>Post</button>
+                </div>
             </div>
         </div>
     )
