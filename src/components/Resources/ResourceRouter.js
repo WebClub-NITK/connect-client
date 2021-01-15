@@ -6,9 +6,11 @@ import {
   useRouteMatch
 } from "react-router-dom"
 
-import Branches from './Branches'
 import Courses from './Courses'
+import ResourceHome from './ResourceHome'
 import Resources from './Resources'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "./css/resources.css"
 
 const ResourceRouter = () => {
 
@@ -17,13 +19,13 @@ const ResourceRouter = () => {
     return (
       <Router>
         <Switch>
-           <Route path={`${match.path}`}>
-            <Branches />
+           <Route exact path={`${match.path}`}>
+            <ResourceHome/>
           </Route>
-          <Route path={`${match.path}/courses/:branchId`}>
+          <Route path={`${match.path}/branch/:branchId`}>
             <Courses />
           </Route>
-          <Route path={`${match.path}/resources/:courseId`}>
+          <Route path={`${match.path}/course/:courseId`}>
             <Resources />
           </Route>
         </Switch>
