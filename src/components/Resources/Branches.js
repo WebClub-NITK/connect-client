@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import BranchTile from './BranchTile'
 import { getAllBranches } from '../../services/resourceService'
-import { Link } from 'react-router-dom'
+import { Row } from 'react-bootstrap'
 
 
 const Branches = () => {
@@ -13,10 +13,11 @@ const Branches = () => {
     }, [])
 
     return (
-        <div>
-            <h1>Branches</h1>
-            
-            {branches ? branches.forEach(b => <BranchTile key={b._id} details={b} />) : <p>No branches to display</p>}
+        <div className="padding">
+            <h2 className="mb-5">Departments</h2>
+            <Row className="justify-content-center">
+                {branches ? branches.map(b => <BranchTile key={b._id} details={b} />) : <p>No branches to display</p>} 
+            </Row>
         </div>
     )
 }

@@ -7,8 +7,8 @@ import {
   
 import Home from './Home'
 import BlogsRouter from './Blogs/BlogsRouter'
-import ResourceHub from './ResourceHub'
 import UserProfile from './UserProfile'
+import ResourceRouter from './Resources/ResourceRouter'
 
 const Routes = () => {
 
@@ -19,7 +19,7 @@ const Routes = () => {
             <BlogsRouter />
           </Route>
           <Route path="/resourcehub">
-            <ResourceHub />
+            <ResourceRouter/>
           </Route>
           <Route path="/profile">
             <UserProfile />

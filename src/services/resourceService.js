@@ -16,7 +16,7 @@ const getAllResources = async ()=>{
 const getAllBranches = async ()=>{
     const branches = await axios.get(`${url}/${branchUrl}`);
     console.log(branches);
-    return branches.data;
+    return branches.data.branches;
 };
 
 const createNewBranch = async({code,name})=>{
@@ -35,10 +35,10 @@ const createNewBranch = async({code,name})=>{
 const getAllCourses = async (branchId)=>{
     const courses = await axios.get(`${url}/${courseUrl}/${branchId}`);
     console.log(courses);
-    return  courses.data;
+    return  courses.data.courses;
 };
 
-const createNewCourse = async({code,name,branch})=>{
+const createNewCourse = async(code,name,branch)=>{
     const courseStatus = await axios.post(`${url}/${courseUrl}`,{code,name,branch});
     console.log(courseStatus);
     if(courseStatus.statusCode == 422)
