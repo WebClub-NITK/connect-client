@@ -3,61 +3,76 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./login.css";
 import { Redirect } from 'react-router-dom';
+import { authLogin } from '../../services/connectService';
 
-const Login = ()  => {
+const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginstate, setLogin] = useState(false);
+  const [userId, setUserId] = useState("");
 
-  const validateForm = ()  => {
-    return username.length > 0 && password.length > 0;
+  const validateForm = () => {
+    return username.length > 0 && password.length >= 8;
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setLogin(true);
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    const response = await authLogin({username, password});
+    if (response && response.accessToken) {
+      localStorage.setItem("accessToken", response.accessToken);
+      setUserId(response.userId);
+      setLogin(true);
+    }
   }
 
-  if(loginstate) 
-  {
+  if (loginstate) {
     return <Redirect to={{
-                  pathname: '/profile',
-                  props: { name: 'ABef' }
-              }}
-            />
+      pathname: '/profile',
+      props: { userId: userId }
+    }}
+    />
   }
-  else
-  {
+  else {
     return (
       <div className="Login">
         <h1 style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-          }}>Login Form</h1>
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+        }}>Login Form</h1><br/>
         <Form onSubmit={handleSubmit}>
-          <Form.Group size="lg" controlId="username">
+          <Form.Group controlId="username">
+            <div className="col-sm-6 col-md-6 col-lg-6 mx-auto">
             <Form.Label>Username</Form.Label>
             <Form.Control
               autoFocus
               type="username"
               value={username}
+              placeholder="Enter your username/email"
               onChange={(e) => setUsername(e.target.value)}
             />
+            </div>
           </Form.Group>
-          <br/>
-          <Form.Group size="lg" controlId="password">
+          <br />
+          <Form.Group controlId="password">
+            <div className="col-sm-6 col-md-6 col-lg-6 mx-auto">
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"
               value={password}
+              placeholder="Enter your password"
               onChange={(e) => setPassword(e.target.value)}
             />
+            </div>
           </Form.Group>
-          <br/>
-          <Button block size="lg" type="submit" disabled={!validateForm()}>
+          <br />
+          <div className="col-sm-3 col-md-3 col-lg-3 mx-auto">
+          <Button block type="submit" disabled={!validateForm()}>
             Login
           </Button>
+          </div>
         </Form>
       </div>
     );

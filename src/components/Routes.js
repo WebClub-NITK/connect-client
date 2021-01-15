@@ -11,6 +11,7 @@ import ResourceHub from './ResourceHub'
 import UserProfile from './Connect/Profile'
 import Login from './Connect/Login'
 import Signup from './Connect/Signup'
+import Search from './Connect/Search'
 
 const Routes = () => {
 
@@ -34,6 +35,9 @@ const Routes = () => {
           </Route>
           <Route path="/signup" exact>
             <Signup />
+          </Route>
+          <Route path="/search" exact>
+            <Search />
           </Route>
         </Switch>
       </Router>   
