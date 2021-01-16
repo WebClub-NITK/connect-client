@@ -9,9 +9,12 @@ import Header from "./Header";
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [blogTitle, setBlogTitle] = useState("");
+
   const [pageNumber, setPageNumber] = useState(1);
-  const [blogsPerPage] = useState(5);
+  const [blogsPerPage] = useState(10);
+
   let history = useHistory();
+
   useEffect(async () => {
     const blogs = await getAllBlogs();
     setBlogs(blogs);
@@ -25,7 +28,9 @@ const Blogs = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const searchTitle = blogTitle;
-    history.push(`/blogs/search?title=${searchTitle}`);
+    if (searchTitle.length > 0) {
+      history.push(`/blogs/search?title=${searchTitle}`);
+    }
   };
 
   //Get the first and last index of current page of the blogs
