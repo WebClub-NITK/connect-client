@@ -20,7 +20,8 @@ const BlogTile = (props) => {
 
   let history = useHistory();
 
-  const handleClick = (e) => {
+  const handleTagsClick = (e) => {
+    window.scrollTo({left:0,top:0,behavior:'smooth'});
     const tag = e.target.innerHTML;
     history.push(`/blogs/tag/${tag}`);
   };
@@ -40,7 +41,7 @@ const BlogTile = (props) => {
           {props.profile ? <Options id={props.details._id} /> : ""}
         </div>
         {props.details.tags.map((tag, index) => (
-          <span onClick={handleClick} key={index} style={styles.tag}>
+          <span onClick={handleTagsClick} key={index} style={styles.tag}>
             {tag}
           </span>
         ))}
