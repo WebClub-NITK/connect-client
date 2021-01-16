@@ -11,7 +11,6 @@ const Tags = () => {
   useEffect(async () => {
     const tagBlogs = await getBlogsByTags(params.tag);
     setLoaded(true);
-
     if (tagBlogs) {
       setBlogs(tagBlogs);
     }
