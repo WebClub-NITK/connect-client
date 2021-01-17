@@ -7,8 +7,8 @@ const getAllBlogs = async () => {
   return blogs.data;
 };
 
-const saveBlog = async ({ title, body, tags }) => {
-  const savedBlog = await axios.post(url, { title, body, tags });
+const saveBlog = async ({ title, body, tags, coverImageUrl }) => {
+  const savedBlog = await axios.post(url, { title, body, tags, coverImageUrl });
   return savedBlog.data;
 };
 
