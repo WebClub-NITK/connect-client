@@ -16,7 +16,7 @@ const BlogTile = (props) => {
   let blogDate = new Date(props.details.createdAt);
   let month = blogDate.toLocaleString("default", { month: "short" });
   const imageURL =
-    "https://indianlawwatch.com/wp-content/uploads/2020/05/BLOG.jpg";
+    props.details.coverImageUrl || "https://indianlawwatch.com/wp-content/uploads/2020/05/BLOG.jpg";
 
   let history = useHistory();
 
