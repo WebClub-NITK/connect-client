@@ -9,6 +9,7 @@ import {Prompt} from 'react-router-dom'
 const NewBlog = () => {
     let history = useHistory();
 
+    const [coverUrl, setCoverUrl] = useState(null)
     // store the image urls sent to server, .current property stores the list
     let imageUrlsReference = useRef([])
 
@@ -79,9 +80,8 @@ const NewBlog = () => {
             }
         });
 
-        for (const url of usedImageUrls){
-            imageUrls.splice(url, 1)
-        }
+        // push the cover Url in UsedImagesUrl
+        usedImageUrls.push(coverUrl)
 
         // updating the reference with unused image urls
         imageUrlsReference.current = imageUrlsReference.current.filter(url => !usedImageUrls.includes(url))
@@ -90,6 +90,32 @@ const NewBlog = () => {
         cleanUp()
         const response = await saveBlog({title, body, tags, coverImageUrl: coverUrl})
         history.push(`/blogs/${response._id}`)
+    }
+
+    const handleCoverChange = async (event) => {
+        var fileList = event.target.files;
+
+        // send the image to server and get a public url
+        const formData = new FormData();
+        formData.append('image', fileList[0]);
+        let options = {
+            method: 'POST',
+            body: formData,
+        }
+        const response = await fetch('http://localhost:3001/blogs/file_image_upload', options)
+        .then(res => res.json()).then(data => {
+            if(data.success){
+                imageUrlsReference.current = imageUrlsReference.current.concat(data.file.url)
+            }
+            return data
+        })
+
+        setCoverUrl(response.file.url)
+    }
+
+    const removeCover = () => {
+        document.getElementById('file-upload').value = null
+        setCoverUrl(null)
     }
 
     return (
@@ -104,7 +130,14 @@ const NewBlog = () => {
             <div style={{background:'lightgray', padding: '50px'}}>
                 <div style={{width:'50vw', margin: '10px auto', padding: '50px', background: 'white', borderRadius: '10px'}}>
                     <div style={{}}>
-                        <button style={{background: 'white', padding: '10px', display: 'block'}}>Add a cover image</button>
+                        {coverUrl && <div style={{padding: '20px', background: '#e3e6e4', marginBottom: '10px'}}>
+                            <img src={coverUrl} style={{display: 'block', margin: '0 auto 10px auto',maxWidth: '600px', borderRadius: '5px'}}></img>
+                            <button onClick={removeCover} style={{...styles.saveBlogButton, background: 'white', margin: 'auto'}}>Remove Image</button>
+                        </div>}
+                            <label style={{background: 'white', padding: '10px', borderRadius: '5px', color: 'gray'}} htmlFor="file-upload" className="custom-file-upload">
+                                Add a cover image
+                            </label>
+                        <input id="file-upload" className='cover-input' onChange={handleCoverChange} type="file"/>
                         <input id='title' placeholder='Add a catchy title' style={{...styles.titleInput, textAlign: 'left', fontWeight: 'bold', padding: '0', margin: '20px 0', display: 'block'}}></input>
                         <input id='tags' placeholder='Tags, comma, spaced, values' style={{...styles.titleInput, fontSize: '1em', width: '100%', textAlign: 'left', fontWeight: 'lighter', padding: '0', margin: '20px 0', display: 'block'}}></input>
                     </div>

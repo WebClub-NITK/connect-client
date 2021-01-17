@@ -34,6 +34,7 @@ const ViewBlog = () => {
         <div>
             <div style={{textAlign:'center'}}>
                 <h1>{blog.title}</h1>
+                <img style={{maxWidth: '500px'}} src={blog.coverImageUrl}></img>
                 <p>{blog.tags.map((tag, index) => <span key={index} style={styles.tag}>{tag}</span>)}</p>
                 <p>Updated On: {Date(blog.updatedAt).slice(0,10).replace(/-/g,"")}</p>
             </div>
