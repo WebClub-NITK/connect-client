@@ -55,6 +55,7 @@
     justify-content: space-between;
 }
 
+/* cover image file input */
 .cover-input {
     display: none;
 }
@@ -63,4 +64,27 @@
     display: inline-block;
     padding: 6px 12px;
     cursor: pointer;
+}
+
+/* Pagination section */
+
+.page-ul{
+    display: flex;
+    flex-direction: row;
+    list-style-type:none;
+    justify-content: center;
+}
+
+.page-li{
+    text-decoration: none;
+    background-color: #fff;
+    border-style: solid;
+    border-width: thin;
+    padding:0.25rem 0.5rem 0.25rem 0.5rem;
+    border-color: #dee3e2;
+}
+
+.page-number{
+    text-decoration: none;
+    color: #0779e4;
 }
