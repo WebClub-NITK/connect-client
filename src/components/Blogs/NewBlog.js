@@ -9,9 +9,9 @@ import {Prompt} from 'react-router-dom'
 const NewBlog = () => {
     let history = useHistory();
 
-    // store image urls for images sent to the server
-    let imageUrls = []
-    
+    // store the image urls sent to server, .current property stores the list
+    let imageUrlsReference = useRef([])
+
     const instanceRef = useRef(null)
 
     // function to get editor data
@@ -31,7 +31,9 @@ const NewBlog = () => {
         }
         return fetch('http://localhost:3001/blogs/file_image_upload', options)
         .then(res => res.json()).then(data => {
-            if(data.success) imageUrls.push(data.file.url)
+            if(data.success) {
+                imageUrlsReference.current = imageUrlsReference.current.concat(data.file.url)
+            }
             return data
         })
     }
@@ -43,26 +45,19 @@ const NewBlog = () => {
 
     // to ask for confirmation before leaving website
     useEffect(() => {
-        window.addEventListener('beforeunload', alertUser)
-        window.addEventListener('unload', cleanUp)
+        window.addEventListener('beforeunload', cleanUp)
         return () => {
-            window.removeEventListener('beforeunload', alertUser)
-            window.removeEventListener('unload', cleanUp)
-            cleanUp()
+            window.removeEventListener('beforeunload', cleanUp)
         }
     }, [])
-    const alertUser = async e => {
-        e.preventDefault()
-        e.returnValue = ''
-    }
 
     // delete all the unused images from the server
     const cleanUp = async () => {
         // sends a list of urls to the server which then deletes those images.
-        if(imageUrls.length !== 0) {
+        if(imageUrlsReference.current.length !== 0) {
             await fetch('http://localhost:3001/blogs/remove_images', {
                 method: 'POST',
-                body: JSON.stringify({images: imageUrls}),
+                body: JSON.stringify({images: imageUrlsReference.current}),
                 headers: {
                     'Content-type': 'application/json; charset=UTF-8'
                 }
@@ -88,9 +83,12 @@ const NewBlog = () => {
             imageUrls.splice(url, 1)
         }
 
-        // clean the unused images
+        // updating the reference with unused image urls
+        imageUrlsReference.current = imageUrlsReference.current.filter(url => !usedImageUrls.includes(url))
+
+        // delete the unused images
         cleanUp()
-        const response = await saveBlog({title, body, tags})
+        const response = await saveBlog({title, body, tags, coverImageUrl: coverUrl})
         history.push(`/blogs/${response._id}`)
     }
 
