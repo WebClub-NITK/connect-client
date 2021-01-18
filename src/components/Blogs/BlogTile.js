@@ -49,6 +49,7 @@ const BlogTile = (props) => {
         <p style={styles.date}>
           {blogDate.getDay()} {month}
         </p>
+        <button style={{padding: '5px 10px',color: 'gray', border: '1px solid gray', background: 'white', borderRadius: '2px'}} ><Link style={styles.link} to={`/blogs/${props.details._id}/update`}>Update</Link></button>
       </div>
     </div>
   );
