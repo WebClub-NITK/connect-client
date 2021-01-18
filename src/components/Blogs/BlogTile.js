@@ -16,11 +16,12 @@ const BlogTile = (props) => {
   let blogDate = new Date(props.details.createdAt);
   let month = blogDate.toLocaleString("default", { month: "short" });
   const imageURL =
-    "https://indianlawwatch.com/wp-content/uploads/2020/05/BLOG.jpg";
+    props.details.coverImageUrl || "https://indianlawwatch.com/wp-content/uploads/2020/05/BLOG.jpg";
 
   let history = useHistory();
 
-  const handleClick = (e) => {
+  const handleTagsClick = (e) => {
+    window.scrollTo({left:0,top:0,behavior:'smooth'});
     const tag = e.target.innerHTML;
     history.push(`/blogs/tag/${tag}`);
   };
@@ -40,7 +41,7 @@ const BlogTile = (props) => {
           {props.profile ? <Options id={props.details._id} /> : ""}
         </div>
         {props.details.tags.map((tag, index) => (
-          <span onClick={handleClick} key={index} style={styles.tag}>
+          <span onClick={handleTagsClick} key={index} style={styles.tag}>
             {tag}
           </span>
         ))}
@@ -48,6 +49,7 @@ const BlogTile = (props) => {
         <p style={styles.date}>
           {blogDate.getDay()} {month}
         </p>
+        <button style={{padding: '5px 10px',color: 'gray', border: '1px solid gray', background: 'white', borderRadius: '2px'}} ><Link style={styles.link} to={`/blogs/${props.details._id}/update`}>Update</Link></button>
       </div>
     </div>
   );

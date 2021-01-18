@@ -7,10 +7,15 @@ const getAllBlogs = async () => {
   return blogs.data;
 };
 
-const saveBlog = async ({ title, body, tags }) => {
-  const savedBlog = await axios.post(url, { title, body, tags });
+const saveBlog = async ({ title, body, tags, coverImageUrl }) => {
+  const savedBlog = await axios.post(url, { title, body, tags, coverImageUrl });
   return savedBlog.data;
 };
+
+const updateBlog = async(id, {title, body, tags, coverImageUrl}) => {
+  const updatedBlog = await axios.put(`${url}/${id}`, {title, body, tags, coverImageUrl })
+  return updatedBlog.data
+}
 
 const getBlogById = async (id) => {
   try {
@@ -42,4 +47,4 @@ const getBlogsByTags = async (tag) => {
   }
 }
 
-export { saveBlog, getAllBlogs, getBlogById, getBlogsByTags,getSearchBlogs };
+export { saveBlog, updateBlog, getAllBlogs, getBlogById, getBlogsByTags,getSearchBlogs };
