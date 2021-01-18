@@ -89,7 +89,7 @@ const NewBlog = () => {
         // delete the unused images
         cleanUp()
         const response = await saveBlog({title, body, tags, coverImageUrl: coverUrl})
-        history.push(`/blogs/${response._id}`)
+        history.push(`/blogs/${response._id}?new=true`)
     }
 
     const handleCoverChange = async (event) => {
