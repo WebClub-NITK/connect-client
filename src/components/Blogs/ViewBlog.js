@@ -4,17 +4,41 @@ import { getBlogById } from '../../services/blogsService';
 import EditorJs from 'react-editor-js';
 import {tools} from './editorConfig'
 import styles from './blogStyles'
+import Confetti from 'react-dom-confetti';
 
-const ViewBlog = () => {
+const config = {
+    angle: "270",
+    spread: "180",
+    startVelocity: "15",
+    elementCount: "144",
+    dragFriction: "0.05",
+    duration: 2000,
+    stagger: "0",
+    width: "10px",
+    height: "10px",
+    perspective: "1000px",
+    colors: ["#000", "#f00"]
+  };
+
+const ViewBlog = (props) => {
     const [blog, setBlog] = useState(null)
     const [loaded, setLoaded] = useState(false)
     let { blogId } = useParams();
+    const [confeti, setConfeti] = useState(false)
 
     useEffect(async () => {
         const blog = await getBlogById(blogId)
+        const params = new URLSearchParams(window.location.search);
+        
         setLoaded(true)
         if(blog){
             setBlog(blog)
+            if(params.get('new')) {
+                history.pushState({}, null,'http://localhost:3000/blogs/5ff3330ce2c7f20c1408c36e')
+                setTimeout(() => {
+                    setConfeti(true)
+                }, 1000);
+            }
         }
     }, [])
 
@@ -31,7 +55,8 @@ const ViewBlog = () => {
     }
 
     return (
-        <div>
+        <div style={{overflowX: 'hidden'}}>
+            <Confetti className='confeti' active={ confeti } config={ config }/>
             <div style={{textAlign:'center'}}>
                 <h1>{blog.title}</h1>
                 <img style={{maxWidth: '500px'}} src={blog.coverImageUrl}></img>
