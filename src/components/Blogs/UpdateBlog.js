@@ -17,10 +17,11 @@ const UpdateBlog = () => {
 	const [blog, setBlog] = useState(null);
 	const [title, setTitle] = useState('')
 	const [tags, setTags] = useState('')
-	const [coverUrl, setCoverUrl] = useState(null)
+    const [coverUrl, setCoverUrl] = useState(null)
 	// store the image urls sent to server, .current property stores the list
 	let imageUrlsReference = useRef([])
-	let blogReference = useRef([])
+    let blogBodyReference = useRef([])
+    let coverImageUrlReference = useRef('')
 
     useEffect(async () => {
 		const blog = await getBlogById(blogId);
@@ -29,9 +30,10 @@ const UpdateBlog = () => {
 		if (blog) {
 			setTitle(blog.title)
 			setTags(blog.tags)
-			setCoverUrl(blog.coverImageUrl)
+            setCoverUrl(blog.coverImageUrl)
+            coverImageUrlReference.current = blog.coverImageUrl
 			setBlog(blog);
-			blogReference.current = blog
+			blogBodyReference.current = JSON.parse(blog.body)
 
 			// image urls used in the post
 			let usedImageUrls = []
@@ -93,10 +95,14 @@ const UpdateBlog = () => {
 
     // delete all the unused images from the server
     const cleanUp = async () => {
+        
+        // using state would result in initialised values.
+        // only references are used here
+
 		// image urls used in the post
 		let usedImageUrls = []
 
-		JSON.parse(blogReference.current.body).blocks.forEach(block => {
+		blogBodyReference.current.blocks.forEach(block => {
 			if(block.type && block.type === 'image'){
 				if(block.data.file.from_server){
 					usedImageUrls.push(block.data.file.url)
@@ -105,7 +111,7 @@ const UpdateBlog = () => {
 		});
 
 		// push the cover Url in UsedImagesUrl
-		usedImageUrls.push(coverUrl)
+		usedImageUrls.push(coverImageUrlReference.current)
         // updating the reference with unused image urls
         imageUrlsReference.current = imageUrlsReference.current.filter(url => !usedImageUrls.includes(url))
 
@@ -125,34 +131,11 @@ const UpdateBlog = () => {
         const title = document.getElementById('title').value
         const tags = document.getElementById('tags').value.split(',')
         const body = await getBody()
-        // image urls used in the post
-        let usedImageUrls = []
-        body.blocks.forEach(block => {
-            if(block.type && block.type === 'image'){
-                if(block.data.file.from_server){
-                    usedImageUrls.push(block.data.file.url)
-                }
-            }
-        });
-
-        // push the cover Url in UsedImagesUrl
-		usedImageUrls.push(coverUrl)
-
-        // updating the reference with unused image urls
-		imageUrlsReference.current = imageUrlsReference.current.filter(url => !usedImageUrls.includes(url))
-		
-        // delete the unused images
-		if(imageUrlsReference.current.length !== 0) {
-            await fetch('http://localhost:3001/blogs/remove_images', {
-                method: 'POST',
-                body: JSON.stringify({images: imageUrlsReference.current}),
-                headers: {
-                    'Content-type': 'application/json; charset=UTF-8'
-                }
-            })
-		}
+        blogBodyReference.current = body
+        coverImageUrlReference.current = coverUrl
 		
         const response = await updateBlog(blogId, {title, body, tags, coverImageUrl: coverUrl})
+        cleanUp()
         history.push(`/blogs/${response._id}`)
     }
 
