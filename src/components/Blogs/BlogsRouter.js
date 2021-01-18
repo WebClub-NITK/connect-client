@@ -26,7 +26,7 @@ const BlogsRouter = () => {
         <Route path={`${match.path}/search`}>
           <Search />
         </Route>
-        <Route path={`${match.path}/update/:blogId`}>
+        <Route path={`${match.path}/:blogId/update`}>
           <UpdateBlog />
         </Route>
         <Route path={`${match.path}/tag/:tag`}>

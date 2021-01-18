@@ -55,6 +55,16 @@
     justify-content: space-between;
 }
 
+/* cover image file input */
+.cover-input {
+    display: none;
+}
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
 
 /* Pagination section */
 
@@ -77,4 +87,8 @@
 .page-number{
     text-decoration: none;
     color: #0779e4;
+}
+
+.confeti {
+    left: 50%;
 }
