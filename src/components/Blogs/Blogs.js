@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import BlogTile from "./BlogTile";
-import { getAllBlogs } from "../../services/blogsService";
+import { getAllBlogs, deleteBlog } from "../../services/blogsService";
 import { Link, useHistory } from "react-router-dom";
 import "./Blogs.css";
 import Pagination from "./Pagination";
@@ -33,6 +33,15 @@ const Blogs = () => {
     }
   };
 
+  //function to delete blogs
+  const handleBlogDelete = async (blogId) => {
+    if (confirm("Are you sure you want to delete the blog?")) {
+      await deleteBlog(blogId);
+      const blogs = await getAllBlogs();
+      setBlogs(blogs);
+    }
+  };
+
   //Get the first and last index of current page of the blogs
   const indexOfLastBlog = pageNumber * blogsPerPage;
   const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
@@ -62,6 +71,7 @@ const Blogs = () => {
               details={blog}
               profile={false}
               description={JSON.parse(blog.body).blocks}
+              handleBlogDelete={handleBlogDelete}
             />
           ))
       ) : (

@@ -12,10 +12,23 @@ const saveBlog = async ({ title, body, tags, coverImageUrl }) => {
   return savedBlog.data;
 };
 
-const updateBlog = async(id, {title, body, tags, coverImageUrl}) => {
-  const updatedBlog = await axios.put(`${url}/${id}`, {title, body, tags, coverImageUrl })
-  return updatedBlog.data
-}
+const updateBlog = async (id, { title, body, tags, coverImageUrl }) => {
+  const updatedBlog = await axios.put(`${url}/${id}`, {
+    title,
+    body,
+    tags,
+    coverImageUrl,
+  });
+  return updatedBlog.data;
+};
+
+const deleteBlog = async (id) => {
+  try {
+    const deleteBlog = await axios.delete(`${url}/${id}`);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 const getBlogById = async (id) => {
   try {
@@ -28,23 +41,31 @@ const getBlogById = async (id) => {
 };
 
 const getSearchBlogs = async (title) => {
-  try{
-   const blogs = await axios.get(`${url}/search?title=${title}`);
-   return blogs.data;
-  }catch(err){
+  try {
+    const blogs = await axios.get(`${url}/search?title=${title}`);
+    return blogs.data;
+  } catch (err) {
     console.log(err);
     return null;
   }
-}
+};
 
 const getBlogsByTags = async (tag) => {
-  try{
-  const blogs = await axios.get(`${url}/tag/${tag}`);
-  return blogs.data;
-  }catch(err){
+  try {
+    const blogs = await axios.get(`${url}/tag/${tag}`);
+    return blogs.data;
+  } catch (err) {
     console.log(err);
     return null;
   }
-}
+};
 
-export { saveBlog, updateBlog, getAllBlogs, getBlogById, getBlogsByTags,getSearchBlogs };
+export {
+  saveBlog,
+  updateBlog,
+  deleteBlog,
+  getAllBlogs,
+  getBlogById,
+  getBlogsByTags,
+  getSearchBlogs,
+};

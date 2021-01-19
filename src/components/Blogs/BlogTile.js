@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import styles from "./blogStyles";
 import "./Blogs.css";
 import Options from "./Options";
+import { deleteBlog } from "../../services/blogsService";
 
 const BlogTile = (props) => {
   let text = "";
@@ -16,12 +17,13 @@ const BlogTile = (props) => {
   let blogDate = new Date(props.details.createdAt);
   let month = blogDate.toLocaleString("default", { month: "short" });
   const imageURL =
-    props.details.coverImageUrl || "https://indianlawwatch.com/wp-content/uploads/2020/05/BLOG.jpg";
+    props.details.coverImageUrl ||
+    "https://indianlawwatch.com/wp-content/uploads/2020/05/BLOG.jpg";
 
   let history = useHistory();
 
   const handleTagsClick = (e) => {
-    window.scrollTo({left:0,top:0,behavior:'smooth'});
+    window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
     const tag = e.target.innerHTML;
     history.push(`/blogs/tag/${tag}`);
   };
@@ -49,7 +51,19 @@ const BlogTile = (props) => {
         <p style={styles.date}>
           {blogDate.getDay()} {month}
         </p>
-        <button style={{padding: '5px 10px',color: 'gray', border: '1px solid gray', background: 'white', borderRadius: '2px'}} ><Link style={styles.link} to={`/blogs/${props.details._id}/update`}>Update</Link></button>
+        <button style={styles.blogOptionButton}>
+          <Link style={styles.link} to={`/blogs/${props.details._id}/update`}>
+            Update
+          </Link>
+        </button>
+        <button
+          style={styles.blogOptionButton}
+          onClick={() => {
+            props.handleBlogDelete(props.details._id);
+          }}
+        >
+          <span style={styles.link}>Delete</span>
+        </button>
       </div>
     </div>
   );
