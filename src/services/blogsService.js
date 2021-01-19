@@ -1,12 +1,50 @@
-import axios from 'axios'
+import axios from "axios";
 
-const url = 'http://localhost:3001/blogs'
+const url = "http://localhost:3001/blogs";
 
 const getAllBlogs = async () => {
-    const blogs = await axios.get(url)
-    return blogs.data
+  const blogs = await axios.get(url);
+  return blogs.data;
+};
+
+const saveBlog = async ({ title, body, tags, coverImageUrl }) => {
+  const savedBlog = await axios.post(url, { title, body, tags, coverImageUrl });
+  return savedBlog.data;
+};
+
+const updateBlog = async(id, {title, body, tags, coverImageUrl}) => {
+  const updatedBlog = await axios.put(`${url}/${id}`, {title, body, tags, coverImageUrl })
+  return updatedBlog.data
 }
 
-export {
-    getAllBlogs
+const getBlogById = async (id) => {
+  try {
+    const blog = await axios.get(`${url}/${id}`);
+    return blog.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+const getSearchBlogs = async (title) => {
+  try{
+   const blogs = await axios.get(`${url}/search?title=${title}`);
+   return blogs.data;
+  }catch(err){
+    console.log(err);
+    return null;
+  }
 }
+
+const getBlogsByTags = async (tag) => {
+  try{
+  const blogs = await axios.get(`${url}/tag/${tag}`);
+  return blogs.data;
+  }catch(err){
+    console.log(err);
+    return null;
+  }
+}
+
+export { saveBlog, updateBlog, getAllBlogs, getBlogById, getBlogsByTags,getSearchBlogs };
