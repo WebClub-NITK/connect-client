@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import BlogTile from "./BlogTile";
 import { getAllBlogs, deleteBlog } from "../../services/blogsService";
 import { Link, useHistory } from "react-router-dom";
@@ -33,10 +35,28 @@ const Blogs = () => {
     }
   };
 
+  //Toast message for blog deletion
+  toast.configure();
+  const notify = (message) =>
+    toast.info(message, {
+      position: "bottom-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: false,
+      progress: undefined,
+    });
+
   //function to delete blogs
   const handleBlogDelete = async (blogId) => {
     if (confirm("Are you sure you want to delete the blog?")) {
-      await deleteBlog(blogId);
+      const deletedBlog = await deleteBlog(blogId);
+      if (deletedBlog.status == 204) {
+        notify("Blog deleted");
+      } else {
+        notify("Couldn't delete the blog. Try again");
+      }
       const blogs = await getAllBlogs();
       setBlogs(blogs);
     }

@@ -25,6 +25,7 @@ const updateBlog = async (id, { title, body, tags, coverImageUrl }) => {
 const deleteBlog = async (id) => {
   try {
     const deleteBlog = await axios.delete(`${url}/${id}`);
+    return deleteBlog;
   } catch (err) {
     console.log(err);
   }

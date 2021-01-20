@@ -33,7 +33,7 @@ const BlogTile = (props) => {
   };
 
   useEffect(() => {
-    const descText = text.replace('undefined','');
+    const descText = text.replace("undefined", "");
     pRef.current.innerHTML = descText;
   }, []);
 
