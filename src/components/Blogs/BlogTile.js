@@ -3,24 +3,28 @@ import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import styles from "./blogStyles";
 import "./Blogs.css";
 import Options from "./Options";
-import { deleteBlog } from "../../services/blogsService";
 
 const BlogTile = (props) => {
+  let history = useHistory();
+  const imageURL =
+    props.details.coverImageUrl ||
+    "https://indianlawwatch.com/wp-content/uploads/2020/05/BLOG.jpg";
+
+  //Blog description
   let text = "";
   let description = props.description;
   description.map((des) => {
     text = text + " " + des.data.text;
   });
-
   let blogDescription = text.replace(/[&]nbsp[;]/gi, " ");
 
-  let blogDate = new Date(props.details.createdAt);
-  let month = blogDate.toLocaleString("default", { month: "short" });
-  const imageURL =
-    props.details.coverImageUrl ||
-    "https://indianlawwatch.com/wp-content/uploads/2020/05/BLOG.jpg";
-
-  let history = useHistory();
+  //blog date
+  let date = new Date(props.details.createdAt);
+  const blogDate = date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    weekday:"short"
+  });
 
   const handleTagsClick = (e) => {
     window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
@@ -48,9 +52,7 @@ const BlogTile = (props) => {
           </span>
         ))}
         <p>{blogDescription}</p>
-        <p style={styles.date}>
-          {blogDate.getDay()} {month}
-        </p>
+        <p style={styles.date}>{blogDate}</p>
         <button style={styles.blogOptionButton}>
           <Link style={styles.link} to={`/blogs/${props.details._id}/update`}>
             Update
