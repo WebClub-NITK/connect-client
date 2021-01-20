@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import styles from "./blogStyles";
 import "./Blogs.css";
 import Options from "./Options";
 
 const BlogTile = (props) => {
+  const pRef = useRef();
   let history = useHistory();
   const imageURL =
     props.details.coverImageUrl ||
@@ -16,14 +17,13 @@ const BlogTile = (props) => {
   description.map((des) => {
     text = text + " " + des.data.text;
   });
-  let blogDescription = text.replace(/[&]nbsp[;]/gi, " ");
 
   //blog date
   let date = new Date(props.details.createdAt);
   const blogDate = date.toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
-    weekday:"short"
+    weekday: "short",
   });
 
   const handleTagsClick = (e) => {
@@ -31,6 +31,11 @@ const BlogTile = (props) => {
     const tag = e.target.innerHTML;
     history.push(`/blogs/tag/${tag}`);
   };
+
+  useEffect(() => {
+    const descText = text.replace('undefined','');
+    pRef.current.innerHTML = descText;
+  }, []);
 
   return (
     <div style={styles.blogTile}>
@@ -51,7 +56,7 @@ const BlogTile = (props) => {
             {tag}
           </span>
         ))}
-        <p>{blogDescription}</p>
+        <p ref={pRef} className="blog-des"></p>
         <p style={styles.date}>{blogDate}</p>
         <button style={styles.blogOptionButton}>
           <Link style={styles.link} to={`/blogs/${props.details._id}/update`}>
