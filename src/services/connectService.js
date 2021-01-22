@@ -33,9 +33,15 @@ const search = async ({ query }) => {
     }
 }
 
+const leaderboard = async () => {
+    const users = await axios.get(baseUrl + "/leaderboard");
+    return users.data;
+}
+
 export {
     authLogin,
     signup,
     RetreiveInfo,
-    search
+    search,
+    leaderboard
 }
