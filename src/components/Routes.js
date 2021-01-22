@@ -6,12 +6,15 @@ import {
 } from "react-router-dom"
   
 import Home from './Home'
-import Blogs from './Blogs/Blogs'
-import ResourceHub from './ResourceHub'
+
+
 import UserProfile from './Connect/Profile'
 import Login from './Connect/Login'
 import Signup from './Connect/Signup'
 import Search from './Connect/Search'
+
+import BlogsRouter from './Blogs/BlogsRouter'
+import ResourceRouter from './Resources/ResourceRouter'
 
 const Routes = () => {
 
@@ -22,10 +25,10 @@ const Routes = () => {
             <Home />
           </Route>
           <Route path="/blogs">
-            <Blogs />
+            <BlogsRouter />
           </Route>
           <Route path="/resourcehub">
-            <ResourceHub />
+            <ResourceRouter/>
           </Route>
           <Route path="/profile"
               component={props => <UserProfile {...props} />}
