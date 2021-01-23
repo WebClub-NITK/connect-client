@@ -68,7 +68,7 @@ const NewBlog = () => {
 
     const handleSubmitPost = async () => {
         const title = document.getElementById('title').value
-        const tags = document.getElementById('tags').value.split(',')
+        const tags = document.getElementById('tags').value.split(',').map(item=>item.trim())
         const body = await getBody()
         // image urls used in the post
         let usedImageUrls = []

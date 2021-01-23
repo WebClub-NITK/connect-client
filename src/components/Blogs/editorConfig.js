@@ -4,6 +4,7 @@ import Embed from '@editorjs/embed';
 import Delimiter from '@editorjs/delimiter';
 import InlineCode from '@editorjs/inline-code';
 import ImageTool from '@editorjs/image';
+import CodeTool from '@editorjs/code'
 
 export const tools = { 
     header: Header, 
@@ -16,6 +17,7 @@ export const tools = {
           }
         }
     },
+    code: CodeTool,
     embed: Embed,
     delimiter: Delimiter,
     inlineCode: {
