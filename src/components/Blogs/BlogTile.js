@@ -30,6 +30,7 @@ const BlogTile = (props) => {
     window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
     const tag = e.target.innerHTML;
     history.push(`/blogs/tag/${tag}`);
+    
   };
 
   useEffect(() => {
