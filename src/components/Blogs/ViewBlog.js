@@ -1,10 +1,24 @@
 import React, { useEffect, useState } from 'react'
+import ReactDOM from 'react-dom'
 import {useParams, Link} from 'react-router-dom'
 import { getBlogById } from '../../services/blogsService';
 import EditorJs from 'react-editor-js';
 import {tools} from './editorConfig'
 import styles from './blogStyles'
 import Confetti from 'react-dom-confetti';
+
+import SyntaxHighlighter from 'react-syntax-highlighter';
+// other good themes: monokai, sunburst
+import { vs2015 } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+
+const Component = (props) => {
+  const codeString = props.code
+  return (
+    <SyntaxHighlighter style={vs2015} customStyle={{borderRadius: '5px'}}>
+      {codeString}
+    </SyntaxHighlighter>
+  );
+};
 
 const config = {
     angle: "270",
@@ -42,6 +56,19 @@ const ViewBlog = (props) => {
         }
     }, [])
 
+    // highlight syntax in code blocks.
+    const formatCodeBlocks = () => {
+        const editor = document.querySelector('.codex-editor')
+
+        const codeBlocks = editor.querySelectorAll('.ce-code')
+        
+        for (const codeBlock of codeBlocks){
+            let codeString = codeBlock.children[0].value
+            ReactDOM.render(<Component code={codeString} />, codeBlock)
+            
+        }
+    }
+
     if(!loaded){
         return (
             <h1>Loading</h1>
@@ -62,13 +89,14 @@ const ViewBlog = (props) => {
                 <img style={{maxWidth: '500px'}} src={blog.coverImageUrl}></img>
                 <p>{blog.tags.map((tag, index) => <span key={index} style={styles.tag}>{tag}</span>)}</p>
                 <p>Updated On: {Date(blog.updatedAt).slice(0,10).replace(/-/g,"")}</p>
-                <button style={{padding: '5px 10px',color: 'gray', border: '1px solid gray', background: 'white', borderRadius: '2px'}} ><Link style={styles.link} to={`/blogs/${blogId}/update`}>Update</Link></button>
+                <Link style={styles.link} to={`/blogs/${blogId}/update`}><button style={{padding: '5px 10px',color: 'gray', border: '1px solid gray', background: 'white', borderRadius: '2px'}} >Update</button></Link>
             </div>
             <EditorJs
                     tools={tools}
                     readOnly={true}
                     data={JSON.parse(blog.body)}
                     logLevel='ERROR'
+                    onReady={formatCodeBlocks}
             />
         </div>
     )

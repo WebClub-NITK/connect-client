@@ -80,7 +80,7 @@ const Blogs = () => {
         value={blogTitle}
       />
       <Link to="/blogs/new">
-        <button>Share an Idea</button>
+        <button className="new-blog-button">Share an Idea</button>
       </Link>
       {blogs ? (
         blogs
