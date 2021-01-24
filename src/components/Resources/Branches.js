@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import BranchTile from './BranchTile'
+import BranchTile from './Tiles/BranchTile'
 import { getAllBranches } from '../../services/resourceService'
 import { Row } from 'react-bootstrap'
 
