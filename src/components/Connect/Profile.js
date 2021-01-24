@@ -6,7 +6,7 @@ import profilepic from "../../assets/logo.png"
 import ProfileCard from "./ProfileCard";
 
 const Profile = (props) => {
-    let userId = null;
+    let userId = localStorage.getItem('UserId').toString();
     if (props.location.props)
         userId = props.location.props.userId;
     const [jsonInfo, setJsonInfo] = useState(null);

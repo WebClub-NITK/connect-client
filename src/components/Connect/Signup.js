@@ -51,6 +51,9 @@ const Signup = ()  => {
     const response = await signup({username, password, annoUsername, annoPassword, name, ptype, semester, branch, email});
     if (response) {
       localStorage.setItem('accessToken', response.accessToken);
+      localStorage.setItem('secondaryToken', response.secondaryToken);
+      localStorage.setItem('UserId', response.userId)
+      localStorage.setItem('secondaryUserId', '')
       setUserId(response.userId.toString());
       setSignup(true);
     }
