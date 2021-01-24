@@ -20,14 +20,22 @@ a:focus {
     outline: none;
 }
 
+.jumbotron {
+    text-align: center;
+}
+
 .padding {
     padding-top: 100px;
     padding-bottom: 100px;
+    text-align: center;
 }
 
 .branch-tile {
     background-color: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    transition: all 0.4s;
     transition: all 0.4s;
 }
 
@@ -35,7 +43,8 @@ a:focus {
     transform: scale(1.02);
 }
 
-.course-tile {
+.course-tile, .resource-tile {
+    text-align: left;
     margin-top: 10px;
     margin-bottom: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -44,7 +53,7 @@ a:focus {
     transition: all 0.4s;
 }
 
-.course-tile:hover {
+.course-tile:hover, .resource-tile:hover {
     transform: scale(1.1);
 }
 
@@ -55,3 +64,23 @@ a:focus {
 .form-card .card-body {
     text-align: left;
 }
+
+.loader-container {
+    text-align: center;
+}
+
+.loader {
+    position: absolute;
+    left: 50%;
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
