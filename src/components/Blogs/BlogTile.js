@@ -14,6 +14,7 @@ const BlogTile = (props) => {
   //Blog description
   let text = "";
   let description = props.description;
+  if(description == null) return 
   description.map((des) => {
     text = text + " " + des.data.text;
   });

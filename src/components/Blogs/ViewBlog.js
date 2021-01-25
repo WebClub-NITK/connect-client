@@ -41,6 +41,7 @@ const ViewBlog = (props) => {
     const [confeti, setConfeti] = useState(false)
 
     useEffect(async () => {
+        window.scrollTo(0, 0)
         const blog = await getBlogById(blogId)
         const params = new URLSearchParams(window.location.search);
         
@@ -48,7 +49,7 @@ const ViewBlog = (props) => {
         if(blog){
             setBlog(blog)
             if(params.get('new')) {
-                history.pushState({}, null,'http://localhost:3000/blogs/5ff3330ce2c7f20c1408c36e')
+                history.pushState({}, null,`http://localhost:3000/blogs/${blogId}`)
                 setTimeout(() => {
                     setConfeti(true)
                 }, 1000);
@@ -85,8 +86,8 @@ const ViewBlog = (props) => {
         <div style={{overflowX: 'hidden'}}>
             <Confetti className='confeti' active={ confeti } config={ config }/>
             <div style={{textAlign:'center'}}>
+                <img style={{maxWidth: '500px', margin: '50px 0', borderRadius: '5px'}} src={blog.coverImageUrl}></img>
                 <h1>{blog.title}</h1>
-                <img style={{maxWidth: '500px'}} src={blog.coverImageUrl}></img>
                 <p>{blog.tags.map((tag, index) => <span key={index} style={styles.tag}>{tag}</span>)}</p>
                 <p>Updated On: {Date(blog.updatedAt).slice(0,10).replace(/-/g,"")}</p>
                 <Link style={styles.link} to={`/blogs/${blogId}/update`}><button style={{padding: '5px 10px',color: 'gray', border: '1px solid gray', background: 'white', borderRadius: '2px'}} >Update</button></Link>
