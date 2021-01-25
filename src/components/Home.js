@@ -2,7 +2,7 @@ import React from 'react'
 import Navigation from './Navigation'
 import Logo from '../assets/logo.png'
 import toggel from '../components/Connect/Toggel'
-
+import logout from '../components/Connect/Logout'
 
 const Home = () => {
     return (
@@ -10,7 +10,8 @@ const Home = () => {
             <img src={Logo} alt={'logo'} style={{objectFit: 'contain'}} />
             <h1>Connect</h1>
             <Navigation />
-            <button type="submit" onClick={toggel}>Toggel</button>
+            <button type="submit" onClick={toggel}>Toggel</button><br/>
+            <button type="submit" onClick={logout}>Logout</button>
         </div>
     )
 }

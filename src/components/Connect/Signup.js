@@ -53,7 +53,7 @@ const Signup = ()  => {
       localStorage.setItem('accessToken', response.accessToken);
       localStorage.setItem('secondaryToken', response.secondaryToken);
       localStorage.setItem('UserId', response.userId)
-      localStorage.setItem('secondaryUserId', '')
+      localStorage.setItem('secondaryUserId', response.annouserId)
       setUserId(response.userId.toString());
       setSignup(true);
     }
@@ -63,8 +63,7 @@ const Signup = ()  => {
     if(signupstate) 
   {
     return <Redirect to={{
-                  pathname: '/profile',
-                  props: { userId: userId }
+                  pathname: '/profile'
               }}
             />
   }

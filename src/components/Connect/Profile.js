@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Spinner from 'react-bootstrap/Spinner';
 import { RetreiveInfo, search } from '../../services/connectService';
-
+import { Redirect } from 'react-router-dom';
 import profilepic from "../../assets/logo.png"
 import ProfileCard from "./ProfileCard";
 
 const Profile = (props) => {
+    if(!localStorage.getItem('UserId'))
+    {
+        return <Redirect to={{
+            pathname: '/login'
+        }}
+        />
+    }
     let userId = localStorage.getItem('UserId').toString();
-    if (props.location.props)
-        userId = props.location.props.userId;
     const [jsonInfo, setJsonInfo] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [user, setUser] = useState(null);

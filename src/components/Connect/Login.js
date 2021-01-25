@@ -47,8 +47,7 @@ const Login = () => {
 
   if (loginstate) {
     return <Redirect to={{
-      pathname: '/profile',
-      props: { userId: userId }
+      pathname: '/profile'
     }}
     />
   }
