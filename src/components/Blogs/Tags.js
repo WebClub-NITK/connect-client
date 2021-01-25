@@ -2,19 +2,29 @@ import React, { useEffect, useState } from "react";
 import { getBlogsByTags } from "../../services/blogsService";
 import { useParams } from "react-router-dom";
 import BlogTile from "./BlogTile";
+import Pagination from "./Pagination";
+import "./Blogs.css";
 
 const Tags = () => {
-  const [blogs, setBlogs] = useState(null);
+  const [blogs, setBlogs] = useState([]);
   const [loaded, setLoaded] = useState(false);
+
+  const [pageNumber, setPageNumber] = useState(1);
+  const [blogsPerPage] = useState(10);
+
   let params = useParams();
 
   useEffect(async () => {
+    setTimeout(getBlogs, 300);
+  },[blogs]);
+
+  const getBlogs = async () => {
     const tagBlogs = await getBlogsByTags(params.tag);
     setLoaded(true);
     if (tagBlogs) {
       setBlogs(tagBlogs);
     }
-  });
+  };
 
   if (!loaded) {
     return <h1>Loading</h1>;
@@ -24,16 +34,28 @@ const Tags = () => {
     return <h4>Not found</h4>;
   }
 
+  const indexOfLastBlog = pageNumber * blogsPerPage;
+  const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
+
+  const paginate = (currentPageNumber) => {
+    setPageNumber(currentPageNumber);
+  };
+
   return (
     <div>
       <h2>Tags: {params.tag}</h2>
-      {blogs.map((blog) => (
+      {blogs.slice(indexOfFirstBlog, indexOfLastBlog).map((blog) => (
         <BlogTile
           key={blog._id}
           details={blog}
           description={JSON.parse(blog.body).blocks}
         />
       ))}
+      <Pagination
+        totalBlogs={blogs.length}
+        blogsPerPage={blogsPerPage}
+        paginate={paginate}
+      />
     </div>
   );
 };
