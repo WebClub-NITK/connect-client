@@ -22,7 +22,8 @@ const Blogs = () => {
     setBlogs(blogs);
   }, []);
 
-  const handleChange = (e) => {
+  //Search blogs
+  const handleChange = async (e) => {
     const blogTitle = e.target.value;
     setBlogTitle(blogTitle);
   };
@@ -72,8 +73,10 @@ const Blogs = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   };
 
+  window.onpopstate = () => {};
+
   return (
-    <div>
+    <div className="blogs_div">
       <Header
         handleSubmit={handleSubmit}
         handleChange={handleChange}

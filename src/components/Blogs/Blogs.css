@@ -1,8 +1,21 @@
-.title{
-    margin:0;
+.title {
+    margin: 0;
+    margin-right: 1rem;
 }
 
-.nav_blogs{
+.search_form {
+    display: flex;
+}
+
+.searchFlex {
+    flex: 5;
+}
+
+.search_form:focus {
+    background-color: red;
+}
+
+.nav_blogs {
     padding: 0.85rem;
     background-color: #0f3057;
     color: white;
@@ -12,57 +25,56 @@
     justify-content: space-between;
 }
 
-.search_input{
+.search_input {
     padding: 0.4rem;
     border-radius: 15px;
     border: none;
     text-align: center;
 }
 
-.search_input:focus{
+
+.search_input:focus {
     outline: none;
+    /* flex: 5; */
 }
 
-.search_button:focus{
-    outline: none;
-}
-
-
-.search_button{
+.search_button {
     padding: 0.35rem;
     margin-left: 0.3rem;
     border-radius: 10px;
     border: none;
+    /* flex:1; */
 }
 
 .dropdown:hover .options-content {
     display: flex;
     flex-direction: column;
-  }
+}
 
-.options-content{
+.options-content {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
 
-.blogHeader{
+.blogHeader {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.blog-des a{
- text-decoration: underline;
+.blog-des a {
+    text-decoration: underline;
 }
 
 /* cover image file input */
 .cover-input {
     display: none;
 }
+
 .custom-file-upload {
     border: 1px solid #ccc;
     display: inline-block;
@@ -72,23 +84,23 @@
 
 /* Pagination section */
 
-.page-ul{
+.page-ul {
     display: flex;
     flex-direction: row;
-    list-style-type:none;
+    list-style-type: none;
     justify-content: center;
 }
 
-.page-li{
+.page-li {
     text-decoration: none;
     background-color: #fff;
     border-style: solid;
     border-width: thin;
-    padding:0.25rem 0.5rem 0.25rem 0.5rem;
+    padding: 0.25rem 0.5rem 0.25rem 0.5rem;
     border-color: #dee3e2;
 }
 
-.page-number{
+.page-number {
     text-decoration: none;
     color: #0779e4;
 }
