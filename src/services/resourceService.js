@@ -19,6 +19,12 @@ const getAllBranches = async ()=>{
     return branches.data.branches;
 };
 
+const getBranch = async (branchId) => {
+    const branch = await axios.get(`${url}/branch/${branchId}`);
+    console.log(branch);
+    return branch.data.branch;
+}
+
 const createNewBranch = async({code,name})=>{
     const branchStatus = await axios.post(`${url}/${branchUrl}`,{code,name});
     console.log(branchStatus);
@@ -32,11 +38,23 @@ const createNewBranch = async({code,name})=>{
     } 
 };
 
-const getAllCourses = async (branchId)=>{
-    const courses = await axios.get(`${url}/${courseUrl}/${branchId}`);
+const getAllCourses = async ()=>{
+    const courses = await axios.get(`${url}/${courseUrl}`);
     console.log(courses);
     return  courses.data.courses;
 };
+
+const getCourse = async (courseId) => {
+    const course = await axios.get(`${url}/course/${courseId}`)
+    console.log(course);
+    return course.data.course;
+}
+
+const getCoursesForBranch = async (branchId) => {
+    const courses = await axios.get(`${url}/${courseUrl}/${branchId}`);
+    console.log(courses);
+    return  courses.data.courses;
+}
 
 const createNewCourse = async(code,name,branch)=>{
     const courseStatus = await axios.post(`${url}/${courseUrl}`,{code,name,branch});
@@ -54,16 +72,39 @@ const createNewCourse = async(code,name,branch)=>{
 const getResourcesForCourse= async (courseId)=>{
     const resources = await axios.get(`${url}/${resourceUrl}/${courseId}`);
     console.log(resources);
-    return resources.data;
+    return resources.data.resources;
+};
+
+const createNewResource = async(course, formData)=>{
+
+    console.log(formData);
+
+    const resourceStatus = await axios.post(`${url}/${resourceUrl}/${course}`, formData, {
+        header: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })
+    console.log(resourceStatus);
+    if(resourceStatus.statusCode == 422)
+        {
+            return  resourceStatus.data.error;
+        }
+    else
+    {
+        return  resourceStatus.data.message;
+    } 
 };
 
 
 export{
-    getAllResources,
     getAllBranches,
+    getBranch,
     createNewBranch,
     getAllCourses,
+    getCourse,
+    getCoursesForBranch,
     createNewCourse,
-    getResourcesForCourse
-
+    getAllResources,
+    getResourcesForCourse,
+    createNewResource,
 }

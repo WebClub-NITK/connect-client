@@ -30,6 +30,8 @@ const Home = () => {
                 <img src={Logo} alt={'logo'} style={{ objectFit: 'contain' }} />
                 <h1>Connect</h1>
                 <Navigation />
+                <button type="submit" onClick={toggel}>Toggel</button><br/>
+                <button type="submit" onClick={logout}>Logout</button>
                 <div className="col-sm-12 col-md-12 col-xs-12" style={{paddingTop: "4em", paddingLeft: "36em", paddingRight: "36em"}}>
                     <table class="table table-dark">
                         <thead>

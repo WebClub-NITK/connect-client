@@ -21,7 +21,25 @@ const Login = () => {
     const password = document.getElementById("password").value;
     const response = await authLogin({username, password});
     if (response && response.accessToken) {
-      localStorage.setItem("accessToken", response.accessToken);
+      let token = localStorage.getItem('accessToken')
+      console.log(!token)
+      if(!token)
+      {
+        localStorage.setItem("accessToken", response.accessToken);
+        localStorage.setItem('secondaryToken', '');
+        localStorage.setItem('UserId', response.userId)
+        localStorage.setItem('secondaryUserId', '')
+      }
+      else
+      {
+        let tmp1 = localStorage.getItem('accessToken').toString()
+        let tmp2 = localStorage.getItem('UserId', response.userId)
+        localStorage.setItem('secondaryUserId', tmp2)
+        localStorage.setItem('UserId', response.userId)
+        localStorage.setItem('secondaryToken', tmp1)
+        localStorage.setItem('accessToken', response.accessToken)
+      }
+      localStorage.setItem('UserId', response.userId)
       setUserId(response.userId);
       setLogin(true);
     }
@@ -29,8 +47,7 @@ const Login = () => {
 
   if (loginstate) {
     return <Redirect to={{
-      pathname: '/profile',
-      props: { userId: userId }
+      pathname: '/profile'
     }}
     />
   }

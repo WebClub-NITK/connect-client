@@ -4,6 +4,7 @@
   "homepage": ".",
   "private": true,
   "dependencies": {
+    "@editorjs/code": "^2.6.0",
     "@editorjs/delimiter": "^1.2.0",
     "@editorjs/editorjs": "^2.19.1",
     "@editorjs/embed": "^2.4.0",
@@ -20,7 +21,9 @@
     "react-dom-confetti": "^0.2.0",
     "react-editor-js": "^1.7.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.1"
+    "react-scripts": "4.0.1",
+    "react-syntax-highlighter": "^15.4.3",
+    "react-toastify": "^6.2.0"
   },
   "scripts": {
     "start": "react-scripts start",
