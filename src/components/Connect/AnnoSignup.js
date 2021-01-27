@@ -3,9 +3,9 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import "./login.css";
 import { Redirect } from 'react-router-dom';
-import { signup } from '../../services/connectService';
+import { annoSignup } from '../../services/connectService';
 
-const Signup = () => {
+const AnnoSignup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,11 +22,11 @@ const Signup = () => {
     const email = document.getElementById("email").value;
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
-    const response = await signup({ username, password, email });
+    const response = await annoSignup({ username, password, email });
     if (response) {
-      localStorage.setItem('accessToken', response.accessToken);
-      localStorage.setItem('UserId', response.userId);
-      setSignup(true);
+        localStorage.setItem('secondaryToken', response.accessToken);
+        localStorage.setItem('secondaryUserId', response.userId);
+        setSignup(true);
     }
   }
 
@@ -99,4 +99,4 @@ const Signup = () => {
   }
 }
 
-export default Signup
+export default AnnoSignup

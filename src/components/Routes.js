@@ -15,6 +15,8 @@ import Search from './Connect/Search'
 
 import BlogsRouter from './Blogs/BlogsRouter'
 import ResourceRouter from './Resources/ResourceRouter'
+import AnnoSignup from './Connect/AnnoSignup'
+import Profile from './Connect/Profile'
 
 const Routes = () => {
 
@@ -30,9 +32,9 @@ const Routes = () => {
           <Route path="/resourcehub">
             <ResourceRouter/>
           </Route>
-          <Route path="/profile"
-              component={props => <UserProfile {...props} />}
-          />
+          <Route path="/profile">
+            <Profile />
+          </Route>
           <Route path="/login">
             <Login />
           </Route>
@@ -41,6 +43,9 @@ const Routes = () => {
           </Route>
           <Route path="/search" exact>
             <Search />
+          </Route>
+          <Route path="/annoSignup" exact>
+            <AnnoSignup />
           </Route>
         </Switch>
       </Router>   
