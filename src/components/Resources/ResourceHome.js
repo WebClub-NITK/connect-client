@@ -1,6 +1,7 @@
 import React from 'react'
-import { Container, Jumbotron } from 'react-bootstrap';
+import { Container, Jumbotron, Row } from 'react-bootstrap';
 import Branches from './Branches'
+import CourseSearch from './CourseSearch';
 
 const ResourceHome = () => {
     
@@ -12,6 +13,7 @@ const ResourceHome = () => {
             <Container>
                 <Branches/>
             </Container>
+            <CourseSearch/>
         </div>
     )
 }

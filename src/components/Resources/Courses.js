@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import CourseTile from './CourseTile'
-import { createNewCourse, getAllBranches, getAllCourses } from '../../services/resourceService'
+import CourseTile from './Tiles/CourseTile'
+import { createNewCourse, getAllBranches, getAllCourses, getBranch, getCoursesForBranch } from '../../services/resourceService'
 import { useParams } from 'react-router-dom'
 import { Button, Card, Container, Form, Jumbotron, Row } from 'react-bootstrap'
 
@@ -16,23 +16,25 @@ const Courses = () => {
     let { branchId } = useParams();
     
     useEffect(async () => {
-        const courses = await getAllCourses(branchId)
-        const allBranches = await getAllBranches()
-
-        allBranches.map((item) => {
-            if(item._id === branchId) {
-                setBranch(item)
-            }
-        })
+        const courses = await getCoursesForBranch(branchId)
+        const branch = await getBranch(branchId)
         
+        if(branch)
+            setBranch(branch)
+    
         if(courses)
-        setCourses(courses)
+            setCourses(courses)
 
         setLoaded(true)
-    }, [])
+    }, [branchId])
 
     const handleSubmit = async () => {
         const response =  await createNewCourse(newCourseCode, newCourseName, branchId)
+        const courses = await getCoursesForBranch(branchId)
+        
+        if(courses)
+            setCourses(courses)
+        
         alert(response)
         setNewCourseCode("")
         setNewCourseName("")
@@ -40,7 +42,9 @@ const Courses = () => {
 
     if(!loaded){
         return (
-            <h1>Loading....</h1>
+            <div className="loader-container">
+                <div className="loader mt-5"></div>
+            </div>
         )
     }
 
