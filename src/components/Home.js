@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Navigation from './Navigation';
 import Logo from '../assets/logo.png';
+import toggel from '../components/Connect/Toggel';
+import logout from '../components/Connect/Logout';
 import Spinner from 'react-bootstrap/Spinner';
 import { leaderboard } from '../services/connectService';
 
