@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useHistory } from "react-router-dom";
 import { getSearchBlogs } from "../../services/blogsService";
 import BlogTile from "../Blogs/BlogTile";
-import Header from "./Header";
+import SearchBar from "./SearchBar";
 import Pagination from "./Pagination";
 
 const Search = () => {
@@ -57,12 +57,12 @@ const Search = () => {
 
   return (
     <div>
-      <Header
+      <SearchBar
         handleSubmit={handleSubmit}
         handleChange={handleChange}
         value={blogTitle}
       />
-      <h2>Search results: {title}</h2>
+      <h2 style={{textAlign:"center"}}>Search results: {title}</h2>
       {searchBlogs.length != 0 ? (
         searchBlogs
           .slice(indexOfFirstBlog, indexOfLastBlog)

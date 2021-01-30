@@ -6,7 +6,7 @@ import { getAllBlogs, deleteBlog } from "../../services/blogsService";
 import { Link, useHistory } from "react-router-dom";
 import "./Blogs.css";
 import Pagination from "./Pagination";
-import Header from "./Header";
+import SearchBar from "./SearchBar";
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -35,6 +35,7 @@ const Blogs = () => {
       history.push(`/blogs/search?title=${searchTitle}`);
     }
   };
+  
 
   //Toast message for blog deletion
   toast.configure();
@@ -77,7 +78,10 @@ const Blogs = () => {
 
   return (
     <div className="blogs_div">
-      <Header
+      <header className="nav_blogs">
+        <h2 className="title">Blogs</h2>
+      </header>
+      <SearchBar
         handleSubmit={handleSubmit}
         handleChange={handleChange}
         value={blogTitle}
