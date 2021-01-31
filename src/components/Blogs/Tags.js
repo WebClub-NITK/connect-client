@@ -16,7 +16,7 @@ const Tags = () => {
 
   useEffect(async () => {
     setTimeout(getBlogs, 300);
-  },[blogs]);
+  }, [params.tag]);
 
   const getBlogs = async () => {
     const tagBlogs = await getBlogsByTags(params.tag);

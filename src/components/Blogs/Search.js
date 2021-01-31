@@ -16,7 +16,7 @@ const Search = () => {
   let history = useHistory();
   const { search } = useLocation();
   const searchParams = new URLSearchParams(search);
-  const title = searchParams.get("title");
+  const title = searchParams.get("q");
 
   useEffect(async () => {
     const blogs = await getSearchBlogs(title);
@@ -24,7 +24,7 @@ const Search = () => {
     if (blogs) {
       setBlogs(blogs);
     }
-  }, [searchBlogs]);
+  }, [title]);
 
   if (!loaded) {
     return <h2>Loading!</h2>;
@@ -44,7 +44,7 @@ const Search = () => {
     setPageNumber(1);
     const searchTitle = blogTitle;
     if (searchTitle.length > 0) {
-      history.push(`/blogs/search?title=${searchTitle}`);
+      history.push(`/blogs/search?q=${searchTitle}`);
     }
   };
 
@@ -62,7 +62,7 @@ const Search = () => {
         handleChange={handleChange}
         value={blogTitle}
       />
-      <h2 style={{textAlign:"center"}}>Search results: {title}</h2>
+      <h2 style={{ textAlign: "center" }}>Search results: {title}</h2>
       {searchBlogs.length != 0 ? (
         searchBlogs
           .slice(indexOfFirstBlog, indexOfLastBlog)

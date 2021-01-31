@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BlogTile from "./BlogTile";
-import { getAllBlogs, deleteBlog } from "../../services/blogsService";
-import { Link, useHistory } from "react-router-dom";
-import "./Blogs.css";
 import Pagination from "./Pagination";
 import SearchBar from "./SearchBar";
+import Header from "./Header";
+import "./Blogs.css";
+import { getAllBlogs, deleteBlog } from "../../services/blogsService";
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [blogTitle, setBlogTitle] = useState("");
+  const [numberOfBlogs, setNumberOfBlogs] = useState(0);
 
   const [pageNumber, setPageNumber] = useState(1);
   const [blogsPerPage] = useState(10);
@@ -18,9 +20,10 @@ const Blogs = () => {
   let history = useHistory();
 
   useEffect(async () => {
-    const blogs = await getAllBlogs();
-    setBlogs(blogs);
-  }, []);
+    const blogsData = await getAllBlogs(pageNumber);
+    setBlogs(blogsData.blogs);
+    setNumberOfBlogs(blogsData.count);
+  },[pageNumber]);
 
   //Search blogs
   const handleChange = async (e) => {
@@ -32,10 +35,9 @@ const Blogs = () => {
     e.preventDefault();
     const searchTitle = blogTitle;
     if (searchTitle.length > 0) {
-      history.push(`/blogs/search?title=${searchTitle}`);
+      history.push(`/blogs/search?q=${searchTitle}`);
     }
   };
-  
 
   //Toast message for blog deletion
   toast.configure();
@@ -64,10 +66,6 @@ const Blogs = () => {
     }
   };
 
-  //Get the first and last index of current page of the blogs
-  const indexOfLastBlog = pageNumber * blogsPerPage;
-  const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
-
   //function to navigate to other pages
   const paginate = (currentPageNumber) => {
     setPageNumber(currentPageNumber);
@@ -78,34 +76,32 @@ const Blogs = () => {
 
   return (
     <div className="blogs_div">
-      <header className="nav_blogs">
-        <h2 className="title">Blogs</h2>
-      </header>
+      <Header />
       <SearchBar
         handleSubmit={handleSubmit}
         handleChange={handleChange}
         value={blogTitle}
       />
-      <Link to="/blogs/new">
-        <button className="new-blog-button">Share an Idea</button>
-      </Link>
-      {blogs ? (
-        blogs
-          .slice(indexOfFirstBlog, indexOfLastBlog)
-          .map((blog) => (
-            <BlogTile
-              key={blog._id}
-              details={blog}
-              profile={false}
-              description={JSON.parse(blog.body).blocks}
-              handleBlogDelete={handleBlogDelete}
-            />
-          ))
-      ) : (
-        <p>No blogs to display</p>
-      )}
+      <div>
+        {blogs ? (
+          blogs
+            .slice(0, 10)
+            .map((blog) => (
+              <BlogTile
+                key={blog._id}
+                details={blog}
+                profile={false}
+                description={JSON.parse(blog.body).blocks}
+                handleBlogDelete={handleBlogDelete}
+              />
+            ))
+        ) : (
+          <p>No blogs to display</p>
+        )}
+      </div>
+
       <Pagination
-        totalBlogs={blogs.length}
+        totalBlogs={numberOfBlogs}
         blogsPerPage={blogsPerPage}
         paginate={paginate}
       />
