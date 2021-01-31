@@ -24,10 +24,9 @@ const Profile = () => {
     const [Branch, setBranch] = useState("");
     const [Semester, setSemester] = useState("");
     const [profileId, setProfileId] = useState("");
-    const [updated, setUpdated] = useState(false);
+    const [noUser, setNoUser] = useState(false);
 
     useEffect(async () => {
-        console.log("Use");
         const query = { id: userId.toString() }
         const user = await search({ query });
         const jsonVal = await RetreiveInfo();
@@ -52,9 +51,19 @@ const Profile = () => {
         const branch = document.getElementById("branch").value;
         const semester = document.getElementById("semester").value;
         const response = await updateProfile({ profileId, email, name, ptype, branch, semester });
+        if (response === null) {
+            setNoUser(true);
+            return;
+        }
         if (response.status === 200) {
             window.location.reload();
         }
+    }
+    if (noUser) {
+        return <Redirect to={{
+            pathname: '/login'
+        }}
+        />
     }
     if (isLoading) {
         return (

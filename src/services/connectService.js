@@ -44,6 +44,9 @@ const leaderboard = async () => {
 }
 
 const updateProfile = async ({profileId, email, name, ptype, branch, semester}) => {
+    if (localStorage.getItem("accessToken") === null) {
+        return null;
+    }
     const response = await axios.post(baseUrl + "/updateProfile", {
         "profileId": profileId,
         "email": email,
