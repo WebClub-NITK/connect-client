@@ -1,6 +1,5 @@
 const Toggel = () => {
-    console.log(localStorage.getItem('secondaryToken').toString().length)
-    if(localStorage.getItem('secondaryToken').toString().length === 0)
+    if(localStorage.getItem('secondaryToken') === null || localStorage.getItem('secondaryToken').toString().length === 0)
     {
         let tmp = localStorage.getItem('accessToken').toString()
         localStorage.getItem('secondaryToken',tmp)

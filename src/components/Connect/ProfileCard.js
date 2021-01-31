@@ -18,9 +18,9 @@ const ProfileCard = (props) => {
                             <Card.Title style={{ textAlign: "center", fontSize: "2.4em" }}>{user.Username}</Card.Title>
                         </Card.Body>
                         <ListGroup className="list-group-flush">
-                            <ListGroupItem>{Object.keys(jsonInfo.ProgrammeType).find(key => jsonInfo.ProgrammeType[key] === user.Profile?.ProgrammeType.toString())}</ListGroupItem>
-                            <ListGroupItem>{Object.keys(jsonInfo.Branch).find(key => jsonInfo.Branch[key] === user.Profile?.Department.toString())}</ListGroupItem>
-                            <ListGroupItem>{user.Profile?.Semester.toString()}</ListGroupItem>
+                            <ListGroupItem>{Object.keys(jsonInfo.ProgrammeType).find(key => jsonInfo.ProgrammeType[key] === user.Profile?.ProgrammeType?.toString())}</ListGroupItem>
+                            <ListGroupItem>{Object.keys(jsonInfo.Branch).find(key => jsonInfo.Branch[key] === user.Profile?.Department?.toString())}</ListGroupItem>
+                            <ListGroupItem>{user.Profile?.Semester?.toString()}</ListGroupItem>
                         </ListGroup>
                     </Card>
                 </div>

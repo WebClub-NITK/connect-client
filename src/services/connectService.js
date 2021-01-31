@@ -7,14 +7,19 @@ const authLogin = async ({username, password}) => {
     return auth.data;
 }
 
-const signup = async({username, password, annoUsername, annoPassword, name, ptype, semester, branch, email}) => {
+const signup = async({username, password, email}) => {
     const userInfo = await axios.post(baseUrl + "/signup",
      {"username": username,
       "passwordUser": password,
-      "passwordAnnoUser": annoPassword,
-      "annoUser": annoUsername,
-      "name": name, "ProgrammeType": ptype, "branch": branch, "semester": semester, "email": email});
-      console.log(userInfo.data);
+      "email": email});
+      return userInfo.data;
+}
+
+const annoSignup = async({username, password, email}) => {
+    const userInfo = await axios.post(baseUrl + "/createAnnoUser",
+     {"username": username,
+      "passwordUser": password,
+      "email": email});
       return userInfo.data;
 }
 
@@ -38,10 +43,31 @@ const leaderboard = async () => {
     return users.data;
 }
 
+const updateProfile = async ({profileId, email, name, ptype, branch, semester}) => {
+    if (localStorage.getItem("accessToken") === null) {
+        return null;
+    }
+    const response = await axios.post(baseUrl + "/updateProfile", {
+        "profileId": profileId,
+        "email": email,
+        "name": name,
+        "ptype": ptype,
+        "branch": branch,
+        "semester": semester
+    }, {
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+        }
+    });
+    return response;
+}
+
 export {
     authLogin,
     signup,
+    annoSignup,
     RetreiveInfo,
     search,
-    leaderboard
+    leaderboard,
+    updateProfile
 }
