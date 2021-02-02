@@ -13,7 +13,7 @@ const ProfileCard = (props) => {
             return (
                 <div style={{ width: '36rem', marginTop: '8em', marginRight: '4.8em', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Card style={{ width: '36rem' }}>
-                        <img src={profilepic} alt={'profilepic'} style={{ objectFit: 'contain' }} />
+                        <img src={user.profileurl} alt={'profilepic'} style={{ objectFit: 'contain' }} />
                         <Card.Body>
                             <Card.Title style={{ textAlign: "center", fontSize: "2.4em" }}>{user.Username}</Card.Title>
                         </Card.Body>

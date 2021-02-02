@@ -40,7 +40,7 @@ const Home = () => {
                     </div>
                 ) : (<Link className="btn btn-primary" style={{marginTop: "1em"}} to='/login'>Login</Link>)}
                 <div className="col-sm-12 col-md-12 col-xs-12" style={{ paddingTop: "4em", paddingLeft: "36em", paddingRight: "36em" }}>
-                    <table class="table table-dark">
+                    <table className="table table-dark">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>

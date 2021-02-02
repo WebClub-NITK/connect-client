@@ -5,12 +5,15 @@ import "./login.css";
 import { Redirect } from 'react-router-dom';
 import { signup } from '../../services/connectService';
 
+const baseUrl = "http://localhost:3001/connect";
+
 const Signup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repassword, setRepassword] = useState("");
   const [signupstate, setSignup] = useState(false);
+  let selectedfile = null
 
   const validateForm = () => {
     var regex = new RegExp('.*\@nitk.edu.in$');
@@ -19,10 +22,14 @@ const Signup = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const email = document.getElementById("email").value;
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
-    const response = await signup({ username, password, email });
+    let formData = new FormData()
+    formData.append('profile',selectedfile)
+    let options = {
+        method: "post",
+        body: formData,
+    }
+    await fetch(`${baseUrl}/upload_profilepic/${username}`,options)
+    const response = await signup({ username, password, email, selectedfile });
     if (response) {
       localStorage.setItem('accessToken', response.accessToken);
       localStorage.setItem('UserId', response.userId);
@@ -88,6 +95,11 @@ const Signup = () => {
                 onChange={(e) => setRepassword(e.target.value)}
               />
             </div>
+          </Form.Group>
+          <Form.Group controlId="selectedfile">
+          <div className="col-sm-6 col-md-6 col-lg-6 mx-auto">
+            <input type="file" onChange={(e) => {selectedfile = e.target.files[0];  }} />
+          </div>
           </Form.Group>
           <br />
           <Button block className="col-sm-6 col-md-6 col-lg-6 mx-auto" type="submit" disabled={!validateForm()}>
