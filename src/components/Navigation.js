@@ -16,7 +16,6 @@ const Nav = () => {
             <Link style={padding} to='/blogs'>Blogs</Link>
             <Link style={padding} to='/login'>Login</Link>
             <Link style={padding} to='/signup'>Signup</Link>
-            <Link style={padding} to='/annoSignup'>Anonymous Signup</Link>
             <Link style={padding} to='/search'>Search</Link>
         </div>
     )
