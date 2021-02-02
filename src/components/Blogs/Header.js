@@ -1,22 +1,31 @@
-import React from 'react';
+import React, { useRef } from "react";
+import { Link } from "react-router-dom";
 
-const Header = (props) => {
-    return (
-        <header className="nav_blogs">
-        <h2 className="title">Blogs</h2>
-        <form onSubmit={props.handleSubmit}>
-          <input
-            onChange={props.handleChange}
-            value={props.value}
-            className="search_input"
-            placeholder="search for blogs"
-          ></input>
-          <button className="search_button" type="submit">
-            search
-          </button>
-        </form>
-      </header>
-    );
-}
+const Header = () => {
+  const nav = useRef();
+
+  return (
+    <div ref={nav} className="nav_blogs">
+      <h2 style={{margin:"0"}}>Blogs</h2>
+      <Link to="/blogs/new">
+        <button className="new-blog-button">Share an idea</button>
+      </Link>
+    </div>
+  );
+};
 
 export default Header;
+
+{
+  /* <div className="header_div">
+      
+      <div className="intro">
+        <div className="intro_text">
+          <h1>Share your passion and ideas here.</h1>
+        </div>
+        <Link to="/blogs/new">
+          <button className="new-blog-button">Share an idea</button>
+        </Link>
+      </div>
+    </div> */
+}

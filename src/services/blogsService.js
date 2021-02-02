@@ -2,9 +2,9 @@ import axios from "axios";
 
 const url = "http://localhost:3001/blogs";
 
-const getAllBlogs = async () => {
-  const blogs = await axios.get(url);
-  return blogs.data;
+const getAllBlogs = async (pageNumber) => {
+  const blogsData = await axios.get(`${url}/page/${pageNumber}`);
+  return blogsData.data;
 };
 
 const saveBlog = async ({ title, body, tags, coverImageUrl }) => {
@@ -43,7 +43,7 @@ const getBlogById = async (id) => {
 
 const getSearchBlogs = async (title) => {
   try {
-    const blogs = await axios.get(`${url}/search?title=${title}`);
+    const blogs = await axios.get(`${url}/search?q=${title}`);
     return blogs.data;
   } catch (err) {
     console.log(err);

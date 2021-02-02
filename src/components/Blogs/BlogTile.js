@@ -14,7 +14,7 @@ const BlogTile = (props) => {
   //Blog description
   let text = "";
   let description = props.description;
-  if(description == null) return 
+  if (description == null) return;
   description.map((des) => {
     text = text + " " + des.data.text;
   });
@@ -31,7 +31,6 @@ const BlogTile = (props) => {
     window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
     const tag = e.target.innerHTML;
     history.push(`/blogs/tag/${tag}`);
-    
   };
 
   useEffect(() => {
@@ -40,7 +39,7 @@ const BlogTile = (props) => {
   }, []);
 
   return (
-    <div style={styles.blogTile}>
+    <div className='card' style={styles.blogTile}>
       <img style={styles.blogImage} src={imageURL}></img>
       <div>
         <div className="blogHeader">
