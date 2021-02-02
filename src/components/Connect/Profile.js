@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Spinner from 'react-bootstrap/Spinner';
 import { RetreiveInfo, search, updateProfile } from '../../services/connectService';
-import { Redirect, useHistory } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import ProfileCard from "./ProfileCard";
 import { Form } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 
 const Profile = () => {
-    let history = useHistory();
     if (!localStorage.getItem('UserId')) {
         return <Redirect to={{
             pathname: '/login'
@@ -23,7 +22,6 @@ const Profile = () => {
     const [ProgrammeType, setProgrammeType] = useState("");
     const [Branch, setBranch] = useState("");
     const [Semester, setSemester] = useState("");
-    const [profileId, setProfileId] = useState("");
     const [noUser, setNoUser] = useState(false);
 
     useEffect(async () => {
@@ -33,7 +31,6 @@ const Profile = () => {
         setUser(user);
         setJsonInfo(jsonVal);
         if (user.Profile) {
-            setProfileId(user.Profile.Id.toString());
             setEmail(user.Profile.Email);
             setName(user.Profile.Name);
             setProgrammeType(user.Profile?.ProgrammeType?.toString());
@@ -50,7 +47,7 @@ const Profile = () => {
         const ptype = document.getElementById("programmeType").value;
         const branch = document.getElementById("branch").value;
         const semester = document.getElementById("semester").value;
-        const response = await updateProfile({ profileId, email, name, ptype, branch, semester });
+        const response = await updateProfile({ email, name, ptype, branch, semester });
         if (response === null) {
             setNoUser(true);
             return;
@@ -80,76 +77,88 @@ const Profile = () => {
     } else {
         if (user.Profile) {
             return (
-                <div style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
-                    <ProfileCard user={user} jsonInfo={jsonInfo} />
-                    <Form onSubmit={handleSubmit} style={{marginTop: '8em', marginRight: '4.8em'}}>
-                        <Form.Group controlId="email">
-                            <div className="col-sm-12 col-md-12 col-lg-12 mx-auto">
-                                <Form.Label>Email</Form.Label>
-                                <Form.Control
-                                    autoFocus
-                                    type="email"
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                />
-                            </div>
-                        </Form.Group>
-                        <br />
-                        <Form.Group controlId="name">
-                            <div className="col-sm-12 col-md-12 col-lg-12 mx-auto">
-                                <Form.Label>Name</Form.Label>
-                                <Form.Control autoFocus type="text" value={name} onChange={(e) => setName(e.target.value)} />
-                            </div>
-                        </Form.Group>
-                        <br />
-                        <Form.Group controlId="programmeType">
-                            <div className="col-sm-12 col-md-12 col-lg-12 mx-auto">
-                                <Form.Label>Select ProgrammeType</Form.Label>
-                                <Form.Control as="select" value={ProgrammeType} custom onChange={(e) => setProgrammeType(e.target.value)}>
-                                    {Object.entries(jsonInfo.ProgrammeType).map((option) =>
-                                        <option key={option[0]} value={option[1]}>
-                                            {option[0]}
-                                        </option>
-                                    )}
-                                </Form.Control>
-                            </div>
-                        </Form.Group>
-                        <br />
-                        <Form.Group controlId="branch">
-                            <div className="col-sm-12 col-md-12 col-lg-12 mx-auto">
-                                <Form.Label>Select Branch</Form.Label>
-                                <Form.Control as="select" custom value={Branch} onChange={(e) => setBranch(e.target.value)}>
-                                    {Object.entries(jsonInfo.Branch).map((option) =>
-                                        <option key={option[0]} value={option[1]}>
-                                            {option[0]}
-                                        </option>
-                                    )}
-                                </Form.Control>
-                            </div>
-                        </Form.Group>
-                        <br />
-                        <Form.Group controlId="semester">
-                            <div className="col-sm-12 col-md-12 col-lg-12 mx-auto">
-                                <Form.Label>Select Semester</Form.Label>
-                                <Form.Control as="select" custom value={Semester} onChange={(e) => setSemester(e.target.value)}>
-                                    {Object.entries(jsonInfo.Semester).map((option) =>
-                                        <option key={option[0]} value={option[1]}>
-                                            {option[0]}
-                                        </option>
-                                    )}
-                                </Form.Control>
-                            </div>
-                        </Form.Group>
-                        <br />
-                        <Button block className="col-sm-12 col-md-12 col-lg-12 mx-auto" type="submit">
-                            Update Profile
+                <div>
+                    {user.Profile.AnnouserSet === null ? (
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            <h4>Profile</h4>
+                            <Link to='/annoSignup'>Anonymous Signup</Link>
+                        </div>
+                    ) : (<h4 style={{ textAlign: "center" }}>Profile</h4>)}
+                    <div style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>
+                        <ProfileCard user={user} jsonInfo={jsonInfo} />
+                        <Form onSubmit={handleSubmit} style={{ marginTop: '8em', marginRight: '4.8em' }}>
+                            <Form.Group controlId="email">
+                                <div className="col-sm-12 col-md-12 col-lg-12 mx-auto">
+                                    <Form.Label>Email</Form.Label>
+                                    <Form.Control
+                                        autoFocus
+                                        type="email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        readOnly
+                                    />
+                                </div>
+                            </Form.Group>
+                            <br />
+                            <Form.Group controlId="name">
+                                <div className="col-sm-12 col-md-12 col-lg-12 mx-auto">
+                                    <Form.Label>Name</Form.Label>
+                                    <Form.Control autoFocus type="text" value={name} onChange={(e) => setName(e.target.value)} />
+                                </div>
+                            </Form.Group>
+                            <br />
+                            <Form.Group controlId="programmeType">
+                                <div className="col-sm-12 col-md-12 col-lg-12 mx-auto">
+                                    <Form.Label>Select ProgrammeType</Form.Label>
+                                    <Form.Control as="select" value={ProgrammeType} custom onChange={(e) => setProgrammeType(e.target.value)}>
+                                        {Object.entries(jsonInfo.ProgrammeType).map((option) =>
+                                            <option key={option[0]} value={option[1]}>
+                                                {option[0]}
+                                            </option>
+                                        )}
+                                    </Form.Control>
+                                </div>
+                            </Form.Group>
+                            <br />
+                            <Form.Group controlId="branch">
+                                <div className="col-sm-12 col-md-12 col-lg-12 mx-auto">
+                                    <Form.Label>Select Branch</Form.Label>
+                                    <Form.Control as="select" custom value={Branch} onChange={(e) => setBranch(e.target.value)}>
+                                        {Object.entries(jsonInfo.Branch).map((option) =>
+                                            <option key={option[0]} value={option[1]}>
+                                                {option[0]}
+                                            </option>
+                                        )}
+                                    </Form.Control>
+                                </div>
+                            </Form.Group>
+                            <br />
+                            <Form.Group controlId="semester">
+                                <div className="col-sm-12 col-md-12 col-lg-12 mx-auto">
+                                    <Form.Label>Select Semester</Form.Label>
+                                    <Form.Control as="select" custom value={Semester} onChange={(e) => setSemester(e.target.value)}>
+                                        {Object.entries(jsonInfo.Semester).map((option) =>
+                                            <option key={option[0]} value={option[1]}>
+                                                {option[0]}
+                                            </option>
+                                        )}
+                                    </Form.Control>
+                                </div>
+                            </Form.Group>
+                            <br />
+                            <Button block className="col-sm-12 col-md-12 col-lg-12 mx-auto" type="submit">
+                                Update Profile
                         </Button>
-                    </Form>
+                        </Form>
+                    </div>
                 </div>
             );
         } else {
             return (
-                <ProfileCard user={user} jsonInfo={jsonInfo} />
+                <div>
+                    <h4 style={{ textAlign: "center" }}>Profile</h4>
+                    <ProfileCard user={user} jsonInfo={jsonInfo} />
+                </div>
             );
         }
     }
