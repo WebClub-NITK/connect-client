@@ -27,6 +27,7 @@ const deleteBlog = async (id) => {
     const deleteBlog = await axios.delete(`${url}/${id}`);
     return deleteBlog;
   } catch (err) {
+    console.log('error');
     console.log(err);
   }
 };
@@ -61,6 +62,16 @@ const getBlogsByTags = async (tag) => {
   }
 };
 
+const getBlogTitles = async() => {
+  try{
+   const blogDetails = await axios.get(`${url}/live/title`);
+  return blogDetails.data;
+  }catch(err){
+    console.log(err);
+    return null;
+  }
+}
+
 export {
   saveBlog,
   updateBlog,
@@ -69,4 +80,5 @@ export {
   getBlogById,
   getBlogsByTags,
   getSearchBlogs,
+  getBlogTitles
 };

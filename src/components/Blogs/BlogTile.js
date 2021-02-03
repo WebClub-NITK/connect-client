@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from "react";
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import styles from "./blogStyles";
 import "./Blogs.css";
-import Options from "./Options";
 
 const BlogTile = (props) => {
   const pRef = useRef();
@@ -39,39 +38,43 @@ const BlogTile = (props) => {
   }, []);
 
   return (
-    <div className='card' style={styles.blogTile}>
-      <img style={styles.blogImage} src={imageURL}></img>
-      <div>
-        <div className="blogHeader">
-          <div>
-            <h2 style={styles.title}>
+    <div className="card mb-3" style={{ margin: "1rem" }}>
+      <div className="row no-gutters">
+        <div className="col-md-4">
+          <img src={imageURL} className="card-img" alt="..." />
+        </div>
+        <div className="col-md-8">
+          <div className="card-body">
+            <h5 className="card-title">
               <Link style={styles.link} to={`/blogs/${props.details._id}`}>
                 {props.details.title}
               </Link>
-            </h2>
+            </h5>
+            {props.details.tags.map((tag, index) => (
+              <span onClick={handleTagsClick} key={index} style={styles.tag}>
+                {tag}
+              </span>
+            ))}
+            <p ref={pRef} className="card-text"></p>
+            <p style={styles.date}>{blogDate}</p>
+            <button style={styles.blogOptionButton}>
+              <Link
+                style={styles.link}
+                to={`/blogs/${props.details._id}/update`}
+              >
+                Update
+              </Link>
+            </button>
+            <button
+              style={styles.blogOptionButton}
+              onClick={() => {
+                props.handleBlogDelete(props.details._id);
+              }}
+            >
+              <span style={styles.link}>Delete</span>
+            </button>
           </div>
-          {props.profile ? <Options id={props.details._id} /> : ""}
         </div>
-        {props.details.tags.map((tag, index) => (
-          <span onClick={handleTagsClick} key={index} style={styles.tag}>
-            {tag}
-          </span>
-        ))}
-        <p ref={pRef} className="blog-des"></p>
-        <p style={styles.date}>{blogDate}</p>
-        <button style={styles.blogOptionButton}>
-          <Link style={styles.link} to={`/blogs/${props.details._id}/update`}>
-            Update
-          </Link>
-        </button>
-        <button
-          style={styles.blogOptionButton}
-          onClick={() => {
-            props.handleBlogDelete(props.details._id);
-          }}
-        >
-          <span style={styles.link}>Delete</span>
-        </button>
       </div>
     </div>
   );

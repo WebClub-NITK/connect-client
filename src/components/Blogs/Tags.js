@@ -9,13 +9,15 @@ const Tags = () => {
   const [blogs, setBlogs] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
+  //pagination
   const [pageNumber, setPageNumber] = useState(1);
   const [blogsPerPage] = useState(10);
 
   let params = useParams();
 
   useEffect(async () => {
-    setTimeout(getBlogs, 300);
+    setLoaded(false);
+    setTimeout(getBlogs, 400);
   }, [params.tag]);
 
   const getBlogs = async () => {
@@ -24,6 +26,7 @@ const Tags = () => {
     if (tagBlogs) {
       setBlogs(tagBlogs);
     }
+    setLoaded(true);
   };
 
   if (!loaded) {

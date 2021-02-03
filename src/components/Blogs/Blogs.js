@@ -1,29 +1,35 @@
 import React, { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import BlogTile from "./BlogTile";
-import Pagination from "./Pagination";
-import SearchBar from "./SearchBar";
-import Header from "./Header";
 import "./Blogs.css";
 import { getAllBlogs, deleteBlog } from "../../services/blogsService";
+import BlogTile from "./BlogTile";
+import Pagination from "./Pagination";
+import Header from "./Header";
+import LiveSearch from "./LiveSearch";
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [blogTitle, setBlogTitle] = useState("");
+  const [blogsUpdate, setBlogsUpdate] = useState(false);
   const [numberOfBlogs, setNumberOfBlogs] = useState(0);
+  const [loaded, setLoaded] = useState(false);
 
   const [pageNumber, setPageNumber] = useState(1);
   const [blogsPerPage] = useState(10);
 
   let history = useHistory();
 
-  useEffect(async () => {
-    const blogsData = await getAllBlogs(pageNumber);
-    setBlogs(blogsData.blogs);
-    setNumberOfBlogs(blogsData.count);
-  },[pageNumber]);
+  useEffect(() => {
+    setLoaded(false);
+    setTimeout(async () => {
+      const blogsData = await getAllBlogs(pageNumber);
+      setBlogs(blogsData.blogs);
+      setNumberOfBlogs(blogsData.count);
+      setLoaded(true);
+    }, 300);
+  }, [pageNumber, blogsUpdate]);
 
   //Search blogs
   const handleChange = async (e) => {
@@ -61,27 +67,29 @@ const Blogs = () => {
       } else {
         notify("Couldn't delete the blog. Try again");
       }
-      const blogs = await getAllBlogs();
-      setBlogs(blogs);
+      setBlogsUpdate(true);
     }
   };
 
   //function to navigate to other pages
   const paginate = (currentPageNumber) => {
     setPageNumber(currentPageNumber);
-    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   };
 
   window.onpopstate = () => {};
 
+  if (!loaded) {
+    return <h1>Loading</h1>;
+  }
+
+  if (!blogs) {
+    return <h4>Not found</h4>;
+  }
+
   return (
     <div className="blogs_div">
       <Header />
-      <SearchBar
-        handleSubmit={handleSubmit}
-        handleChange={handleChange}
-        value={blogTitle}
-      />
+      <LiveSearch />
       <div>
         {blogs ? (
           blogs
