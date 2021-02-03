@@ -29,7 +29,7 @@ const Signup = () => {
         body: formData,
     }
     await fetch(`${baseUrl}/upload_profilepic/${username}`,options)
-    const response = await signup({ username, password, email, selectedfile });
+    const response = await signup({ username, password, email });
     if (response) {
       localStorage.setItem('accessToken', response.accessToken);
       localStorage.setItem('UserId', response.userId);
