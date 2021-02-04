@@ -70,6 +70,11 @@ const NewBlog = () => {
         const title = document.getElementById('title').value
         const tags = document.getElementById('tags').value.split(',').map(item=>item.trim())
         const body = await getBody()
+        if (!localStorage.getItem('accessToken')) {
+            alert('User not logged in')
+            return
+        }
+        
         // image urls used in the post
         let usedImageUrls = []
         body.blocks.forEach(block => {
@@ -88,7 +93,8 @@ const NewBlog = () => {
 
         // delete the unused images
         cleanUp()
-        const response = await saveBlog({title, body, tags, coverImageUrl: coverUrl})
+        let accessToken = localStorage.getItem('accessToken').toString();
+        const response = await saveBlog(accessToken, {title, body, tags, coverImageUrl: coverUrl})
         history.push(`/blogs/${response._id}?new=true`)
     }
 

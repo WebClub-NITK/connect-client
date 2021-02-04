@@ -7,8 +7,9 @@ const getAllBlogs = async () => {
   return blogs.data;
 };
 
-const saveBlog = async ({ title, body, tags, coverImageUrl }) => {
-  const savedBlog = await axios.post(url, { title, body, tags, coverImageUrl });
+const saveBlog = async (accessToken, { title, body, tags, coverImageUrl }) => {
+  const headers = {'Authorization': `Bearer ${accessToken}`}
+  const savedBlog = await axios.post(url, { title, body, tags, coverImageUrl }, {headers});
   return savedBlog.data;
 };
 
