@@ -4,9 +4,9 @@ import { getBlogTitles } from "../../services/blogsService";
 import "./Blogs.css";
 
 const LiveSearch = () => {
-  const liveDiv = useRef();
   const [searchValue, setSearchValue] = useState("");
   const [blogDetails, setBlogDetails] = useState([]);
+  const liveDiv = useRef();
 
   let history = useHistory();
 
@@ -20,33 +20,36 @@ const LiveSearch = () => {
   //Adds search result to search_items div from blog titles
   const handleInstantSearch = () => {
     const titleBlogs = blogDetails;
-    const liveItems = liveDiv.current.querySelector(".search_items");
-    const searchResults = liveItems.getElementsByTagName("li");
-    if (searchValue != "") {
-      let itemsArray = titleBlogs.filter((suggestion) => {
-        return suggestion.title
-          .trim()
-          .toLocaleLowerCase()
-          .includes(searchValue.toLocaleLowerCase().trim());
-      });
+    const sItems = liveDiv.current;
+    if (sItems != null) {
+      const liveItems = sItems.querySelector(".search_items");
+      const searchResults = liveItems.getElementsByTagName("li");
+      if (searchValue != "") {
+        let itemsArray = titleBlogs.filter((suggestion) => {
+          return suggestion.title
+            .trim()
+            .toLocaleLowerCase()
+            .includes(searchValue.toLocaleLowerCase().trim());
+        });
 
-      itemsArray = itemsArray.map((item) => {
-        return `<li data-id=${item._id}>${item.title}</li>`;
-      });
+        itemsArray = itemsArray.map((item) => {
+          return `<li data-id=${item._id}>${item.title}</li>`;
+        });
 
-      if (itemsArray.length > 0) {
-        liveItems.innerHTML = itemsArray.join("");
+        if (itemsArray.length > 0) {
+          liveItems.innerHTML = itemsArray.join("");
+        } else {
+          liveItems.innerHTML = `<li data-id=search>${searchValue}</li>`;
+        }
+
+        const searchItems = Array.from(searchResults);
+
+        searchItems.forEach((item) => {
+          item.addEventListener("click", handleClick);
+        });
       } else {
-        liveItems.innerHTML = `<li data-id=search>${searchValue}</li>`;
+        liveItems.innerHTML = "";
       }
-
-      const searchItems = Array.from(searchResults);
-
-      searchItems.forEach((item) => {
-        item.addEventListener("click", handleClick);
-      });
-    } else {
-      liveItems.innerHTML = "";
     }
   };
 
@@ -72,7 +75,7 @@ const LiveSearch = () => {
     if (searchValue.length > 0) {
       history.push(`/blogs/search?q=${searchValue}`);
     }
-    setSearchValue('');
+    setSearchValue("");
   };
 
   return (

@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Blogs.css";
-import { getAllBlogs, deleteBlog } from "../../services/blogsService";
 import BlogTile from "./BlogTile";
 import Pagination from "./Pagination";
 import Header from "./Header";
 import LiveSearch from "./LiveSearch";
+import LoadingComponent from "./LoadingComponent";
+import { getAllBlogs, deleteBlog } from "../../services/blogsService";
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
-  const [blogTitle, setBlogTitle] = useState("");
   const [blogsUpdate, setBlogsUpdate] = useState(false);
   const [numberOfBlogs, setNumberOfBlogs] = useState(0);
   const [loaded, setLoaded] = useState(false);
@@ -30,20 +30,6 @@ const Blogs = () => {
       setLoaded(true);
     }, 300);
   }, [pageNumber, blogsUpdate]);
-
-  //Search blogs
-  const handleChange = async (e) => {
-    const blogTitle = e.target.value;
-    setBlogTitle(blogTitle);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const searchTitle = blogTitle;
-    if (searchTitle.length > 0) {
-      history.push(`/blogs/search?q=${searchTitle}`);
-    }
-  };
 
   //Toast message for blog deletion
   toast.configure();
@@ -64,6 +50,7 @@ const Blogs = () => {
       const deletedBlog = await deleteBlog(blogId);
       if (deletedBlog.status == 204) {
         notify("Blog deleted");
+        
       } else {
         notify("Couldn't delete the blog. Try again");
       }
@@ -79,7 +66,7 @@ const Blogs = () => {
   window.onpopstate = () => {};
 
   if (!loaded) {
-    return <h1>Loading</h1>;
+    return <LoadingComponent />;
   }
 
   if (!blogs) {

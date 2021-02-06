@@ -109,9 +109,26 @@
     outline: none;
 }
 
-.live_search_div input:focus{
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius:0 ;
+
+/*  */
+
+.blog-card{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+    position: relative;
+    margin: 1rem auto 1rem auto;
+    border: 1px solid #e7e6e1;
+    border-radius: 15px;
+    padding: 0.8rem;
+    padding-bottom: 0;
+}
+
+.blog-img{
+    height: 100%;
+    width: 230px;
+    object-fit:cover;
+    margin-right: 1rem;
 }
 
 /*  */

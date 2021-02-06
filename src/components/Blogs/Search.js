@@ -4,38 +4,41 @@ import { getSearchBlogs } from "../../services/blogsService";
 import BlogTile from "../Blogs/BlogTile";
 import Pagination from "./Pagination";
 import LiveSearch from "./LiveSearch";
+import LoadingComponent from "./LoadingComponent";
 
 const Search = () => {
-  const [blogTitle, setBlogTitle] = useState("");
   const [searchBlogs, setBlogs] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
   const [pageNumber, setPageNumber] = useState(1);
   const [blogsPerPage] = useState(10);
+  const [numberOfBlogs, setNumberOfBlogs] = useState(0);
 
-  let history = useHistory();
   const { search } = useLocation();
   const searchParams = new URLSearchParams(search);
   const title = searchParams.get("q");
 
   useEffect(async () => {
-    const blogs = await getSearchBlogs(title);
-    setLoaded(true);
-    if (blogs) {
-      setBlogs(blogs);
+    setLoaded(false);
+    setTimeout(getBlogs, 300);
+  }, [title, pageNumber]);
+
+  const getBlogs = async () => {
+    const searchBlogs = await getSearchBlogs(title, pageNumber);
+    if (searchBlogs) {
+      setBlogs(searchBlogs.blogs);
+      setNumberOfBlogs(searchBlogs.count);
+      setLoaded(true);
     }
-  }, [title]);
+  };
 
   if (!loaded) {
-    return <h2>Loading!</h2>;
+    return <LoadingComponent />;
   }
 
   if (!searchBlogs) {
     return <h2>No blogs found</h2>;
   }
-
-  const indexOfLastBlog = pageNumber * blogsPerPage;
-  const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
 
   const paginate = (currentPageNumber) => {
     setPageNumber(currentPageNumber);
@@ -43,11 +46,11 @@ const Search = () => {
 
   return (
     <div>
-      <LiveSearch/>
+      <LiveSearch />
       <h2 style={{ textAlign: "center" }}>Search results: {title}</h2>
       {searchBlogs.length != 0 ? (
         searchBlogs
-          .slice(indexOfFirstBlog, indexOfLastBlog)
+          .slice(0, 10)
           .map((blog) => (
             <BlogTile
               key={blog._id}
@@ -59,7 +62,7 @@ const Search = () => {
         <h4>No blogs found</h4>
       )}
       <Pagination
-        totalBlogs={searchBlogs.length}
+        totalBlogs={numberOfBlogs}
         blogsPerPage={blogsPerPage}
         paginate={paginate}
       />

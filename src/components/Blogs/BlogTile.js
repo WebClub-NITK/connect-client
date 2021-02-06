@@ -2,21 +2,16 @@ import React, { useEffect, useRef } from "react";
 import { Link, useRouteMatch, useHistory } from "react-router-dom";
 import styles from "./blogStyles";
 import "./Blogs.css";
+import { DropdownButton, Dropdown } from "react-bootstrap";
+import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 
 const BlogTile = (props) => {
   const pRef = useRef();
+  const updateURL = `/blogs/${props.details._id}/update`;
   let history = useHistory();
   const imageURL =
     props.details.coverImageUrl ||
     "https://indianlawwatch.com/wp-content/uploads/2020/05/BLOG.jpg";
-
-  //Blog description
-  let text = "";
-  let description = props.description;
-  if (description == null) return;
-  description.map((des) => {
-    text = text + " " + des.data.text;
-  });
 
   //blog date
   let date = new Date(props.details.createdAt);
@@ -26,55 +21,78 @@ const BlogTile = (props) => {
     weekday: "short",
   });
 
+  //navigate to tags page
   const handleTagsClick = (e) => {
-    window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
     const tag = e.target.innerHTML;
-    history.push(`/blogs/tag/${tag}`);
+    history.push({ pathname: `/blogs/tag/${tag}`, data: { pageNumber: 1 } });
   };
+
+  //Blog description
+  let text = "";
+  let description = props.description;
+  if (description == null) return;
+  description.map((des) => {
+    text = text + " " + des.data.text;
+  });
 
   useEffect(() => {
     const descText = text.replace("undefined", "");
-    pRef.current.innerHTML = descText;
+    pRef.current.innerHTML =
+      descText.substring(0, 280).trim() + `<strong>...</strong>`;
   }, []);
 
   return (
-    <div className="card mb-3" style={{ margin: "1rem" }}>
-      <div className="row no-gutters">
-        <div className="col-md-4">
-          <img src={imageURL} className="card-img" alt="..." />
-        </div>
-        <div className="col-md-8">
-          <div className="card-body">
-            <h5 className="card-title">
-              <Link style={styles.link} to={`/blogs/${props.details._id}`}>
-                {props.details.title}
-              </Link>
-            </h5>
-            {props.details.tags.map((tag, index) => (
-              <span onClick={handleTagsClick} key={index} style={styles.tag}>
-                {tag}
-              </span>
-            ))}
-            <p ref={pRef} className="card-text"></p>
-            <p style={styles.date}>{blogDate}</p>
-            <button style={styles.blogOptionButton}>
-              <Link
-                style={styles.link}
-                to={`/blogs/${props.details._id}/update`}
-              >
-                Update
-              </Link>
-            </button>
-            <button
-              style={styles.blogOptionButton}
+    <div className="blog-card">
+      <img className="blog-img" src={imageURL}></img>
+      <div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <h3 className="card-title">
+            <Link style={styles.link} to={`/blogs/${props.details._id}`}>
+              {props.details.title}
+            </Link>
+          </h3>
+          <DropdownButton
+            className="dropdownButton"
+            id="dropdown-basic-button"
+            title="Options"
+            variant="secondary"
+          >
+            <Dropdown.Item href={updateURL}>Update</Dropdown.Item>
+            <span
               onClick={() => {
                 props.handleBlogDelete(props.details._id);
               }}
             >
-              <span style={styles.link}>Delete</span>
-            </button>
-          </div>
+              <Dropdown.Item>Delete</Dropdown.Item>
+            </span>
+          </DropdownButton>
         </div>
+        {props.details.tags.map((tag, index) => (
+          <span
+            onClick={handleTagsClick}
+            key={index}
+            style={styles.tag}
+            className="badge bg-secondary"
+          >
+            {tag}
+          </span>
+        ))}
+        <p
+          ref={pRef}
+          style={{ marginBottom: "0.2rem", cursor: "pointer" }}
+          onClick={() => {
+            history.push(`/blogs/${props.details._id}`);
+          }}
+          className="card-text"
+        ></p>
+
+        <p style={styles.date}>{blogDate}</p>
       </div>
     </div>
   );

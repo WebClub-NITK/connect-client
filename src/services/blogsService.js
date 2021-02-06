@@ -42,9 +42,9 @@ const getBlogById = async (id) => {
   }
 };
 
-const getSearchBlogs = async (title) => {
+const getSearchBlogs = async (title, pageNumber) => {
   try {
-    const blogs = await axios.get(`${url}/search?q=${title}`);
+    const blogs = await axios.get(`${url}/search/${pageNumber}?q=${title}`);
     return blogs.data;
   } catch (err) {
     console.log(err);
@@ -52,9 +52,9 @@ const getSearchBlogs = async (title) => {
   }
 };
 
-const getBlogsByTags = async (tag) => {
+const getBlogsByTags = async (tag,pageNumber) => {
   try {
-    const blogs = await axios.get(`${url}/tag/${tag}`);
+    const blogs = await axios.get(`${url}/tag/${tag}/${pageNumber}`);
     return blogs.data;
   } catch (err) {
     console.log(err);
