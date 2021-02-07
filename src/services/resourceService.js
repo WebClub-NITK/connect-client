@@ -60,14 +60,53 @@ const createNewCourse = async(code,name,branch)=>{
     const courseStatus = await axios.post(`${url}/${courseUrl}`,{code,name,branch});
     console.log(courseStatus);
     if(courseStatus.statusCode == 422)
-        {
-            return  courseStatus.data.error;
-        }
+    {
+        return  courseStatus.data.error;
+    }
     else
     {
         return  courseStatus.data.message;
     } 
 };
+
+const getAllComments = async (courseId) => {
+    const commentsStatus = await axios.get(`${url}/course/${courseId}/comments`);
+    console.log(commentsStatus);
+    if(commentsStatus.statusCode == 422)
+    {
+        return  commentsStatus.data.error;
+    }
+    else
+    {
+        return  commentsStatus.data.comments;
+    } 
+}
+
+const addComment = async (comment, courseId) => {
+    const commentStatus = await axios.post(`${url}/course/${courseId}/comments`, {comment})
+    console.log(commentStatus);
+    if(commentStatus == 422)
+    {
+        return commentStatus.data.error;   
+    }
+    else 
+    {
+        return commentStatus.data.message;
+    }
+}
+
+const addReply = async (reply, commentId) => {
+    const replyStatus = await  axios.put(`${url}/course/comments/${commentId}`, {reply})
+    console.log(replyStatus);
+    if(replyStatus == 422)
+    {
+        return replyStatus.data.error;
+    }
+    else
+    {
+        return replyStatus.data.message;
+    }
+}
 
 const getResourcesForCourse= async (courseId)=>{
     const resources = await axios.get(`${url}/${resourceUrl}/${courseId}`);
@@ -104,6 +143,9 @@ export{
     getCourse,
     getCoursesForBranch,
     createNewCourse,
+    getAllComments,
+    addComment,
+    addReply,
     getAllResources,
     getResourcesForCourse,
     createNewResource,
