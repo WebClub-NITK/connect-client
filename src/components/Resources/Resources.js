@@ -1,31 +1,38 @@
 import React, { useEffect, useState } from 'react'
 import ResourceTile from './Tiles/ResourceTile'
-import { createNewResource, getCourse, getResourcesForCourse } from '../../services/resourceService'
+import { addComment, createNewResource, getAllComments, getCourse, getResourcesForCourse } from '../../services/resourceService'
 import { useParams } from 'react-router-dom'
 import { Button, Card, Container, Form, InputGroup, Jumbotron, Row } from 'react-bootstrap'
+import Comments from './Comments/Comments'
 
 
 const Resources = () => {
     const [resources, setResources] = useState(null)
     const [loaded, setLoaded] = useState(false)
     const [course, setCourse] = useState(null)
+    const [comments, setComments] = useState(null)
 
     const [newResourceTitle, setNewResourceTitle] = useState("")
     const [newResourceDescription, setNewResourceDescription] = useState("")
     const [file, setFile] = useState(null)
     const [filename, setFilename] = useState('Choose File')
+    const [newComment, setNewComment] = useState("")
     
     let { courseId } = useParams();
     
     useEffect(async () => {
         const resources = await getResourcesForCourse(courseId)
         const course = await getCourse(courseId)
+        const comments = await getAllComments(courseId)
         
         if(course)
             setCourse(course)
     
         if(resources)
             setResources(resources)
+
+        if(comments)
+            setComments(comments)
 
         setLoaded(true)
     }, [courseId])
@@ -56,10 +63,25 @@ const Resources = () => {
         alert(response)
     }
 
+    const resetComments = async () => {
+       
+        const comments = await getAllComments(courseId)
+        
+        if(comments)
+            setComments(comments)
+    }
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
         setFilename(e.target.files[0].name);
+    }
+
+    const postComment = async () => {
+        const response = await addComment(newComment, courseId)
+
+        await resetComments()
+        
+        setNewComment("")
     }
 
 
@@ -144,6 +166,31 @@ const Resources = () => {
                             </Card>
                         </div>
                     </Row>
+                </div>
+
+                <div className="padding">
+                    <h2>Comments</h2>
+                    <div className="comments">
+                        <InputGroup className="mb-4">
+                            <Form.Control 
+                                type="text" 
+                                placeholder="Add a public comment"
+                                value={newComment}
+                                onChange={(e)=>setNewComment(e.target.value)}
+                            />
+                            <InputGroup.Append>
+                                <Button onClick={postComment}>
+                                    Comment
+                                </Button>
+                            </InputGroup.Append>
+                        </InputGroup>
+
+                        {comments.map((item, index) => {
+                            return (
+                                <Comments key={index} comment={item} resetComments={resetComments}/>
+                            )
+                        })}
+                    </div>
                 </div>
             </Container>
         </div>
