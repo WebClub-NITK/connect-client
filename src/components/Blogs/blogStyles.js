@@ -1,11 +1,8 @@
 const styles = {
   tag: {
-    padding: "2px 5px",
-    border: "1px solid black",
-    borderRadius: "5px",
-    fontSize: "0.8em",
-    margin: "2px",
-    cursor: "pointer",
+    margin:'0 0.2rem 0.2rem 0.2rem',
+    color:'white',
+    cursor:'pointer',
   },
   blogTile: {
     margin: "20px",

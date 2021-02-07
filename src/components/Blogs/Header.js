@@ -6,7 +6,7 @@ const Header = () => {
 
   return (
     <div ref={nav} className="nav_blogs">
-      <h2 style={{margin:"0"}}>Blogs</h2>
+        <h2 style={{ margin: "0" }}>Blogs</h2>
       <Link to="/blogs/new">
         <button className="new-blog-button">Share an idea</button>
       </Link>
