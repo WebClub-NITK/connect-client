@@ -1,9 +1,8 @@
 import React, { useEffect, useRef } from "react";
-import { Link, useRouteMatch, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styles from "./blogStyles";
 import "./Blogs.css";
 import { DropdownButton, Dropdown } from "react-bootstrap";
-import DropdownMenu from "react-bootstrap/esm/DropdownMenu";
 
 const BlogTile = (props) => {
   const pRef = useRef();
@@ -38,7 +37,7 @@ const BlogTile = (props) => {
   useEffect(() => {
     const descText = text.replace("undefined", "");
     pRef.current.innerHTML =
-      descText.substring(0, 280).trim() + `<strong>...</strong>`;
+      descText.substring(0, 350).trim() + `<strong>...</strong>`;
   }, []);
 
   return (
@@ -85,11 +84,10 @@ const BlogTile = (props) => {
         ))}
         <p
           ref={pRef}
-          style={{ marginBottom: "0.2rem", cursor: "pointer" }}
           onClick={() => {
             history.push(`/blogs/${props.details._id}`);
           }}
-          className="card-text"
+          className="blog_des"
         ></p>
 
         <p style={styles.date}>{blogDate}</p>
