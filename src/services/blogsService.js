@@ -13,13 +13,14 @@ const saveBlog = async (accessToken, { title, body, tags, coverImageUrl }) => {
   return savedBlog.data;
 };
 
-const updateBlog = async (id, { title, body, tags, coverImageUrl }) => {
+const updateBlog = async (accessToken, id, { title, body, tags, coverImageUrl }) => {
+  const headers = {'Authorization': `Bearer ${accessToken}`}
   const updatedBlog = await axios.put(`${url}/${id}`, {
     title,
     body,
     tags,
     coverImageUrl,
-  });
+  }, { headers });
   return updatedBlog.data;
 };
 

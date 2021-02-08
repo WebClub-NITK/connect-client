@@ -9,6 +9,12 @@ import {Prompt} from 'react-router-dom'
 const NewBlog = () => {
     let history = useHistory();
 
+    const accessToken = localStorage.getItem('accessToken').toString();
+
+    if (!accessToken) {
+        return (<h1>You are not logged In</h1>)
+    }
+
     const [coverUrl, setCoverUrl] = useState(null)
     // store the image urls sent to server, .current property stores the list
     let imageUrlsReference = useRef([])
@@ -70,10 +76,8 @@ const NewBlog = () => {
         const title = document.getElementById('title').value
         const tags = document.getElementById('tags').value.split(',').map(item=>item.trim())
         const body = await getBody()
-        if (!localStorage.getItem('accessToken')) {
-            alert('User not logged in')
-            return
-        }
+
+        const response = await saveBlog(accessToken, {title, body, tags, coverImageUrl: coverUrl})
         
         // image urls used in the post
         let usedImageUrls = []
@@ -93,8 +97,6 @@ const NewBlog = () => {
 
         // delete the unused images
         cleanUp()
-        let accessToken = localStorage.getItem('accessToken').toString();
-        const response = await saveBlog(accessToken, {title, body, tags, coverImageUrl: coverUrl})
         history.push(`/blogs/${response._id}?new=true`)
     }
 

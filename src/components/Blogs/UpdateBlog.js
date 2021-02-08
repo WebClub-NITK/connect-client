@@ -133,8 +133,10 @@ const UpdateBlog = () => {
         const body = await getBody()
         blogBodyReference.current = body
         coverImageUrlReference.current = coverUrl
+
+        const accessToken = localStorage.getItem('accessToken').toString();
 		
-        const response = await updateBlog(blogId, {title, body, tags, coverImageUrl: coverUrl})
+        const response = await updateBlog(accessToken, blogId, {title, body, tags, coverImageUrl: coverUrl})
         cleanUp()
         history.push(`/blogs/${response._id}`)
     }
@@ -164,6 +166,11 @@ const UpdateBlog = () => {
         document.getElementById('file-upload').value = null
         setCoverUrl(null)
 	}
+
+    const userId = localStorage.getItem('UserId');
+    if(!userId) {
+        return (<h1>You are not logged in!</h1>)
+    }
 	
 	if (!loaded) {
 		return <h1>Loading</h1>;
@@ -172,6 +179,10 @@ const UpdateBlog = () => {
 	if (!blog) {
 		return <h1>Not Found</h1>;
 	}
+
+    if(blog.author_id != userId.toString()){
+        return (<h1>You cannot edit this!</h1>)
+    }
 
     return (
         <div>

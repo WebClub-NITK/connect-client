@@ -40,6 +40,8 @@ const ViewBlog = (props) => {
     let { blogId } = useParams();
     const [confeti, setConfeti] = useState(false)
 
+    const userId = localStorage.getItem('UserId');
+
     useEffect(async () => {
         window.scrollTo(0, 0)
         const blog = await getBlogById(blogId)
@@ -88,9 +90,10 @@ const ViewBlog = (props) => {
             <div style={{textAlign:'center'}}>
                 <img style={{maxWidth: '500px', margin: '50px 0', borderRadius: '5px'}} src={blog.coverImageUrl}></img>
                 <h1>{blog.title}</h1>
+                <p> <img src={blog.author_profileurl} style={{width: '20px', height: '20px', borderRadius: '5px'}} /> Author: {blog.author_name} <span style={{color: 'gray', fontWeight: 'bold'}}>@{blog.author_username}</span></p>
                 <p>{blog.tags.map((tag, index) => <span key={index} style={styles.tag}>{tag}</span>)}</p>
                 <p>Updated On: {Date(blog.updatedAt).slice(0,10).replace(/-/g,"")}</p>
-                <Link style={styles.link} to={`/blogs/${blogId}/update`}><button style={{padding: '5px 10px',color: 'gray', border: '1px solid gray', background: 'white', borderRadius: '2px'}} >Update</button></Link>
+                {blog.author_id == userId && <Link style={styles.link} to={`/blogs/${blogId}/update`}><button style={{padding: '5px 10px',color: 'gray', border: '1px solid gray', background: 'white', borderRadius: '2px'}} >Update</button></Link>}
             </div>
             <EditorJs
                     tools={tools}
