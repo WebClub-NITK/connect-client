@@ -24,6 +24,11 @@ const updateBlog = async (accessToken, id, { title, body, tags, coverImageUrl })
   return updatedBlog.data;
 };
 
+const likeBlog = async (accessToken, blogId) => {
+  const headers = {'Authorization': `Bearer ${accessToken}`}
+  await axios.post(`${url}/${blogId}/like`, {crap: 'crap'}, {headers})
+}
+
 const deleteBlog = async (id) => {
   try {
     const deleteBlog = await axios.delete(`${url}/${id}`);
@@ -71,4 +76,5 @@ export {
   getBlogById,
   getBlogsByTags,
   getSearchBlogs,
+  likeBlog,
 };

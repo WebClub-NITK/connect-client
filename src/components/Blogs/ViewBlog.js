@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 import {useParams, Link} from 'react-router-dom'
-import { getBlogById } from '../../services/blogsService';
+import { getBlogById, likeBlog } from '../../services/blogsService';
 import EditorJs from 'react-editor-js';
 import {tools} from './editorConfig'
 import styles from './blogStyles'
@@ -36,11 +36,14 @@ const config = {
 
 const ViewBlog = (props) => {
     const [blog, setBlog] = useState(null)
+    const [likes, setLikes] = useState(0)
+    const [liked, setLiked] = useState(false)
     const [loaded, setLoaded] = useState(false)
     let { blogId } = useParams();
     const [confeti, setConfeti] = useState(false)
 
     const userId = localStorage.getItem('UserId');
+    const accessToken = localStorage.getItem('accessToken').toString();
 
     useEffect(async () => {
         window.scrollTo(0, 0)
@@ -50,6 +53,15 @@ const ViewBlog = (props) => {
         setLoaded(true)
         if(blog){
             setBlog(blog)
+
+            setLikes(blog.likes.length)
+
+            if(userId){
+                if(blog.likes.includes(userId)) {
+                    setLiked(true)
+                }
+            }
+
             if(params.get('new')) {
                 history.pushState({}, null,`http://localhost:3000/blogs/${blogId}`)
                 setTimeout(() => {
@@ -70,6 +82,16 @@ const ViewBlog = (props) => {
             ReactDOM.render(<Component code={codeString} />, codeBlock)
             
         }
+    }
+
+    const handleLike = () => {
+        if(liked){
+            setLikes(likes - 1)
+        } else {
+            setLikes(likes + 1)
+        }
+        likeBlog(accessToken, blogId)
+        setLiked(!liked)
     }
 
     if(!loaded){
@@ -94,6 +116,7 @@ const ViewBlog = (props) => {
                 <p>{blog.tags.map((tag, index) => <span key={index} style={styles.tag}>{tag}</span>)}</p>
                 <p>Updated On: {Date(blog.updatedAt).slice(0,10).replace(/-/g,"")}</p>
                 {blog.author_id == userId && <Link style={styles.link} to={`/blogs/${blogId}/update`}><button style={{padding: '5px 10px',color: 'gray', border: '1px solid gray', background: 'white', borderRadius: '2px'}} >Update</button></Link>}
+                <button style={{padding: '5px 10px',color: 'gray', border: '1px solid gray', background: 'white', borderRadius: '2px'}} onClick={handleLike}>Likes {likes}</button>
             </div>
             <EditorJs
                     tools={tools}
