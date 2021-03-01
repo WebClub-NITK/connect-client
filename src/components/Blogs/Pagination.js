@@ -14,15 +14,14 @@ const Pagination = ({ totalBlogs, blogsPerPage, paginate }) => {
         {pages.map((number) => {
           return (
             <li
+              style={{ cursor: "pointer" }}
               onClick={() => {
                 paginate(number);
               }}
               className="page-li"
               key={number}
             >
-              <a className="page-number" href="#">
-                {number}
-              </a>
+              <span className="page-number">{number}</span>
             </li>
           );
         })}

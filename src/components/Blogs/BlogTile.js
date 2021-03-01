@@ -1,23 +1,16 @@
 import React, { useEffect, useRef } from "react";
-import { Link, useRouteMatch, useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styles from "./blogStyles";
 import "./Blogs.css";
-import Options from "./Options";
+import { DropdownButton, Dropdown } from "react-bootstrap";
 
 const BlogTile = (props) => {
   const pRef = useRef();
+  const updateURL = `/blogs/${props.details._id}/update`;
   let history = useHistory();
   const imageURL =
     props.details.coverImageUrl ||
     "https://indianlawwatch.com/wp-content/uploads/2020/05/BLOG.jpg";
-
-  //Blog description
-  let text = "";
-  let description = props.description;
-  if(description == null) return 
-  description.map((des) => {
-    text = text + " " + des.data.text;
-  });
 
   //blog date
   let date = new Date(props.details.createdAt);
@@ -27,52 +20,77 @@ const BlogTile = (props) => {
     weekday: "short",
   });
 
+  //navigate to tags page
   const handleTagsClick = (e) => {
-    window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
     const tag = e.target.innerHTML;
-    history.push(`/blogs/tag/${tag}`);
-    
+    history.push({ pathname: `/blogs/tag/${tag}`, data: { pageNumber: 1 } });
   };
+
+  //Blog description
+  let text = "";
+  let description = props.description;
+  if (description == null) return;
+  description.map((des) => {
+    text = text + " " + des.data.text;
+  });
 
   useEffect(() => {
     const descText = text.replace("undefined", "");
-    pRef.current.innerHTML = descText;
+    pRef.current.innerHTML =
+      descText.substring(0, 350).trim() + `<strong>...</strong>`;
   }, []);
 
   return (
-    <div style={styles.blogTile}>
-      <img style={styles.blogImage} src={imageURL}></img>
+    <div className="blog-card">
+      <img className="blog-img" src={imageURL}></img>
       <div>
-        <div className="blogHeader">
-          <div>
-            <h2 style={styles.title}>
-              <Link style={styles.link} to={`/blogs/${props.details._id}`}>
-                {props.details.title}
-              </Link>
-            </h2>
-          </div>
-          {props.profile ? <Options id={props.details._id} /> : ""}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <h3 className="card-title">
+            <Link style={styles.link} to={`/blogs/${props.details._id}`}>
+              {props.details.title}
+            </Link>
+          </h3>
+          <DropdownButton
+            className="dropdownButton"
+            id="dropdown-basic-button"
+            title="Options"
+            variant="secondary"
+          >
+            <Dropdown.Item href={updateURL}>Update</Dropdown.Item>
+            <span
+              onClick={() => {
+                props.handleBlogDelete(props.details._id);
+              }}
+            >
+              <Dropdown.Item>Delete</Dropdown.Item>
+            </span>
+          </DropdownButton>
         </div>
         {props.details.tags.map((tag, index) => (
-          <span onClick={handleTagsClick} key={index} style={styles.tag}>
+          <span
+            onClick={handleTagsClick}
+            key={index}
+            style={styles.tag}
+            className="badge bg-secondary"
+          >
             {tag}
           </span>
         ))}
-        <p ref={pRef} className="blog-des"></p>
-        <p style={styles.date}>{blogDate}</p>
-        <button style={styles.blogOptionButton}>
-          <Link style={styles.link} to={`/blogs/${props.details._id}/update`}>
-            Update
-          </Link>
-        </button>
-        <button
-          style={styles.blogOptionButton}
+        <p
+          ref={pRef}
           onClick={() => {
-            props.handleBlogDelete(props.details._id);
+            history.push(`/blogs/${props.details._id}`);
           }}
-        >
-          <span style={styles.link}>Delete</span>
-        </button>
+          className="blog_des"
+        ></p>
+
+        <p style={styles.date}>{blogDate}</p>
       </div>
     </div>
   );
