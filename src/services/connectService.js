@@ -8,13 +8,17 @@ const authLogin = async ({ username, password }) => {
 }
 
 const signup = async ({ username, password, email }) => {
-    const userInfo = await axios.post(baseUrl + "/signup",
-        {
-            "username": username,
-            "passwordUser": password,
-            "email": email
-        });
-    return userInfo.data;
+    try {
+        const userInfo = await axios.post(baseUrl + "/signup",
+            {
+                "username": username,
+                "passwordUser": password,
+                "email": email
+            });
+        return userInfo.data;
+    } catch (e) {
+        return "Encountered an exception! Please try again after sometime!"
+    }
 }
 
 const annoSignup = async ({ username, password }) => {
@@ -26,10 +30,10 @@ const annoSignup = async ({ username, password }) => {
             "username": username,
             "passwordUser": password
         }, {
-        headers: {
-            "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-        }
-    });
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+            }
+        });
     return userInfo.data;
 }
 
