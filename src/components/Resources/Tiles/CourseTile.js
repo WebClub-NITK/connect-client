@@ -1,9 +1,9 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
-import {Link, useRouteMatch} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 
 const CourseTile = ({details}) => {
-    let match = useRouteMatch();
     return (
         <div className="col-12 col-md-4">
             <Link to={`/resourcehub/course/${details._id}`}>
@@ -17,5 +17,9 @@ const CourseTile = ({details}) => {
         </div>
     )
 }
+
+CourseTile.propTypes = {
+    details: PropTypes.node,
+};
 
 export default CourseTile

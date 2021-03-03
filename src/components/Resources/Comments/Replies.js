@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types';
 import { Accordion, Button, Card, Form, InputGroup } from 'react-bootstrap'
 import {addReply} from '../../../services/resourceService'
 
@@ -13,7 +14,8 @@ const Replies = ({replies, commentId, resetComments}) => {
             likes: 0,
             dislikes: 0
         }
-        const response = await addReply(reply, commentId)
+        
+        await addReply(reply, commentId)
 
         await resetComments()
 
@@ -46,15 +48,15 @@ const Replies = ({replies, commentId, resetComments}) => {
                             </InputGroup>
 
                             {replies.map((item, index) => {
-                            return (
-                                <div className="mb-2">
-                                    <div>
-                                        <div><strong>Username</strong></div>
-                                        {item.text}
+                                return (
+                                    <div className="mb-2" key={index}>
+                                        <div>
+                                            <div><strong>Username</strong></div>
+                                            {item.text}
+                                        </div>
                                     </div>
-                                </div>
-                            )
-                        })}
+                                )
+                            })}
                         </Card.Body>
                     </Accordion.Collapse>
                 </Card>
@@ -62,5 +64,11 @@ const Replies = ({replies, commentId, resetComments}) => {
         </div>
     )
 }
+
+Replies.propTypes = {
+    replies: PropTypes.node,
+    commentId: PropTypes.node,
+    resetComments: PropTypes.node,
+};
 
 export default Replies

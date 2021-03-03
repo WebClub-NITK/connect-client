@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import {Link, useRouteMatch} from 'react-router-dom'
 
 const BranchTile = ({details}) => {
@@ -13,5 +14,9 @@ const BranchTile = ({details}) => {
         </div>
     )
 }
+
+BranchTile.propTypes = {
+    details: PropTypes.node,
+};
 
 export default BranchTile

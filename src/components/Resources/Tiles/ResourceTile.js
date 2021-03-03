@@ -1,9 +1,8 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
-import {useRouteMatch} from 'react-router-dom'
 
 const ResourceTile = ({details}) => {
-    let match = useRouteMatch();
     const url = 'http://localhost:3001/resource_module'
     return (
         <div className="col-12 col-md-4">
@@ -18,5 +17,9 @@ const ResourceTile = ({details}) => {
         </div>
     )
 }
+
+ResourceTile.propTypes = {
+    details: PropTypes.node,
+};
 
 export default ResourceTile
