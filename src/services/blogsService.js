@@ -27,7 +27,7 @@ const deleteBlog = async (id) => {
     const deleteBlog = await axios.delete(`${url}/${id}`);
     return deleteBlog;
   } catch (err) {
-    console.log('error');
+    console.log("error");
     console.log(err);
   }
 };
@@ -52,7 +52,7 @@ const getSearchBlogs = async (title, pageNumber) => {
   }
 };
 
-const getBlogsByTags = async (tag,pageNumber) => {
+const getBlogsByTags = async (tag, pageNumber) => {
   try {
     const blogs = await axios.get(`${url}/tag/${tag}/${pageNumber}`);
     return blogs.data;
@@ -62,15 +62,18 @@ const getBlogsByTags = async (tag,pageNumber) => {
   }
 };
 
-const getBlogTitles = async() => {
-  try{
-   const blogDetails = await axios.get(`${url}/live/title`);
-  return blogDetails.data;
-  }catch(err){
-    console.log(err);
-    return null;
+const getBlogTitles = async (title) => {
+  if (title.length > 0) {
+    try {
+      const blogDetails = await axios.get(`${url}/live/${title}`);
+      return blogDetails.data;
+    } catch (err) {
+      console.log("error");
+      console.log(err);
+      return null;
+    }
   }
-}
+};
 
 export {
   saveBlog,
@@ -80,5 +83,5 @@ export {
   getBlogById,
   getBlogsByTags,
   getSearchBlogs,
-  getBlogTitles
+  getBlogTitles,
 };

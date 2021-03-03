@@ -11,9 +11,6 @@ const LiveSearch = () => {
   let history = useHistory();
 
   useEffect(async () => {
-    //Here we get the blog titles and id
-    const blogDetails = await getBlogTitles();
-    setBlogDetails(blogDetails);
     handleInstantSearch();
   }, [searchValue]);
 
@@ -64,8 +61,10 @@ const LiveSearch = () => {
   };
 
   //handles change in search value
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const value = e.target.value;
+    const blogDetails = await getBlogTitles(value);
+    setBlogDetails(blogDetails);
     setSearchValue(value);
   };
 
