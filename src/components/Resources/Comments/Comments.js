@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import Replies from './Replies'
 
 const Comments = ({comment, resetComments}) => {
@@ -10,5 +11,10 @@ const Comments = ({comment, resetComments}) => {
         </div>
     )
 }
+
+Comments.propTypes = {
+    comment: PropTypes.node,
+    resetComments: PropTypes.node,
+};
 
 export default Comments

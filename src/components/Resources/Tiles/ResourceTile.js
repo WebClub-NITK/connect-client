@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
 
 const ResourceTile = ({details}) => {
@@ -16,5 +17,9 @@ const ResourceTile = ({details}) => {
         </div>
     )
 }
+
+ResourceTile.propTypes = {
+    details: PropTypes.node,
+};
 
 export default ResourceTile

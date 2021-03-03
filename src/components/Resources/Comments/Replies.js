@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types';
 import { Accordion, Button, Card, Form, InputGroup } from 'react-bootstrap'
 import {addReply} from '../../../services/resourceService'
 
@@ -63,5 +64,11 @@ const Replies = ({replies, commentId, resetComments}) => {
         </div>
     )
 }
+
+Replies.propTypes = {
+    replies: PropTypes.node,
+    commentId: PropTypes.node,
+    resetComments: PropTypes.node,
+};
 
 export default Replies
