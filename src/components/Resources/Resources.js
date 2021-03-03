@@ -77,7 +77,7 @@ const Resources = () => {
     }
 
     const postComment = async () => {
-        const response = await addComment(newComment, courseId)
+        await addComment(newComment, courseId)
 
         await resetComments()
         

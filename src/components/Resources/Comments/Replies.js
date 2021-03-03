@@ -13,7 +13,8 @@ const Replies = ({replies, commentId, resetComments}) => {
             likes: 0,
             dislikes: 0
         }
-        const response = await addReply(reply, commentId)
+        
+        await addReply(reply, commentId)
 
         await resetComments()
 
@@ -47,7 +48,7 @@ const Replies = ({replies, commentId, resetComments}) => {
 
                             {replies.map((item, index) => {
                                 return (
-                                    <div className="mb-2">
+                                    <div className="mb-2" key={index}>
                                         <div>
                                             <div><strong>Username</strong></div>
                                             {item.text}

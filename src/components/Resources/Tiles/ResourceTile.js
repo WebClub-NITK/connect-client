@@ -1,9 +1,7 @@
 import React from 'react'
 import { Card } from 'react-bootstrap';
-import {useRouteMatch} from 'react-router-dom'
 
 const ResourceTile = ({details}) => {
-    let match = useRouteMatch();
     const url = 'http://localhost:3001/resource_module'
     return (
         <div className="col-12 col-md-4">

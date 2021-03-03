@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import CourseTile from './Tiles/CourseTile'
-import { createNewCourse, getAllBranches, getAllCourses, getBranch, getCoursesForBranch } from '../../services/resourceService'
+import { createNewCourse, getBranch, getCoursesForBranch } from '../../services/resourceService'
 import { useParams } from 'react-router-dom'
 import { Button, Card, Container, Form, Jumbotron, Row } from 'react-bootstrap'
 
