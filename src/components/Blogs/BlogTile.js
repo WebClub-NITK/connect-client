@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styles from "./blogStyles";
 import "./Blogs.css";
-import { DropdownButton, Dropdown } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 const BlogTile = (props) => {
   const pRef = useRef();
@@ -36,8 +36,7 @@ const BlogTile = (props) => {
 
   useEffect(() => {
     const descText = text.replace("undefined", "");
-    pRef.current.innerHTML =
-      descText.substring(0, 350).trim() + `<strong>...</strong>`;
+    pRef.current.innerHTML = descText.substring(0, 400).trim();
   }, []);
 
   return (
@@ -56,7 +55,38 @@ const BlogTile = (props) => {
               {props.details.title}
             </Link>
           </h3>
-          <DropdownButton
+        </div>
+        {props.details.tags.map((tag, index) => (
+          <span
+            onClick={handleTagsClick}
+            key={index}
+            style={styles.tag}
+            className="badge bg-secondary"
+          >
+            {tag}
+          </span>
+        ))}
+        <p ref={pRef} className="blog_des"></p>
+
+        <p style={styles.date}>{blogDate}</p>
+        <Button
+          onClick={() => {
+            history.push(`/blogs/${props.details._id}`);
+          }}
+          bg="dark"
+          variant="dark"
+        >
+          Read more
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export default BlogTile;
+
+{
+  /* <DropdownButton
             className="dropdownButton"
             id="dropdown-basic-button"
             title="Options"
@@ -70,30 +100,5 @@ const BlogTile = (props) => {
             >
               <Dropdown.Item>Delete</Dropdown.Item>
             </span>
-          </DropdownButton>
-        </div>
-        {props.details.tags.map((tag, index) => (
-          <span
-            onClick={handleTagsClick}
-            key={index}
-            style={styles.tag}
-            className="badge bg-secondary"
-          >
-            {tag}
-          </span>
-        ))}
-        <p
-          ref={pRef}
-          onClick={() => {
-            history.push(`/blogs/${props.details._id}`);
-          }}
-          className="blog_des"
-        ></p>
-
-        <p style={styles.date}>{blogDate}</p>
-      </div>
-    </div>
-  );
-};
-
-export default BlogTile;
+          </DropdownButton> */
+}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -50,7 +50,6 @@ const Blogs = () => {
       const deletedBlog = await deleteBlog(blogId);
       if (deletedBlog.status == 204) {
         notify("Blog deleted");
-        
       } else {
         notify("Couldn't delete the blog. Try again");
       }
