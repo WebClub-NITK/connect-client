@@ -57,13 +57,13 @@ const CourseSearch = () => {
                                     {results.length!==0
                                         ? 
                                         <Card>
-                                        {results.map((item) => {
-                                            return (
-                                                <Link to={`/resourcehub/course/${item._id}`}>
-                                                    <div className="py-1">{item.code} - {item.name}</div>
-                                                </Link>
-                                            )
-                                        })}
+                                            {results.map((item) => {
+                                                return (
+                                                    <Link to={`/resourcehub/course/${item._id}`}>
+                                                        <div className="py-1">{item.code} - {item.name}</div>
+                                                    </Link>
+                                                )
+                                            })}
                                         </Card>
                                         : <div></div> 
                                     }

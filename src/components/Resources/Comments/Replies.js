@@ -46,15 +46,15 @@ const Replies = ({replies, commentId, resetComments}) => {
                             </InputGroup>
 
                             {replies.map((item, index) => {
-                            return (
-                                <div className="mb-2">
-                                    <div>
-                                        <div><strong>Username</strong></div>
-                                        {item.text}
+                                return (
+                                    <div className="mb-2">
+                                        <div>
+                                            <div><strong>Username</strong></div>
+                                            {item.text}
+                                        </div>
                                     </div>
-                                </div>
-                            )
-                        })}
+                                )
+                            })}
                         </Card.Body>
                     </Accordion.Collapse>
                 </Card>
