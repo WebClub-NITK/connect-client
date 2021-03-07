@@ -5,6 +5,7 @@ import Delimiter from '@editorjs/delimiter';
 import InlineCode from '@editorjs/inline-code';
 import ImageTool from '@editorjs/image';
 import CodeTool from '@editorjs/code'
+import {SERVER_URL} from '../../services/config'
 
 export const tools = { 
     header: Header, 
@@ -13,7 +14,7 @@ export const tools = {
         class: ImageTool,
         config: {
           endpoints: {
-            byUrl: 'http://localhost:3001/blogs/url_image_upload', // endpoint that provides uploading by Url
+            byUrl: `${SERVER_URL}/blogs/url_image_upload`, // endpoint that provides uploading by Url
           }
         }
     },

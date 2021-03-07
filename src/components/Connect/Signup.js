@@ -4,8 +4,10 @@ import Button from "react-bootstrap/Button";
 import "./login.css";
 import { Redirect } from 'react-router-dom';
 import { signup } from '../../services/connectService';
+import { SERVER_URL } from "../../services/config";
 
-const baseUrl = "http://localhost:3001/connect";
+// const baseUrl = "http://localhost:3001/connect";
+const baseUrl = `${SERVER_URL}/connect`
 
 const Signup = () => {
   const [username, setUsername] = useState("");

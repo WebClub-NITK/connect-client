@@ -1,9 +1,11 @@
+import { SERVER_URL } from "../../services/config"
+
 const Toggel = () => {
     if(localStorage.getItem('secondaryToken') === null || localStorage.getItem('secondaryToken').toString().length === 0)
     {
         let tmp = localStorage.getItem('accessToken').toString()
         localStorage.getItem('secondaryToken',tmp)
-        window.location.replace('http://localhost:3000/login')
+        window.location.replace(`${SERVER_URL}/login`)
     }
     else
     {

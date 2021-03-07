@@ -1,6 +1,7 @@
 import axios from 'axios'
+import { SERVER_URL } from './config';
 
-const url = 'http://localhost:3001/resource_module'
+const url = `${SERVER_URL}/resource_module`
 
 const resourceUrl = 'resources';
 const branchUrl = 'branches';

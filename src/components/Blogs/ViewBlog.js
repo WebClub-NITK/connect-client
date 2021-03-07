@@ -10,6 +10,7 @@ import Confetti from 'react-dom-confetti';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 // other good themes: monokai, sunburst
 import { vs2015 } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { SERVER_URL } from '../../services/config';
 
 const Component = (props) => {
   const codeString = props.code
@@ -49,7 +50,7 @@ const ViewBlog = (props) => {
         if(blog){
             setBlog(blog)
             if(params.get('new')) {
-                history.pushState({}, null,`http://localhost:3000/blogs/${blogId}`)
+                history.pushState({}, null,`${SERVER_URL}/blogs/${blogId}`)
                 setTimeout(() => {
                     setConfeti(true)
                 }, 1000);

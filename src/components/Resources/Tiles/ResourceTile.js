@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
+import { SERVER_URL } from '../../../services/config';
 
 const ResourceTile = ({details}) => {
-    const url = 'http://localhost:3001/resource_module'
+    const url = `${SERVER_URL}/resource_module`
     return (
         <div className="col-12 col-md-4">
             <a href={`${url}/docs/${details.files[0]}`}>
