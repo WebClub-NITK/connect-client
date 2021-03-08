@@ -77,7 +77,7 @@ const Resources = () => {
     }
 
     const postComment = async () => {
-        const response = await addComment(newComment, courseId)
+        await addComment(newComment, courseId)
 
         await resetComments()
         
@@ -100,8 +100,8 @@ const Resources = () => {
             </Jumbotron>
             <Container>
                 <div className="padding"> 
-                {resources.length!=0 
-                    ?   
+                    {resources.length!=0 
+                        ?   
                         <>
                             <h2 className="mb-5">Available Resources</h2> 
                             <Row className="justify-content-center">
@@ -111,11 +111,10 @@ const Resources = () => {
                                     )
                                 })}
                             </Row>
-                        </>
-                        
-                    : 
+                        </>  
+                        : 
                         <h2 className="mb-5">Unfortunately No Resources Available for this Course</h2>
-                }
+                    }
 
                 </div>
 

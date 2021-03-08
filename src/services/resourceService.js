@@ -1,6 +1,7 @@
 import axios from 'axios'
+import { SERVER_URL } from './config';
 
-const url = 'http://localhost:3001/resource_module'
+const url = `${SERVER_URL}/resource_module`
 
 const resourceUrl = 'resources';
 const branchUrl = 'branches';
@@ -29,9 +30,9 @@ const createNewBranch = async({code,name})=>{
     const branchStatus = await axios.post(`${url}/${branchUrl}`,{code,name});
     console.log(branchStatus);
     if(branchStatus.statusCode == 422)
-        {
-            return  branchStatus.data.error;
-        }
+    {
+        return  branchStatus.data.error;
+    }
     else
     {
         return  branchStatus.data.message;
@@ -125,9 +126,9 @@ const createNewResource = async(course, formData)=>{
     })
     console.log(resourceStatus);
     if(resourceStatus.statusCode == 422)
-        {
-            return  resourceStatus.data.error;
-        }
+    {
+        return  resourceStatus.data.error;
+    }
     else
     {
         return  resourceStatus.data.message;

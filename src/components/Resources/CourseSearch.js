@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Card, Container, Row} from 'react-bootstrap'
 import { Link } from 'react-router-dom';
 import { getAllCourses } from '../../services/resourceService';
@@ -57,13 +57,13 @@ const CourseSearch = () => {
                                     {results.length!==0
                                         ? 
                                         <Card>
-                                        {results.map((item) => {
-                                            return (
-                                                <Link to={`/resourcehub/course/${item._id}`}>
-                                                    <div className="py-1">{item.code} - {item.name}</div>
-                                                </Link>
-                                            )
-                                        })}
+                                            {results.map((item, index) => {
+                                                return (
+                                                    <Link to={`/resourcehub/course/${item._id}`} key={index}>
+                                                        <div className="py-1">{item.code} - {item.name}</div>
+                                                    </Link>
+                                                )
+                                            })}
                                         </Card>
                                         : <div></div> 
                                     }

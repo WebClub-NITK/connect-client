@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const url = "http://localhost:3001/blogs";
+import {SERVER_URL} from './config'
+
+const url = SERVER_URL + '/blogs'
 
 const getAllBlogs = async (pageNumber) => {
   const blogsData = await axios.get(`${url}/page/${pageNumber}`);

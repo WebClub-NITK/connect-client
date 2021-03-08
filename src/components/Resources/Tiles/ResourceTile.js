@@ -1,10 +1,10 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import { Card } from 'react-bootstrap';
-import {useRouteMatch} from 'react-router-dom'
+import { SERVER_URL } from '../../../services/config';
 
 const ResourceTile = ({details}) => {
-    let match = useRouteMatch();
-    const url = 'http://localhost:3001/resource_module'
+    const url = `${SERVER_URL}/resource_module`
     return (
         <div className="col-12 col-md-4">
             <a href={`${url}/docs/${details.files[0]}`}>
@@ -18,5 +18,9 @@ const ResourceTile = ({details}) => {
         </div>
     )
 }
+
+ResourceTile.propTypes = {
+    details: PropTypes.node,
+};
 
 export default ResourceTile

@@ -1,6 +1,7 @@
 import axios from "axios";
+import { SERVER_URL } from "./config";
 
-const baseUrl = "http://localhost:3001/connect";
+const baseUrl = `${SERVER_URL}/connect`;
 
 const authLogin = async ({ username, password }) => {
     const auth = await axios.post(baseUrl + "/login", { "username": username, "password": password });
