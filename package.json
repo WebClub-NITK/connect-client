@@ -15,6 +15,7 @@
     "@editorjs/paragraph": "^2.8.0",
     "axios": "^0.21.1",
     "bootstrap": "^4.5.3",
+    "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",
     "react-dom": "^17.0.1",
@@ -42,5 +43,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "eslint": "^7.19.0",
+    "eslint-plugin-react": "^7.22.0"
   }
 }

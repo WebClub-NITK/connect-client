@@ -7,6 +7,7 @@ import styles from './blogStyles'
 import {Prompt} from 'react-router-dom'
 import { useParams } from "react-router-dom";
 import { getBlogById } from "../../services/blogsService";
+import { SERVER_URL } from '../../services/config';
 
 // improvements: cleanup is getting called twice.
 
@@ -71,7 +72,7 @@ const UpdateBlog = () => {
             method: 'POST',
             body: formData,
         }
-        return fetch('http://localhost:3001/blogs/file_image_upload', options)
+        return fetch(`${SERVER_URL}/blogs/file_image_upload`, options)
         .then(res => res.json()).then(data => {
             if(data.success) {
                 imageUrlsReference.current = imageUrlsReference.current.concat(data.file.url)
@@ -117,7 +118,7 @@ const UpdateBlog = () => {
 
         // sends a list of urls to the server which then deletes those images.
         if(imageUrlsReference.current.length !== 0) {
-            await fetch('http://localhost:3001/blogs/remove_images', {
+            await fetch(`${SERVER_URL}/blogs/remove_images`, {
                 method: 'POST',
                 body: JSON.stringify({images: imageUrlsReference.current}),
                 headers: {
@@ -149,7 +150,7 @@ const UpdateBlog = () => {
             method: 'POST',
             body: formData,
         }
-        const response = await fetch('http://localhost:3001/blogs/file_image_upload', options)
+        const response = await fetch(`${SERVER_URL}/blogs/file_image_upload`, options)
         .then(res => res.json()).then(data => {
             if(data.success){
                 imageUrlsReference.current = imageUrlsReference.current.concat(data.file.url)

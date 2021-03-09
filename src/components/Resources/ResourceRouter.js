@@ -1,9 +1,9 @@
 import React from 'react'
 
 import {
-  BrowserRouter as Router,
-  Switch, Route,
-  useRouteMatch
+    BrowserRouter as Router,
+    Switch, Route,
+    useRouteMatch
 } from "react-router-dom"
 
 import Courses from './Courses'
@@ -17,19 +17,19 @@ const ResourceRouter = () => {
     let match = useRouteMatch();
 
     return (
-      <Router>
-        <Switch>
-           <Route exact path={`${match.path}`}>
-            <ResourceHome/>
-          </Route>
-          <Route path={`${match.path}/branch/:branchId`}>
-            <Courses />
-          </Route>
-          <Route path={`${match.path}/course/:courseId`}>
-            <Resources />
-          </Route>
-        </Switch>
-      </Router>   
+        <Router>
+            <Switch>
+                <Route exact path={`${match.path}`}>
+                    <ResourceHome/>
+                </Route>
+                <Route path={`${match.path}/branch/:branchId`}>
+                    <Courses />
+                </Route>
+                <Route path={`${match.path}/course/:courseId`}>
+                    <Resources />
+                </Route>
+            </Switch>
+        </Router>   
     )
 }
 

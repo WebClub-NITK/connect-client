@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link } from "react-router-dom"
 
-
 const Nav = () => {
 
     const padding = {
@@ -16,7 +15,7 @@ const Nav = () => {
             <Link style={padding} to='/resourcehub'>Resource Hub</Link>
             <Link style={padding} to='/blogs'>Blogs</Link>
             <Link style={padding} to='/login'>Login</Link>
-            <Link style={padding} to='/signup'>SIgnup</Link>
+            <Link style={padding} to='/signup'>Signup</Link>
             <Link style={padding} to='/search'>Search</Link>
         </div>
     )

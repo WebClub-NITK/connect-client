@@ -1,6 +1,7 @@
 import axios from 'axios'
+import { SERVER_URL } from './config';
 
-const url = 'http://localhost:3001/resource_module'
+const url = `${SERVER_URL}/resource_module`
 
 const resourceUrl = 'resources';
 const branchUrl = 'branches';
@@ -29,9 +30,9 @@ const createNewBranch = async({code,name})=>{
     const branchStatus = await axios.post(`${url}/${branchUrl}`,{code,name});
     console.log(branchStatus);
     if(branchStatus.statusCode == 422)
-        {
-            return  branchStatus.data.error;
-        }
+    {
+        return  branchStatus.data.error;
+    }
     else
     {
         return  branchStatus.data.message;
@@ -60,14 +61,53 @@ const createNewCourse = async(code,name,branch)=>{
     const courseStatus = await axios.post(`${url}/${courseUrl}`,{code,name,branch});
     console.log(courseStatus);
     if(courseStatus.statusCode == 422)
-        {
-            return  courseStatus.data.error;
-        }
+    {
+        return  courseStatus.data.error;
+    }
     else
     {
         return  courseStatus.data.message;
     } 
 };
+
+const getAllComments = async (courseId) => {
+    const commentsStatus = await axios.get(`${url}/course/${courseId}/comments`);
+    console.log(commentsStatus);
+    if(commentsStatus.statusCode == 422)
+    {
+        return  commentsStatus.data.error;
+    }
+    else
+    {
+        return  commentsStatus.data.comments;
+    } 
+}
+
+const addComment = async (comment, courseId) => {
+    const commentStatus = await axios.post(`${url}/course/${courseId}/comments`, {comment})
+    console.log(commentStatus);
+    if(commentStatus == 422)
+    {
+        return commentStatus.data.error;   
+    }
+    else 
+    {
+        return commentStatus.data.message;
+    }
+}
+
+const addReply = async (reply, commentId) => {
+    const replyStatus = await  axios.put(`${url}/course/comments/${commentId}`, {reply})
+    console.log(replyStatus);
+    if(replyStatus == 422)
+    {
+        return replyStatus.data.error;
+    }
+    else
+    {
+        return replyStatus.data.message;
+    }
+}
 
 const getResourcesForCourse= async (courseId)=>{
     const resources = await axios.get(`${url}/${resourceUrl}/${courseId}`);
@@ -86,9 +126,9 @@ const createNewResource = async(course, formData)=>{
     })
     console.log(resourceStatus);
     if(resourceStatus.statusCode == 422)
-        {
-            return  resourceStatus.data.error;
-        }
+    {
+        return  resourceStatus.data.error;
+    }
     else
     {
         return  resourceStatus.data.message;
@@ -104,6 +144,9 @@ export{
     getCourse,
     getCoursesForBranch,
     createNewCourse,
+    getAllComments,
+    addComment,
+    addReply,
     getAllResources,
     getResourcesForCourse,
     createNewResource,

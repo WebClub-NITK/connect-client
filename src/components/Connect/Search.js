@@ -52,6 +52,7 @@ const Search = () => {
             <div className="row" style={{justifyContent: "center"}}>
                 {users ? (
                     users.map((user) => (
+                        // eslint-disable-next-line react/jsx-key
                         <ProfileCard
                             user={user}
                             jsonInfo={jsonInfo}
