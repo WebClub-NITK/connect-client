@@ -93,7 +93,6 @@ const Signup = () => {
                         <strong className="mr-auto">Incorrect details</strong>
                     </Toast.Header>
                     <Toast.Body>{toastMessage}</Toast.Body>
-
                 </Toast>
                 <h1 style={{
                     display: "flex",
