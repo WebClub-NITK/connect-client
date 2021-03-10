@@ -1,4 +1,4 @@
-const SERVER_URL = 'https://mysterious-ravine-81190.herokuapp.com'
+const SERVER_URL = 'http://localhost:3001'
 
 export {
     SERVER_URL,
