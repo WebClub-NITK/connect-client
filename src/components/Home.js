@@ -38,7 +38,7 @@ const Home = () => {
                         <button type="submit" onClick={toggel}>Toggel</button><br />
                         <button type="submit" onClick={logout}>Logout</button>
                     </div>
-                ) : (<Link className="btn btn-primary" style={{marginTop: "1em"}} to='/login'>Login</Link>)}
+                ) : (<Link className="btn btn-primary" style={{ marginTop: "1em" }} to='/login'>Login</Link>)}
                 <div className="col-sm-12 col-md-12 col-xs-12" style={{ paddingTop: "4em", paddingLeft: "36em", paddingRight: "36em" }}>
                     <table className="table table-dark">
                         <thead>
@@ -51,7 +51,7 @@ const Home = () => {
                         <tbody>
                             {users ? (
                                 users.map((user, i) => (
-                                    <tr>
+                                    <tr key={i}>
                                         <td scope="col">{i + 1}</td>
                                         <td scope="col">{user.Username}</td>
                                         <td scope="col">{user.Respect}</td>
