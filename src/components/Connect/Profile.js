@@ -52,6 +52,9 @@ const Profile = () => {
             setNoUser(true);
             return;
         }
+        if (response.status === 403) {
+            setNoUser(true);
+        }
         if (response.status === 200) {
             window.location.reload();
         }
