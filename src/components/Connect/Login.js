@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Toast from "react-bootstrap/Toast";
 import "./login.css";
 import { Redirect } from 'react-router-dom';
 import { authLogin } from '../../services/connectService';
@@ -11,28 +12,41 @@ const Login = () => {
     const [loginstate, setLogin] = useState(false);
     // eslint-disable-next-line no-unused-vars
     const [userId, setUserId] = useState("");
+    const [showToast, setShowToast] = useState(false);
+    const [toastMessage, setToastMessage] = useState("");
 
     const validateForm = () => {
+        if (username.length <= 0) {
+            setShowToast(true);
+            setToastMessage("Username should be more than 1 character");
+            return false;
+        }
+        if (password.length < 8) {
+            setShowToast(true);
+            setToastMessage("Password must be of at least 8 characters");
+            return false;
+        }
         return username.length > 0 && password.length >= 8;
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        if (!validateForm()) {
+            return false;
+        }
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
-        const response = await authLogin({username, password});
-        if (response && response.accessToken) {
+        const response = await authLogin({ username, password });
+        if (response && typeof response !== 'string' && response.accessToken) {
             let token = localStorage.getItem('accessToken')
             console.log(!token)
-            if(!token)
-            {
+            if (!token) {
                 localStorage.setItem("accessToken", response.accessToken);
                 localStorage.setItem('secondaryToken', '');
                 localStorage.setItem('UserId', response.userId)
                 localStorage.setItem('secondaryUserId', '')
             }
-            else
-            {
+            else {
                 let tmp1 = localStorage.getItem('accessToken').toString()
                 let tmp2 = localStorage.getItem('UserId', response.userId)
                 localStorage.setItem('secondaryUserId', tmp2)
@@ -43,6 +57,9 @@ const Login = () => {
             localStorage.setItem('UserId', response.userId)
             setUserId(response.userId);
             setLogin(true);
+        } else {
+            setShowToast(true);
+            setToastMessage(response);
         }
     }
 
@@ -55,11 +72,17 @@ const Login = () => {
     else {
         return (
             <div className="Login">
+                <Toast onClose={() => setShowToast(false)} show={showToast} delay={2000} autohide>
+                    <Toast.Header>
+                        <strong className="mr-auto">Incorrect details</strong>
+                    </Toast.Header>
+                    <Toast.Body>{toastMessage}</Toast.Body>
+                </Toast>
                 <h1 style={{
                     display: "flex",
                     justifyContent: "center",
                     alignItems: "center"
-                }}>Login Form</h1><br/>
+                }}>Login Form</h1><br />
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="username">
                         <div className="col-sm-6 col-md-6 col-lg-6 mx-auto">
@@ -87,8 +110,8 @@ const Login = () => {
                     </Form.Group>
                     <br />
                     <div className="col-sm-3 col-md-3 col-lg-3 mx-auto">
-                        <Button block type="submit" disabled={!validateForm()}>
-            Login
+                        <Button block type="submit">
+                            Login
                         </Button>
                     </div>
                 </Form>

@@ -4,8 +4,15 @@ import { SERVER_URL } from "./config";
 const baseUrl = `${SERVER_URL}/connect`;
 
 const authLogin = async ({ username, password }) => {
-    const auth = await axios.post(baseUrl + "/login", { "username": username, "password": password });
-    return auth.data;
+    try {
+        const auth = await axios.post(baseUrl + "/login", { "username": username, "password": password });
+        return auth.data;
+    } catch (e) {
+        if (e.response) {
+            return e.response.data;
+        }
+        return "Encountered an exception! Please try again after sometime!";
+    }
 }
 
 const signup = async ({ username, password, email }) => {
@@ -18,7 +25,10 @@ const signup = async ({ username, password, email }) => {
             });
         return userInfo.data;
     } catch (e) {
-        return "Encountered an exception! Please try again after sometime!"
+        if (e.response) {
+            return e.response.data;
+        }
+        return "Encountered an exception! Please try again after sometime!";
     }
 }
 
@@ -26,16 +36,23 @@ const annoSignup = async ({ username, password }) => {
     if (localStorage.getItem("accessToken") === null) {
         return null;
     }
-    const userInfo = await axios.post(baseUrl + "/createAnnoUser",
-        {
-            "username": username,
-            "passwordUser": password
-        }, {
+    try {
+        const userInfo = await axios.post(baseUrl + "/createAnnoUser",
+            {
+                "username": username,
+                "passwordUser": password
+            }, {
             headers: {
                 "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
             }
         });
-    return userInfo.data;
+        return userInfo.data;
+    } catch (e) {
+        if (e.response) {
+            return e.response.data;
+        }
+        return "Encountered an exception! Please try again after sometime!";
+    }
 }
 
 const RetreiveInfo = async () => {
@@ -44,12 +61,19 @@ const RetreiveInfo = async () => {
 }
 
 const search = async ({ query }) => {
-    if (query.id) {
-        const user = await axios.get(baseUrl + "/search", { params: { "id": query.id } });
-        return user.data;
-    } else if (query.username) {
-        const user = await axios.get(baseUrl + "/search", { params: { "username": query.username } });
-        return user.data;
+    try {
+        if (query.id) {
+            const user = await axios.get(baseUrl + "/search", { params: { "id": query.id } });
+            return user.data;
+        } else if (query.username) {
+            const user = await axios.get(baseUrl + "/search", { params: { "username": query.username } });
+            return user.data;
+        }
+    } catch(e) {
+        if (e.response) {
+            return e.response.data;
+        }
+        return "Encountered an exception! Please try again after sometime!";
     }
 }
 
@@ -62,18 +86,25 @@ const updateProfile = async ({ email, name, ptype, branch, semester }) => {
     if (localStorage.getItem("accessToken") === null) {
         return null;
     }
-    const response = await axios.post(baseUrl + "/updateProfile", {
-        "email": email,
-        "name": name,
-        "ptype": ptype,
-        "branch": branch,
-        "semester": semester
-    }, {
-        headers: {
-            "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+    try {
+        const response = await axios.post(baseUrl + "/updateProfile", {
+            "email": email,
+            "name": name,
+            "ptype": ptype,
+            "branch": branch,
+            "semester": semester
+        }, {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+            }
+        });
+        return response;
+    } catch(e) {
+        if (e.response) {
+            return e.response.data;
         }
-    });
-    return response;
+        return "Encountered an exception! Please try again after sometime!";
+    }
 }
 
 export {
