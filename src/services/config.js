@@ -1,4 +1,4 @@
-const SERVER_URL = 'https://mysterious-ravine-81190.herokuapp.com'
+const SERVER_URL = 'https://nitk-connect-server.herokuapp.com/'
 
 export {
     SERVER_URL,

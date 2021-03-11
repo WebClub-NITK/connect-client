@@ -4,7 +4,8 @@ import "react-toastify/dist/ReactToastify.css";
 import "./Blogs.css";
 import BlogTile from "./BlogTile";
 import Pagination from "./Pagination";
-import Header from "./Header";
+// import Header from "./Header";
+import MainNavbar from "../MainNavbar";
 import LiveSearch from "./LiveSearch";
 import LoadingComponent from "./LoadingComponent";
 import { getAllBlogs, deleteBlog } from "../../services/blogsService";
@@ -71,7 +72,7 @@ const Blogs = () => {
 
     return (
         <div className="blogs_div">
-            <Header />
+            <MainNavbar />
             <LiveSearch />
             <div>
                 {blogs ? (
