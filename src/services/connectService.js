@@ -42,10 +42,10 @@ const annoSignup = async ({ username, password }) => {
                 "username": username,
                 "passwordUser": password
             }, {
-            headers: {
-                "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
-            }
-        });
+                headers: {
+                    "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+                }
+            });
         return userInfo.data;
     } catch (e) {
         if (e.response) {
