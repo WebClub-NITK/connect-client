@@ -1,4 +1,6 @@
 import React from 'react'
+import { HashRouter as Router } from 'react-router-dom'
+import MainNavbar from './components/MainNavbar'
 import Routes from './components/Routes'
 
 const App = () => {
@@ -7,7 +9,11 @@ const App = () => {
 
     return (
         <div>
-            <Routes />
+            <Router>
+                <MainNavbar />
+                <Routes />
+            </Router>
+
         </div>
     )
 }

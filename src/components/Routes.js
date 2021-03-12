@@ -1,10 +1,9 @@
 import React from 'react'
 
 import {
-    HashRouter as Router,
     Switch, Route,
 } from "react-router-dom"
-  
+
 import Home from './Home'
 
 
@@ -20,34 +19,34 @@ import Profile from './Connect/Profile'
 const Routes = () => {
 
     return (
-        <Router>
-            <Switch>
-                <Route path="/" exact>
-                    <Home />
-                </Route>
-                <Route path="/blogs">
-                    <BlogsRouter />
-                </Route>
-                <Route path="/resourcehub">
-                    <ResourceRouter/>
-                </Route>
-                <Route path="/profile">
-                    <Profile />
-                </Route>
-                <Route path="/login">
-                    <Login />
-                </Route>
-                <Route path="/signup" exact>
-                    <Signup />
-                </Route>
-                <Route path="/search" exact>
-                    <Search />
-                </Route>
-                <Route path="/annoSignup" exact>
-                    <AnnoSignup />
-                </Route>
-            </Switch>
-        </Router>   
+
+        <Switch>
+            <Route path="/" exact>
+                <Home />
+            </Route>
+            <Route path="/blogs">
+                <BlogsRouter />
+            </Route>
+            <Route path="/resourcehub">
+                <ResourceRouter />
+            </Route>
+            <Route path="/profile">
+                <Profile />
+            </Route>
+            <Route path="/login">
+                <Login />
+            </Route>
+            <Route path="/signup" exact>
+                <Signup />
+            </Route>
+            <Route path="/search" exact>
+                <Search />
+            </Route>
+            <Route path="/annoSignup" exact>
+                <AnnoSignup />
+            </Route>
+        </Switch>
+
     )
 }
 
