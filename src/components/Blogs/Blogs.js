@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Blogs.css";
@@ -72,6 +73,9 @@ const Blogs = () => {
 
     return (
         <div className="blogs_div">
+            <Link to="/blogs/new">
+                <button className="new-blog-button">Share an idea</button>
+            </Link>
             <LiveSearch />
             <div>
                 {blogs ? (
