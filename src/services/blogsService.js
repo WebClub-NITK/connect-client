@@ -9,10 +9,16 @@ const getAllBlogs = async (pageNumber) => {
     return blogsData.data;
 };
 
-const saveBlog = async ({ title, body, tags, coverImageUrl }) => {
-    const savedBlog = await axios.post(url, { title, body, tags, coverImageUrl });
-    return savedBlog.data;
-};
+const saveBlog = async (accessToken, { title, body, tags, coverImageUrl }) => {
+    try {
+        const headers = {'Authorization': `Bearer ${accessToken}`}
+        const savedBlog = await axios.post(url, { title, body, tags, coverImageUrl }, {headers});
+        return savedBlog.data;
+    } catch(err) {
+        console.log(err)
+        throw new Error('Blog couldn\'t be saved')
+    }
+}
 
 const updateBlog = async (id, { title, body, tags, coverImageUrl }) => {
     const updatedBlog = await axios.put(`${url}/${id}`, {
