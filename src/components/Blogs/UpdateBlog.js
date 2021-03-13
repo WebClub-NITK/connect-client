@@ -10,6 +10,7 @@ import { Prompt } from 'react-router-dom'
 import { useParams } from "react-router-dom";
 import { getBlogById } from "../../services/blogsService";
 import { SERVER_URL } from '../../services/config';
+import ErrorMessage from './ErrorMessage';
 
 // improvements: cleanup is getting called twice.
 
@@ -21,6 +22,7 @@ const UpdateBlog = () => {
     const [title, setTitle] = useState('')
     const [tags, setTags] = useState('')
     const [coverUrl, setCoverUrl] = useState(null)
+    const [errorMessage, setErrorMessage] = useState(null)
     // store the image urls sent to server, .current property stores the list
     let imageUrlsReference = useRef([])
     let blogBodyReference = useRef([])
@@ -131,15 +133,26 @@ const UpdateBlog = () => {
     }
 
     const handleSubmitPost = async () => {
-        const title = document.getElementById('title').value
-        const tags = document.getElementById('tags').value.split(',')
-        const body = await getBody()
-        blogBodyReference.current = body
-        coverImageUrlReference.current = coverUrl
+        try{
+            const title = document.getElementById('title').value
+            const tags = document.getElementById('tags').value.split(',')
+            const body = await getBody()
+            blogBodyReference.current = body
+            coverImageUrlReference.current = coverUrl
+    
+    
+            const accessToken = localStorage.getItem('accessToken').toString();
+    
+            const response = await updateBlog(accessToken, blogId, {title, body, tags, coverImageUrl: coverUrl})
+    
+            // const response = await updateBlog(blogId, { title, body, tags, coverImageUrl: coverUrl })
+            cleanUp()
+            history.push(`/blogs/${response._id}`)
 
-        const response = await updateBlog(blogId, { title, body, tags, coverImageUrl: coverUrl })
-        cleanUp()
-        history.push(`/blogs/${response._id}`)
+        } catch(err){
+            console.log(err)
+            setErrorMessage(err.message)
+        }
     }
 
     const handleCoverChange = async (event) => {
@@ -168,12 +181,21 @@ const UpdateBlog = () => {
         setCoverUrl(null)
     }
 
+    const userId = localStorage.getItem('UserId');
+    if(!userId) {
+        return (<h1>Please login to update!</h1>)
+    }
+
     if (!loaded) {
         return <h1>Loading</h1>;
     }
 
     if (!blog) {
         return <h1>Not Found</h1>;
+    }
+
+    if(blog.author_id != userId.toString()){
+        return (<h1>You cannot edit this!</h1>)
     }
 
     return (
@@ -185,6 +207,7 @@ const UpdateBlog = () => {
                     return true
                 }}
             />
+            <ErrorMessage message={errorMessage} setMessage={setErrorMessage} />
             <div style={{ background: 'lightgray', padding: '50px' }}>
                 <div style={{ width: '50vw', margin: '10px auto', padding: '50px', background: 'white', borderRadius: '10px' }}>
                     <div style={{}}>

@@ -20,14 +20,21 @@ const saveBlog = async (accessToken, { title, body, tags, coverImageUrl }) => {
     }
 }
 
-const updateBlog = async (id, { title, body, tags, coverImageUrl }) => {
-    const updatedBlog = await axios.put(`${url}/${id}`, {
-        title,
-        body,
-        tags,
-        coverImageUrl,
-    });
-    return updatedBlog.data;
+const updateBlog = async (accessToken, id, { title, body, tags, coverImageUrl }) => {
+    try{
+        const headers = {'Authorization': `Bearer ${accessToken}`}
+        const updatedBlog = await axios.put(`${url}/${id}`, {
+            title,
+            body,
+            tags,
+            coverImageUrl,
+        }, { headers });
+        return updatedBlog.data;
+
+    } catch(err) {
+        console.log(err)
+        throw new Error('Blog couldn\'t be updated')
+    }
 };
 
 const deleteBlog = async (id) => {
