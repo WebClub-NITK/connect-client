@@ -1,8 +1,8 @@
-/* eslint-disable react/prop-types */ // TODO: upgrade to latest eslint tooling
 import React, { useEffect, useRef } from "react";
-import {Link, useHistory } from "react-router-dom";
+import  {Link, useHistory } from "react-router-dom";
 import styles from "./blogStyles";
 import "./Blogs.css";
+import PropTypes from "prop-types";
 import { Button, DropdownButton, Dropdown } from "react-bootstrap";
 
 const BlogTile = (props) => {
@@ -36,7 +36,8 @@ const BlogTile = (props) => {
     });
 
     useEffect(() => {
-        pRef.current.innerHTML = text.substring(0, 400).trim();
+        const descText = text.replace(undefined,"");
+        pRef.current.innerHTML = descText.substring(0, 400).trim();
     }, []);
 
     return (
@@ -99,5 +100,12 @@ const BlogTile = (props) => {
         </div>
     );
 };
+
+BlogTile.propTypes = {
+    props : PropTypes.node,
+    details : PropTypes.node,
+    description: PropTypes.node,
+    handleBlogDelete: PropTypes.node,
+}
 
 export default BlogTile;
