@@ -89,6 +89,30 @@ const getBlogTitles = async (title) => {
     }
 };
 
+const likeBlog = async (accessToken, id) => {
+    try {
+        const headers = {'Authorization': `Bearer ${accessToken}`}
+        const response = axios.put(`${url}/${id}/like`, {}, {headers})
+
+        return response
+    } catch (err) {
+        console.log(err)
+        throw new Error('Couldn\'t like the blog')
+    }
+}
+
+const unlikeBlog = async (accessToken, id) => {
+    try {
+        const headers = {'Authorization': `Bearer ${accessToken}`}
+        const response = axios.put(`${url}/${id}/unlike`, {}, {headers})
+
+        return response
+    } catch (err) {
+        console.log(err)
+        throw new Error('Couldn\'t unlike the blog')
+    }
+}
+
 export {
     saveBlog,
     updateBlog,
@@ -98,4 +122,6 @@ export {
     getBlogsByTags,
     getSearchBlogs,
     getBlogTitles,
+    likeBlog,
+    unlikeBlog
 };
