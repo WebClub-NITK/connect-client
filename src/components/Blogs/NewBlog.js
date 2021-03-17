@@ -8,9 +8,17 @@ import { useHistory } from 'react-router-dom'
 import styles from './blogStyles'
 import { Prompt } from 'react-router-dom'
 import { SERVER_URL } from '../../services/config'
+import ErrorMessage from './ErrorMessage';
 
 const NewBlog = () => {
     let history = useHistory();
+    const [errorMessage, setErrorMessage] = useState(null)
+
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (!accessToken) {
+        return (<h1>Please login to post a blog.</h1>)
+    }
 
     const [coverUrl, setCoverUrl] = useState(null)
     // store the image urls sent to server, .current property stores the list
@@ -70,29 +78,37 @@ const NewBlog = () => {
     }
 
     const handleSubmitPost = async () => {
-        const title = document.getElementById('title').value
-        const tags = document.getElementById('tags').value.split(',').map(item => item.trim())
-        const body = await getBody()
-        // image urls used in the post
-        let usedImageUrls = []
-        body.blocks.forEach(block => {
-            if (block.type && block.type === 'image') {
-                if (block.data.file.from_server) {
-                    usedImageUrls.push(block.data.file.url)
+        try{
+
+            const title = document.getElementById('title').value
+            const tags = document.getElementById('tags').value.split(',').map(item => item.trim())
+            const body = await getBody()
+    
+            const response = await saveBlog(accessToken, {title, body, tags, coverImageUrl: coverUrl})
+    
+            // image urls used in the post
+            let usedImageUrls = []
+            body.blocks.forEach(block => {
+                if (block.type && block.type === 'image') {
+                    if (block.data.file.from_server) {
+                        usedImageUrls.push(block.data.file.url)
+                    }
                 }
-            }
-        });
-
-        // push the cover Url in UsedImagesUrl
-        usedImageUrls.push(coverUrl)
-
-        // updating the reference with unused image urls
-        imageUrlsReference.current = imageUrlsReference.current.filter(url => !usedImageUrls.includes(url))
-
-        // delete the unused images
-        cleanUp()
-        const response = await saveBlog({ title, body, tags, coverImageUrl: coverUrl })
-        history.push(`/blogs/${response._id}?new=true`)
+            });
+    
+            // push the cover Url in UsedImagesUrl
+            usedImageUrls.push(coverUrl)
+    
+            // updating the reference with unused image urls
+            imageUrlsReference.current = imageUrlsReference.current.filter(url => !usedImageUrls.includes(url))
+    
+            // delete the unused images
+            cleanUp()
+            // const response = await saveBlog({ title, body, tags, coverImageUrl: coverUrl })
+            history.push(`/blogs/${response._id}?new=true`)
+        }catch(err){
+            setErrorMessage(err.message)
+        }
     }
 
     const handleCoverChange = async (event) => {
@@ -130,6 +146,7 @@ const NewBlog = () => {
                     return true
                 }}
             />
+            <ErrorMessage message={errorMessage} setMessage={setErrorMessage} />
             <div style={{ background: 'lightgray', padding: '50px' }}>
                 <div style={{ width: '50vw', margin: '10px auto', padding: '50px', background: 'white', borderRadius: '10px' }}>
                     <div style={{}}>

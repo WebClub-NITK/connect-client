@@ -13,6 +13,8 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 // other good themes: monokai, sunburst
 import { vs2015 } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { SERVER_URL } from '../../services/config';
+import LikeButton from './LikeButton';
+import VisibilityIcon from '@material-ui/icons/Visibility';
 
 const Component = (props) => {
     const codeString = props.code
@@ -91,7 +93,8 @@ const ViewBlog = (props) => {
             <div style={{ textAlign: 'center' }}>
                 <img style={{ maxWidth: '500px', margin: '50px 0', borderRadius: '5px' }} src={blog.coverImageUrl}></img>
                 <h1>{blog.title}</h1>
-                <p>{blog.tags.map((tag, index) => <span key={index} style={styles.tag}>{tag}</span>)}</p>
+                <p><VisibilityIcon /> {blog.views} <LikeButton likes={blog.likes} blogId={blogId} /></p>
+                <p>{blog.tags.map((tag, index) => <span className="badge bg-secondary" key={index} style={styles.tag}>{tag}</span>)}</p>
                 <p>Updated On: {Date(blog.updatedAt).slice(0, 10).replace(/-/g, "")}</p>
                 <Link style={styles.link} to={`/blogs/${blogId}/update`}><button style={{ padding: '5px 10px', color: 'gray', border: '1px solid gray', background: 'white', borderRadius: '2px' }} >Update</button></Link>
             </div>
