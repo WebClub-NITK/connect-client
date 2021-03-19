@@ -147,7 +147,7 @@ const Signup = () => {
                     </Form.Group>
                     <Form.Group controlId="selectedfile">
                         <div className="col-sm-6 col-md-6 col-lg-6 mx-auto">
-                            <input type="file" onChange={(e) => { selectedfile = e.target.files[0]; }} />
+                            <input type="file" onChange={(e) => { selectedfile = e.target.files[0]; console.log(selectedfile) }} />
                         </div>
                     </Form.Group>
                     <br />
