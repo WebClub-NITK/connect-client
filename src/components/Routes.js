@@ -1,14 +1,12 @@
 import React from 'react'
 
 import {
-  BrowserRouter as Router,
-  Switch, Route,
+    Switch, Route,
 } from "react-router-dom"
-  
+
 import Home from './Home'
 
 
-import UserProfile from './Connect/Profile'
 import Login from './Connect/Login'
 import Signup from './Connect/Signup'
 import Search from './Connect/Search'
@@ -21,34 +19,34 @@ import Profile from './Connect/Profile'
 const Routes = () => {
 
     return (
-      <Router>
+
         <Switch>
-          <Route path="/" exact>
-            <Home />
-          </Route>
-          <Route path="/blogs">
-            <BlogsRouter />
-          </Route>
-          <Route path="/resourcehub">
-            <ResourceRouter/>
-          </Route>
-          <Route path="/profile">
-            <Profile />
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/signup" exact>
-            <Signup />
-          </Route>
-          <Route path="/search" exact>
-            <Search />
-          </Route>
-          <Route path="/annoSignup" exact>
-            <AnnoSignup />
-          </Route>
+            <Route path="/" exact>
+                <Home />
+            </Route>
+            <Route path="/blogs">
+                <BlogsRouter />
+            </Route>
+            <Route path="/resourcehub">
+                <ResourceRouter />
+            </Route>
+            <Route path="/profile">
+                <Profile />
+            </Route>
+            <Route path="/login">
+                <Login />
+            </Route>
+            <Route path="/signup" exact>
+                <Signup />
+            </Route>
+            <Route path="/search" exact>
+                <Search />
+            </Route>
+            <Route path="/annoSignup" exact>
+                <AnnoSignup />
+            </Route>
         </Switch>
-      </Router>   
+
     )
 }
 

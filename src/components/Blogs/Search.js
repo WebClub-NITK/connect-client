@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation} from "react-router-dom";
 import { getSearchBlogs } from "../../services/blogsService";
 import BlogTile from "../Blogs/BlogTile";
 import Pagination from "./Pagination";
@@ -7,67 +7,67 @@ import LiveSearch from "./LiveSearch";
 import LoadingComponent from "./LoadingComponent";
 
 const Search = () => {
-  const [searchBlogs, setBlogs] = useState([]);
-  const [loaded, setLoaded] = useState(false);
+    const [searchBlogs, setBlogs] = useState([]);
+    const [loaded, setLoaded] = useState(false);
 
-  const [pageNumber, setPageNumber] = useState(1);
-  const [blogsPerPage] = useState(10);
-  const [numberOfBlogs, setNumberOfBlogs] = useState(0);
+    const [pageNumber, setPageNumber] = useState(1);
+    const [blogsPerPage] = useState(10);
+    const [numberOfBlogs, setNumberOfBlogs] = useState(0);
 
-  const { search } = useLocation();
-  const searchParams = new URLSearchParams(search);
-  const title = searchParams.get("q");
+    const { search } = useLocation();
+    const searchParams = new URLSearchParams(search);
+    const title = searchParams.get("q");
 
-  useEffect(async () => {
-    setLoaded(false);
-    setTimeout(getBlogs, 300);
-  }, [title, pageNumber]);
+    useEffect(async () => {
+        setLoaded(false);
+        setTimeout(getBlogs, 300);
+    }, [title, pageNumber]);
 
-  const getBlogs = async () => {
-    const searchBlogs = await getSearchBlogs(title, pageNumber);
-    if (searchBlogs) {
-      setBlogs(searchBlogs.blogs);
-      setNumberOfBlogs(searchBlogs.count);
-      setLoaded(true);
+    const getBlogs = async () => {
+        const searchBlogs = await getSearchBlogs(title, pageNumber);
+        if (searchBlogs) {
+            setBlogs(searchBlogs.blogs);
+            setNumberOfBlogs(searchBlogs.count);
+            setLoaded(true);
+        }
+    };
+
+    if (!loaded) {
+        return <LoadingComponent />;
     }
-  };
 
-  if (!loaded) {
-    return <LoadingComponent />;
-  }
+    if (!searchBlogs) {
+        return <h2>No blogs found</h2>;
+    }
 
-  if (!searchBlogs) {
-    return <h2>No blogs found</h2>;
-  }
+    const paginate = (currentPageNumber) => {
+        setPageNumber(currentPageNumber);
+    };
 
-  const paginate = (currentPageNumber) => {
-    setPageNumber(currentPageNumber);
-  };
-
-  return (
-    <div>
-      <LiveSearch />
-      <h2 style={{ textAlign: "center" }}>Search results: {title}</h2>
-      {searchBlogs.length != 0 ? (
-        searchBlogs
-          .slice(0, 10)
-          .map((blog) => (
-            <BlogTile
-              key={blog._id}
-              details={blog}
-              description={JSON.parse(blog.body).blocks}
+    return (
+        <div>
+            <LiveSearch />
+            <h2 style={{ textAlign: "center" }}>Search results: {title}</h2>
+            {searchBlogs.length != 0 ? (
+                searchBlogs
+                    .slice(0, 10)
+                    .map((blog) => (
+                        <BlogTile
+                            key={blog._id}
+                            details={blog}
+                            description={JSON.parse(blog.body).blocks}
+                        />
+                    ))
+            ) : (
+                <h4>No blogs found</h4>
+            )}
+            <Pagination
+                totalBlogs={numberOfBlogs}
+                blogsPerPage={blogsPerPage}
+                paginate={paginate}
             />
-          ))
-      ) : (
-        <h4>No blogs found</h4>
-      )}
-      <Pagination
-        totalBlogs={numberOfBlogs}
-        blogsPerPage={blogsPerPage}
-        paginate={paginate}
-      />
-    </div>
-  );
+        </div>
+    );
 };
 
 export default Search;
