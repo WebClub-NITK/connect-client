@@ -4,6 +4,8 @@ import { addComment, createNewResource, getAllComments, getCourse, getResourcesF
 import { useParams } from 'react-router-dom'
 import { Button, Card, Container, Form, InputGroup, Jumbotron, Row } from 'react-bootstrap'
 import Comments from './Comments/Comments'
+import { Link } from "react-router-dom"
+import BlogsFromTag from '../Blogs/BlogsFromTag'
 
 
 const Resources = () => {
@@ -97,6 +99,7 @@ const Resources = () => {
         <div>
             <Jumbotron>
                 <h1 className="p-5 display-4">{course.name}</h1>
+                <Link to={`/blogs/new?tag=${course.code}`}>Add Blog here</Link>
             </Jumbotron>
             <Container>
                 <div className="padding"> 
@@ -166,6 +169,8 @@ const Resources = () => {
                         </div>
                     </Row>
                 </div>
+
+                <BlogsFromTag tag={course.code} />
 
                 <div className="padding">
                     <h2>Comments</h2>
