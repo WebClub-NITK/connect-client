@@ -85,7 +85,6 @@ BlogTile.propTypes = {
     props : PropTypes.node,
     details : PropTypes.node,
     description: PropTypes.node,
-    handleBlogDelete: PropTypes.node,
 }
 
 export default BlogTile;
