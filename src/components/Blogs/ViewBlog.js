@@ -49,16 +49,17 @@ const ViewBlog = (props) => {
         window.scrollTo(0, 0)
         const blog = await getBlogById(blogId)
         const params = new URLSearchParams(window.location.search);
+        const url_parts = window.location.hash.split('?')
 
         setLoaded(true)
         if (blog) {
             setBlog(blog)
-            if (params.get('new')) {
-                history.pushState({}, null, `${SERVER_URL}/blogs/${blogId}`)
+            if (url_parts.length > 1 && url_parts[1].split('=')[1] == 'true') {
                 setTimeout(() => {
                     setConfeti(true)
                 }, 1000);
             }
+            window.history.pushState({}, null, `#/blogs/${blogId}/${blog.title.split(' ').join('-')}`)
         }
     }, [])
 
