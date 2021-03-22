@@ -17,8 +17,6 @@ const UserBlogs = () => {
         setLoading(true);
     }, [params]);
 
-    console.log(userBlogs);
-
     if (!loading) {
         return <LoadingComponent />
     }
@@ -33,7 +31,6 @@ const UserBlogs = () => {
             <h2>User Blogs</h2>
             {userBlogs ? (
                 userBlogs
-                    .slice(0, 10)
                     .map((blog) => (
                         <BlogTile
                             key={blog._id}
