@@ -58,6 +58,14 @@ const NewBlog = () => {
     // to ask for confirmation before leaving website
     useEffect(() => {
         window.addEventListener('beforeunload', cleanUp)
+
+        const url_parts = window.location.hash.split('?')
+
+        if(url_parts.length !== 1) {
+            document.getElementById('tags').value = url_parts[1].split('=')[1]
+        }
+
+
         return () => {
             window.removeEventListener('beforeunload', cleanUp)
         }

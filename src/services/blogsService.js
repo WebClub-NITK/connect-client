@@ -11,18 +11,18 @@ const getAllBlogs = async (pageNumber) => {
 
 const saveBlog = async (accessToken, { title, body, tags, coverImageUrl }) => {
     try {
-        const headers = {'Authorization': `Bearer ${accessToken}`}
-        const savedBlog = await axios.post(url, { title, body, tags, coverImageUrl }, {headers});
+        const headers = { 'Authorization': `Bearer ${accessToken}` }
+        const savedBlog = await axios.post(url, { title, body, tags, coverImageUrl }, { headers });
         return savedBlog.data;
-    } catch(err) {
+    } catch (err) {
         console.log(err)
         throw new Error('Blog couldn\'t be saved')
     }
 }
 
 const updateBlog = async (accessToken, id, { title, body, tags, coverImageUrl }) => {
-    try{
-        const headers = {'Authorization': `Bearer ${accessToken}`}
+    try {
+        const headers = { 'Authorization': `Bearer ${accessToken}` }
         const updatedBlog = await axios.put(`${url}/${id}`, {
             title,
             body,
@@ -31,7 +31,7 @@ const updateBlog = async (accessToken, id, { title, body, tags, coverImageUrl })
         }, { headers });
         return updatedBlog.data;
 
-    } catch(err) {
+    } catch (err) {
         console.log(err)
         throw new Error('Blog couldn\'t be updated')
     }
@@ -91,8 +91,8 @@ const getBlogTitles = async (title) => {
 
 const likeBlog = async (accessToken, id) => {
     try {
-        const headers = {'Authorization': `Bearer ${accessToken}`}
-        const response = axios.put(`${url}/${id}/like`, {}, {headers})
+        const headers = { 'Authorization': `Bearer ${accessToken}` }
+        const response = axios.put(`${url}/${id}/like`, {}, { headers })
 
         return response
     } catch (err) {
@@ -103,13 +103,23 @@ const likeBlog = async (accessToken, id) => {
 
 const unlikeBlog = async (accessToken, id) => {
     try {
-        const headers = {'Authorization': `Bearer ${accessToken}`}
-        const response = axios.put(`${url}/${id}/unlike`, {}, {headers})
+        const headers = { 'Authorization': `Bearer ${accessToken}` }
+        const response = axios.put(`${url}/${id}/unlike`, {}, { headers })
 
         return response
     } catch (err) {
         console.log(err)
         throw new Error('Couldn\'t unlike the blog')
+    }
+}
+
+const getUserBlogs = async (userId) => {
+    try {
+        const userBlogs = await axios.get(`${url}//profile/${userId}`);
+        return userBlogs.data;
+    } catch (e) {
+        console.log(e);
+        throw new Error('Couldn\'t get user blogs');
     }
 }
 
@@ -123,5 +133,6 @@ export {
     getSearchBlogs,
     getBlogTitles,
     likeBlog,
-    unlikeBlog
+    unlikeBlog,
+    getUserBlogs
 };
