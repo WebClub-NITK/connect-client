@@ -107,6 +107,10 @@ const updateProfile = async ({ email, name, ptype, branch, semester }) => {
     }
 }
 
+const updatepass = async({password,token}) => {
+    axios.post(baseUrl + "/updatepass",{"password": password,"token": token});
+}
+
 export {
     authLogin,
     signup,
@@ -114,5 +118,6 @@ export {
     RetreiveInfo,
     search,
     leaderboard,
-    updateProfile
+    updateProfile,
+    updatepass
 }

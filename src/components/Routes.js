@@ -10,6 +10,7 @@ import Home from './Home'
 import Login from './Connect/Login'
 import Signup from './Connect/Signup'
 import Search from './Connect/Search'
+import Updatepass from './Connect/Updatepass'
 
 import BlogsRouter from './Blogs/BlogsRouter'
 import ResourceRouter from './Resources/ResourceRouter'
@@ -44,6 +45,9 @@ const Routes = () => {
             </Route>
             <Route path="/annoSignup" exact>
                 <AnnoSignup />
+            </Route>
+            <Route path="/updatepass/:token" exact>
+                <Updatepass />
             </Route>
         </Switch>
 
