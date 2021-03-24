@@ -14,6 +14,7 @@ const Login = () => {
     const [userId, setUserId] = useState("");
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
+    const [forgotpass,setForgotPass] = useState(false);
 
     const validateForm = () => {
         if (username.length <= 0) {
@@ -61,6 +62,14 @@ const Login = () => {
             setShowToast(true);
             setToastMessage(response);
         }
+    }
+
+    if(forgotpass)
+    {
+        return <Redirect to={{
+            pathname: '/connect/forgotpassword'
+        }}
+        />
     }
 
     if (loginstate) {
@@ -112,6 +121,12 @@ const Login = () => {
                     <div className="col-sm-3 col-md-3 col-lg-3 mx-auto">
                         <Button block type="submit">
                             Login
+                        </Button>
+                    </div>
+                    <br />
+                    <div className="col-sm-3 col-md-3 col-lg-3 mx-auto">
+                        <Button block onClick={() => setForgotPass(true)}>
+                            Forgot Password
                         </Button>
                     </div>
                 </Form>

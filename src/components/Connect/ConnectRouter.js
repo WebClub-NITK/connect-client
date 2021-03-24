@@ -13,6 +13,7 @@ import Search from './Search'
 import Updatepass from './Updatepass'
 import AnnoSignup from './AnnoSignup'
 import Profile from './Profile'
+import ForgotPassword from './Forgotpassword'
 
 const ConnectRouter = () => {
     let match = useRouteMatch();
@@ -33,6 +34,9 @@ const ConnectRouter = () => {
                 </Route>
                 <Route path={`${match.path}/annoSignup`}>
                     <AnnoSignup />
+                </Route>
+                <Route path={`${match.path}/forgotpassword`}>
+                    <ForgotPassword />
                 </Route>
                 <Route path={`${match.path}/updatepass/:token`}>
                     <Updatepass />

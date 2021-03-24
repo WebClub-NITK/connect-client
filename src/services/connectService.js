@@ -112,6 +112,10 @@ const updatepass = async({password,token}) => {
     axios.post(baseUrl + "/updatepass",{"password": password,"token": token});
 }
 
+const forgotpass = async({username}) => {
+    return axios.post(baseUrl + "/forgotpass",{"username":username});
+}
+
 export {
     authLogin,
     signup,
@@ -120,5 +124,6 @@ export {
     search,
     leaderboard,
     updateProfile,
-    updatepass
+    updatepass,
+    forgotpass
 }
