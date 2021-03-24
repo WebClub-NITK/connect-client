@@ -9,7 +9,7 @@ import Button from "react-bootstrap/Button";
 const Profile = () => {
     if (!localStorage.getItem('UserId')) {
         return <Redirect to={{
-            pathname: '/login'
+            pathname: '/connect/login'
         }}
         />
     }
@@ -61,7 +61,7 @@ const Profile = () => {
     }
     if (noUser) {
         return <Redirect to={{
-            pathname: '/login'
+            pathname: '/connect/login'
         }}
         />
     }

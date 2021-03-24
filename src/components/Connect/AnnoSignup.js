@@ -43,7 +43,7 @@ const AnnoSignup = () => {
         const response = await annoSignup({ username, password });
         if (response === null) {
             return <Redirect to={{
-                pathname: '/login'
+                pathname: '/connect/login'
             }}
             />
         }
@@ -65,7 +65,7 @@ const AnnoSignup = () => {
 
     if (signupstate) {
         return <Redirect to={{
-            pathname: '/profile'
+            pathname: '/connect/profile'
         }}
         />
     }

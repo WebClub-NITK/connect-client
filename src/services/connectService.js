@@ -108,7 +108,12 @@ const updateProfile = async ({ email, name, ptype, branch, semester }) => {
 }
 
 const updatepass = async({password,token}) => {
+    console.log(token,password)
     axios.post(baseUrl + "/updatepass",{"password": password,"token": token});
+}
+
+const forgotpass = async({username}) => {
+    return axios.post(baseUrl + "/forgotpass",{"username":username});
 }
 
 export {
@@ -119,5 +124,6 @@ export {
     search,
     leaderboard,
     updateProfile,
-    updatepass
+    updatepass,
+    forgotpass
 }
