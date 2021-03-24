@@ -27,10 +27,10 @@ const MainNavbar = () => {
                     <LinkContainer to="/resourcehub">
                         <Nav.Link>Resource Hub</Nav.Link>
                     </LinkContainer>
-                    <LinkContainer to="/profile">
+                    <LinkContainer to="/connect/profile">
                         <Nav.Link>Profile</Nav.Link>
                     </LinkContainer>
-                    <LinkContainer to="/search">
+                    <LinkContainer to="/connect/search">
                         <Nav.Link>Search</Nav.Link>
                     </LinkContainer>
                 </Nav>

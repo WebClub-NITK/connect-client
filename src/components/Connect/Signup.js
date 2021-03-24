@@ -81,7 +81,7 @@ const Signup = () => {
 
     if (signupstate) {
         return <Redirect to={{
-            pathname: '/profile'
+            pathname: '/connect/profile'
         }}
         />
     }

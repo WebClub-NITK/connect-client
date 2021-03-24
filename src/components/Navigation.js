@@ -11,12 +11,12 @@ const Nav = () => {
     return(
         <div>
             <Link style={padding} to='/'>Home</Link>
-            <Link style={padding} to='/profile'>Profile</Link>
             <Link style={padding} to='/resourcehub'>Resource Hub</Link>
             <Link style={padding} to='/blogs'>Blogs</Link>
-            <Link style={padding} to='/login'>Login</Link>
-            <Link style={padding} to='/signup'>Signup</Link>
-            <Link style={padding} to='/search'>Search</Link>
+            <Link style={padding} to='/connect/login'>Login</Link>
+            <Link style={padding} to='/connect/signup'>Signup</Link>
+            <Link style={padding} to='/connect/search'>Search</Link>
+            <Link style={padding} to='/connect/profile'>Profile</Link>
         </div>
     )
 }
