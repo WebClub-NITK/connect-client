@@ -50,6 +50,8 @@ const AnnoSignup = () => {
         if (response && typeof response !== 'string' && !(response instanceof Array)) {
             localStorage.setItem('secondaryToken', response.accessToken);
             localStorage.setItem('secondaryUserId', response.userId);
+            localStorage.setItem('secondaryUsername', response.username);
+            localStorage.setItem('secType', response.anonymous ? 1 : 2);
             setSignup(true);
         } else {
             setShowToast(true);

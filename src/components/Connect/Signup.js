@@ -71,6 +71,8 @@ const Signup = () => {
         if (response && typeof response !== 'string' && !(response instanceof Array)) {
             localStorage.setItem('accessToken', response.accessToken);
             localStorage.setItem('UserId', response.userId);
+            localStorage.setItem('username', response.username);
+            localStorage.setItem('type', response.anonymous ? 1 : 2);
             setSignup(true);
         } else {
             setShowToast(true);
