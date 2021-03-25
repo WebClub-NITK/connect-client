@@ -39,23 +39,33 @@ const Login = () => {
         const password = document.getElementById("password").value;
         const response = await authLogin({ username, password });
         if (response && typeof response !== 'string' && response.accessToken) {
-            let token = localStorage.getItem('accessToken')
-            console.log(!token)
+            let token = localStorage.getItem('accessToken');
             if (!token) {
                 localStorage.setItem("accessToken", response.accessToken);
                 localStorage.setItem('secondaryToken', '');
-                localStorage.setItem('UserId', response.userId)
-                localStorage.setItem('secondaryUserId', '')
+                localStorage.setItem('UserId', response.userId);
+                localStorage.setItem('secondaryUserId', '');
+                localStorage.setItem('username', response.username);
+                localStorage.setItem('secondaryUsername', '');
+                localStorage.setItem('type', response.anonymous ? 1 : 2);
+                localStorage.setItem('secType', '');
             }
             else {
-                let tmp1 = localStorage.getItem('accessToken').toString()
-                let tmp2 = localStorage.getItem('UserId', response.userId)
-                localStorage.setItem('secondaryUserId', tmp2)
-                localStorage.setItem('UserId', response.userId)
-                localStorage.setItem('secondaryToken', tmp1)
-                localStorage.setItem('accessToken', response.accessToken)
+                let tmp1 = localStorage.getItem('accessToken').toString();
+                let tmp2 = localStorage.getItem('UserId');
+                let tmp3 = localStorage.getItem('username');
+                let tmp4 = localStorage.getItem('type');
+                localStorage.setItem('secondaryUserId', tmp2);
+                localStorage.setItem('UserId', response.userId);
+                localStorage.setItem('secondaryToken', tmp1);
+                localStorage.setItem('accessToken', response.accessToken);
+                localStorage.setItem('username', response.username);
+                localStorage.setItem('secondaryUsername', tmp3);
+                localStorage.setItem('type', response.anonymous ? 1 : 2);
+                localStorage.setItem('secType', tmp4);
             }
-            localStorage.setItem('UserId', response.userId)
+            localStorage.setItem('UserId', response.userId);
+            localStorage.setItem('upNav', '1');
             setUserId(response.userId);
             setLogin(true);
         } else {
