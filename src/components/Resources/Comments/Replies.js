@@ -2,20 +2,21 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types';
 import { Accordion, Button, Card, Form, InputGroup } from 'react-bootstrap'
 import {addReply} from '../../../services/resourceService'
+import { useHistory } from 'react-router';
 
 const Replies = ({replies, commentId, resetComments}) => {
 
     const [newReply, setNewReply] = useState("");
 
+    const history = useHistory()
+
     const postReply = async () => {
 
-        const reply = {
-            text: newReply,
-            likes: 0,
-            dislikes: 0
+        if (!localStorage.getItem('UserId')) {
+            history.push('/connect/login')
         }
         
-        await addReply(reply, commentId)
+        await addReply(newReply, commentId)
 
         await resetComments()
 
@@ -51,7 +52,7 @@ const Replies = ({replies, commentId, resetComments}) => {
                                 return (
                                     <div className="mb-2" key={index}>
                                         <div>
-                                            <div><strong>Username</strong></div>
+                                            <div><strong>{item.user.Username}</strong></div>
                                             {item.text}
                                         </div>
                                     </div>
