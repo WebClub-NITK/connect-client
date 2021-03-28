@@ -1,7 +1,7 @@
 import { SERVER_URL } from "../../services/config"
 
 const Toggel = () => {
-    if(localStorage.getItem('secondaryToken') === null || localStorage.getItem('secondaryToken').toString().length === 0)
+    if(localStorage.getItem('secondaryToken') === null || localStorage.getItem('secondaryToken') === '')
     {
         let tmp = localStorage.getItem('accessToken').toString()
         localStorage.getItem('secondaryToken',tmp)
@@ -17,7 +17,16 @@ const Toggel = () => {
         tmp2 = localStorage.getItem('secondaryUserId').toString()
         localStorage.setItem('secondaryUserId', tmp1)
         localStorage.setItem('UserId', tmp2)
+        tmp1 = localStorage.getItem('username');
+        tmp2 = localStorage.getItem('secondaryUsername');
+        localStorage.setItem('username', tmp2);
+        localStorage.setItem('secondaryUsername', tmp1);
+        tmp1 = localStorage.getItem('type');
+        tmp2 = localStorage.getItem('secType');
+        localStorage.setItem('type', tmp2);
+        localStorage.setItem('secType', tmp1);
     }
+    window.location.reload();
 }
 
 export default Toggel

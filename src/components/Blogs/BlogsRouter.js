@@ -13,6 +13,7 @@ import Tags from "./Tags";
 import ViewBlog from "./ViewBlog";
 import UpdateBlog from "./UpdateBlog";
 import Search from "./Search";
+import UserBlogs from "./UserBlogs";
 
 const BlogsRouter = () => {
     let match = useRouteMatch();
@@ -31,6 +32,9 @@ const BlogsRouter = () => {
                 </Route>
                 <Route path={`${match.path}/tag/:tag`}>
                     <Tags />
+                </Route>
+                <Route path={`${match.path}/profile/:userid`}>
+                    <UserBlogs />
                 </Route>
                 <Route path={`${match.path}/:blogId`}>
                     <ViewBlog />

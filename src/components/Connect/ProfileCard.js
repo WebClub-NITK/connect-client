@@ -4,16 +4,18 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import ListGroupItem from 'react-bootstrap/ListGroupItem';
 import './img.css'
 import profilepic from "../../assets/logo.png";
+import {SERVER_URL} from "../../services/config"
 
 const ProfileCard = (props) => {
     const user = props.user;
     const jsonInfo = props.jsonInfo;
     if (user) {
+        let profileurl = `${SERVER_URL}/profiles/${user.Username}`
         if (user.Profile) {
             return (
                 <div style={{ width: '36rem', marginTop: '8em', marginRight: '4.8em', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <Card style={{ width: '36rem' }}>
-                        <img src={user.profileurl} alt={'profilepic'} style={{ objectFit: 'contain' }} className="circular" />
+                        <img src={profileurl} alt={'profilepic'} style={{ objectFit: 'contain' }} className="circular" />
                         <Card.Body>
                             <Card.Title style={{ textAlign: "center", fontSize: "2.4em" }}>{user.Username}</Card.Title>
                         </Card.Body>

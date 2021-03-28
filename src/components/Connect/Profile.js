@@ -9,9 +9,13 @@ import Button from "react-bootstrap/Button";
 const Profile = () => {
     if (!localStorage.getItem('UserId')) {
         return <Redirect to={{
-            pathname: '/login'
+            pathname: '/connect/login'
         }}
         />
+    }
+    if (localStorage.getItem('upNav') === '1') {
+        localStorage.removeItem('upNav');
+        window.location.reload();
     }
     let userId = localStorage.getItem('UserId').toString();
     const [jsonInfo, setJsonInfo] = useState(null);
@@ -61,7 +65,7 @@ const Profile = () => {
     }
     if (noUser) {
         return <Redirect to={{
-            pathname: '/login'
+            pathname: '/connect/login'
         }}
         />
     }
@@ -81,10 +85,10 @@ const Profile = () => {
         if (user.Profile) {
             return (
                 <div>
-                    {user.Profile.AnnouserSet === null ? (
+                    {(user.Profile.AnnouserSet === null || user.Profile.AnnouserSet === false) ? (
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                             <h4>Profile</h4>
-                            <Link to='/annoSignup'>Anonymous Signup</Link>
+                            <Link to='/connect/annoSignup'>Anonymous Signup</Link>
                         </div>
                     ) : (<h4 style={{ textAlign: "center" }}>Profile</h4>)}
                     <div style={{ display: "flex", flexDirection: "row", justifyContent: "center" }}>

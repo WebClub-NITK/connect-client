@@ -1,14 +1,14 @@
-/* eslint-disable react/prop-types */ // TODO: upgrade to latest eslint tooling
 import React, { useEffect, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
+import  {Link, useHistory } from "react-router-dom";
 import styles from "./blogStyles";
 import "./Blogs.css";
 import { Button, DropdownButton,Dropdown } from "react-bootstrap";
 import { SERVER_URL } from "../../services/config";
+import PropTypes from "prop-types";
 
 const BlogTile = (props) => {
     const pRef = useRef();
-    const updateURL = `/blogs/${props.details._id}/update`;
+    // const updateURL = `/blogs/${props.details._id}/update`;
     let history = useHistory();
     const imageURL =
         props.details.coverImageUrl ||
@@ -33,46 +33,27 @@ const BlogTile = (props) => {
     let description = props.description;
     if (description == null) return;
     description.map((des) => {
-        text = text + " " + des.data.text;
+        text = text + " " + (des.data.text || " ");
     });
 
     useEffect(() => {
-        const descText = text.replace("undefined", "");
+        const descText = text.replace(undefined,"");
         pRef.current.innerHTML = descText.substring(0, 400).trim();
     }, []);
 
     return (
         <div className="blog-card">
             <img className="blog-img" src={imageURL}></img>
-            <div>
-                <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                    }}
-                >
-                    <h3 className="card-title">
-                        <Link style={styles.link} to={`/blogs/${props.details._id}`}>
+            <div style={{width:'100%'}}>
+                <div  className="row justify-content-between">
+                    <div className="col-10">
+                        <h3 className="card-title"><Link style={styles.link} to={`/blogs/${props.details._id}`}>
                             {props.details.title}
-                        </Link>
-                    </h3>
-                    <DropdownButton
-                        className="dropdownButton"
-                        id="dropdown-basic-button"
-                        title="Options"
-                        variant="secondary"
-                    >
-                        <Dropdown.Item href={updateURL}>Update</Dropdown.Item>
-                        <span
-                            onClick={() => {
-                                props.handleBlogDelete(props.details._id);
-                            }}
-                        >
-                            <Dropdown.Item>Delete</Dropdown.Item>
-                        </span>
-                    </DropdownButton>
+                        </Link></h3>
+                    </div>
                 </div>
+                    
+                
                 {props.details.tags.map((tag, index) => (
                     <span
                         onClick={handleTagsClick}
@@ -96,10 +77,37 @@ const BlogTile = (props) => {
                     variant="dark"
                 >
                     Read more
+     
                 </Button>
             </div>
         </div>
     );
 };
 
+BlogTile.propTypes = {
+    props : PropTypes.node,
+    details : PropTypes.node,
+    description: PropTypes.node,
+}
+
 export default BlogTile;
+
+// Options 
+
+{/* <DropdownButton
+                            className="dropdownButton"
+                            id="dropdown-basic-button"
+                            title="Options"
+                            variant="secondary"
+                        >
+                            <Dropdown.Item href={updateURL}>Update</Dropdown.Item>
+                            <span
+                                onClick={() => {
+             
+                                    props.handleBlogDelete(props.details._id);
+                                }}
+             
+                            >
+                                <Dropdown.Item>Delete</Dropdown.Item>
+                            </span>
+                        </DropdownButton> */}

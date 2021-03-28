@@ -6,6 +6,7 @@ import "./login.css";
 import { Redirect } from 'react-router-dom';
 import { signup } from '../../services/connectService';
 import { SERVER_URL } from "../../services/config";
+import GoogleLogin from 'react-google-login'
 
 // const baseUrl = "http://localhost:3001/connect";
 const baseUrl = `${SERVER_URL}/connect`
@@ -50,6 +51,10 @@ const Signup = () => {
         return username.length > 0 && password.length >= 8 && password === repassword && email.length > 0 && email.match(regex);
     }
 
+    const responsegoogle = (res) => {
+        setEmail(res.profileObj.email);
+    }
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (!validateForm()) {
@@ -66,6 +71,8 @@ const Signup = () => {
         if (response && typeof response !== 'string' && !(response instanceof Array)) {
             localStorage.setItem('accessToken', response.accessToken);
             localStorage.setItem('UserId', response.userId);
+            localStorage.setItem('username', response.username);
+            localStorage.setItem('type', response.anonymous ? 1 : 2);
             setSignup(true);
         } else {
             setShowToast(true);
@@ -81,7 +88,7 @@ const Signup = () => {
 
     if (signupstate) {
         return <Redirect to={{
-            pathname: '/profile'
+            pathname: '/connect/profile'
         }}
         />
     }
@@ -100,17 +107,6 @@ const Signup = () => {
                     alignItems: "center"
                 }}>Sign Up</h1>
                 <Form onSubmit={handleSubmit}>
-                    <Form.Group controlId="email">
-                        <div className="col-sm-6 col-md-6 col-lg-6 mx-auto">
-                            <Form.Label>Email</Form.Label>
-                            <Form.Control
-                                autoFocus
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                        </div>
-                    </Form.Group>
                     <br />
                     <Form.Group controlId="username">
                         <div className="col-sm-6 col-md-6 col-lg-6 mx-auto">
@@ -144,9 +140,20 @@ const Signup = () => {
                             />
                         </div>
                     </Form.Group>
+                    <Form.Group controlId="email">
+                        <div className="col-sm-6 col-md-6 col-lg-6 mx-auto">
+                            <GoogleLogin
+                                clientId="85087114323-nmfhkspttd354dcpunkrkonclm1vobit.apps.googleusercontent.com"
+                                buttonText="Email"
+                                onSuccess={responsegoogle}
+                                onFailure={responsegoogle}
+                                cookiePolicy={'single_host_origin'}
+                            />
+                        </div>
+                    </Form.Group>
                     <Form.Group controlId="selectedfile">
                         <div className="col-sm-6 col-md-6 col-lg-6 mx-auto">
-                            <input type="file" onChange={(e) => { selectedfile = e.target.files[0]; }} />
+                            <input type="file" onChange={(e) => { selectedfile = e.target.files[0]; console.log(selectedfile) }} />
                         </div>
                     </Form.Group>
                     <br />

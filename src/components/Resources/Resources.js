@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ResourceTile from './Tiles/ResourceTile'
 import { addComment, createNewResource, getAllComments, getCourse, getResourcesForCourse } from '../../services/resourceService'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import { Button, Card, Container, Form, InputGroup, Jumbotron, Row } from 'react-bootstrap'
 import Comments from './Comments/Comments'
 import { Link } from "react-router-dom"
@@ -19,6 +19,8 @@ const Resources = () => {
     const [file, setFile] = useState(null)
     const [filename, setFilename] = useState('Choose File')
     const [newComment, setNewComment] = useState("")
+
+    const history = useHistory()
     
     let { courseId } = useParams();
     
@@ -79,6 +81,11 @@ const Resources = () => {
     }
 
     const postComment = async () => {
+
+        if (!localStorage.getItem('UserId')) {
+            history.push('/connect/login')
+        }
+
         await addComment(newComment, courseId)
 
         await resetComments()

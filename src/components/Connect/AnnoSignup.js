@@ -43,13 +43,15 @@ const AnnoSignup = () => {
         const response = await annoSignup({ username, password });
         if (response === null) {
             return <Redirect to={{
-                pathname: '/login'
+                pathname: '/connect/login'
             }}
             />
         }
         if (response && typeof response !== 'string' && !(response instanceof Array)) {
             localStorage.setItem('secondaryToken', response.accessToken);
             localStorage.setItem('secondaryUserId', response.userId);
+            localStorage.setItem('secondaryUsername', response.username);
+            localStorage.setItem('secType', response.anonymous ? 1 : 2);
             setSignup(true);
         } else {
             setShowToast(true);
@@ -65,7 +67,7 @@ const AnnoSignup = () => {
 
     if (signupstate) {
         return <Redirect to={{
-            pathname: '/profile'
+            pathname: '/connect/profile'
         }}
         />
     }

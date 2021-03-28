@@ -84,7 +84,11 @@ const getAllComments = async (courseId) => {
 }
 
 const addComment = async (comment, courseId) => {
-    const commentStatus = await axios.post(`${url}/course/${courseId}/comments`, {comment})
+    const commentStatus = await axios.post(`${url}/course/${courseId}/comments`, {comment}, {
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+        }
+    })
     console.log(commentStatus);
     if(commentStatus == 422)
     {
@@ -97,7 +101,11 @@ const addComment = async (comment, courseId) => {
 }
 
 const addReply = async (reply, commentId) => {
-    const replyStatus = await  axios.put(`${url}/course/comments/${commentId}`, {reply})
+    const replyStatus = await  axios.put(`${url}/course/comments/${commentId}`, {reply}, {
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+        }
+    })
     console.log(replyStatus);
     if(replyStatus == 422)
     {
@@ -117,11 +125,10 @@ const getResourcesForCourse= async (courseId)=>{
 
 const createNewResource = async(course, formData)=>{
 
-    console.log(formData);
-
     const resourceStatus = await axios.post(`${url}/${resourceUrl}/${course}`, formData, {
-        header: {
-            'Content-Type': 'multipart/form-data'
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
         }
     })
     console.log(resourceStatus);

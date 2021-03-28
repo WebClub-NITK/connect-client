@@ -43,7 +43,7 @@ const Home = () => {
                 <img src={Logo} alt={"logo"} style={{ objectFit: "contain" }} />
                 <h1>Connect</h1>
                 <Navigation />
-                {localStorage.getItem("accessToken") !== null ? (
+                {(localStorage.getItem("accessToken") !== null && localStorage.getItem("secondaryToken") !== null && localStorage.getItem("secondaryToken") !== '') ? (
                     <div>
                         <button type="submit" onClick={toggel}>
                             Toggel
@@ -57,7 +57,7 @@ const Home = () => {
                     <Link
                         className="btn btn-primary"
                         style={{ marginTop: "1em" }}
-                        to="/login"
+                        to="/connect/login"
                     >
                         Login
                     </Link>

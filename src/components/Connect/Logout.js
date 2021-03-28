@@ -3,4 +3,4 @@ const logout = () => {
     window.location.reload();
 }
 
-export default logout
+export default logout;
