@@ -2,8 +2,9 @@ import React, { useEffect, useRef } from "react";
 import  {Link, useHistory } from "react-router-dom";
 import styles from "./blogStyles";
 import "./Blogs.css";
+import { Button, DropdownButton,Dropdown } from "react-bootstrap";
+import { SERVER_URL } from "../../services/config";
 import PropTypes from "prop-types";
-import { Button} from "react-bootstrap";
 
 const BlogTile = (props) => {
     const pRef = useRef();
@@ -66,6 +67,8 @@ const BlogTile = (props) => {
                 <p ref={pRef} className="blog_des"></p>
 
                 <p style={styles.date}>{blogDate}</p>
+                <img style={{width: '50px', borderRadius: '5px'}} src={`${SERVER_URL}/profiles/${props.details.author_username}`} />
+                <p>{props.details.author_name} @{props.details.author_username}</p>
                 <Button
                     onClick={() => {
                         history.push(`/blogs/${props.details._id}`);

@@ -96,7 +96,13 @@ const ViewBlog = (props) => {
                 <h1>{blog.title}</h1>
                 <p><VisibilityIcon /> {blog.views} <LikeButton likes={blog.likes} blogId={blogId} /></p>
                 <p>{blog.tags.map((tag, index) => <span className="badge bg-secondary" key={index} style={styles.tag}>{tag}</span>)}</p>
-                <p>Updated On: {Date(blog.updatedAt).slice(0, 10).replace(/-/g, "")}</p>
+                <p>Updated On: {new Date(blog.createdAt).toLocaleDateString("en-US", {
+                    month: "short",
+                    day: "numeric",
+                    weekday: "short",
+                })}</p>
+                <img style={{width: '50px', borderRadius: '5px'}} src={`${SERVER_URL}/profiles/${blog.author_username}`} />
+                <p>{blog.author_name} @{blog.author_username}</p>
                 <Link style={styles.link} to={`/blogs/${blogId}/update`}><button style={{ padding: '5px 10px', color: 'gray', border: '1px solid gray', background: 'white', borderRadius: '2px' }} >Update</button></Link>
             </div>
             <EditorJs
