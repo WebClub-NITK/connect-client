@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */ // TODO: upgrade to latest eslint tooling
 import React, { useEffect, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { useParams, Link } from 'react-router-dom'
@@ -101,8 +99,8 @@ const ViewBlog = (props) => {
                     day: "numeric",
                     weekday: "short",
                 })}</p>
-                <img style={{width: '50px', borderRadius: '5px'}} src={`${SERVER_URL}/profiles/${blog.author_username}`} />
-                <p>{blog.author_name} @{blog.author_username}</p>
+                <img style={{ width: '50px', borderRadius: '5px' }} src={`${SERVER_URL}/profiles/${blog.author_username}`} />
+                <p>{blog.author_name} <Link to={`/blogs/profile/${blog.author_id}`}>@{blog.author_username}</Link></p>
                 <Link style={styles.link} to={`/blogs/${blogId}/update`}><button style={{ padding: '5px 10px', color: 'gray', border: '1px solid gray', background: 'white', borderRadius: '2px' }} >Update</button></Link>
             </div>
             <EditorJs

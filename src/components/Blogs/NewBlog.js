@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */ // TODO: upgrade to latest eslint tooling
 import React, { useRef, useEffect, useState } from 'react'
 import EditorJs from 'react-editor-js';
 import { tools } from './editorConfig'
