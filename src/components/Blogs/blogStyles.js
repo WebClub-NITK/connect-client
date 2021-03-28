@@ -66,6 +66,9 @@ const styles = {
         borderRadius: "2px",
         margin: "0 0.5rem 0 0.5rem"
     },
+    nameLink:{
+        textDecoration:'underline'
+    }
 };
 
 export default styles;

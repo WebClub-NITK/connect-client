@@ -100,7 +100,7 @@ const ViewBlog = (props) => {
                     weekday: "short",
                 })}</p>
                 <img style={{ width: '50px', borderRadius: '5px' }} src={`${SERVER_URL}/profiles/${blog.author_username}`} />
-                <p>{blog.author_name} <Link to={`/blogs/profile/${blog.author_id}`}>@{blog.author_username}</Link></p>
+                <p>{blog.author_name} <Link style={styles.nameLink} to={`/blogs/profile/${blog.author_id}`}>@{blog.author_username}</Link></p>
                 <Link style={styles.link} to={`/blogs/${blogId}/update`}><button style={{ padding: '5px 10px', color: 'gray', border: '1px solid gray', background: 'white', borderRadius: '2px' }} >Update</button></Link>
             </div>
             <EditorJs
