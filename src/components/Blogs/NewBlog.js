@@ -154,7 +154,7 @@ const NewBlog = () => {
             />
             <ErrorMessage message={errorMessage} setMessage={setErrorMessage} />
             <div style={{ background: 'lightgray', padding: '50px' }}>
-                <div style={{ width: '50vw', margin: '10px auto', padding: '50px', background: 'white', borderRadius: '10px' }}>
+                <div style={{ maxWidth: '800px', margin: '10px auto', padding: '50px', background: 'white', borderRadius: '10px' }}>
                     <div style={{}}>
                         {coverUrl && <div style={{ padding: '20px', background: '#e3e6e4', marginBottom: '10px' }}>
                             <img src={coverUrl} style={{ display: 'block', margin: '0 auto 10px auto', maxWidth: '600px', borderRadius: '5px' }}></img>
@@ -164,7 +164,7 @@ const NewBlog = () => {
                             Add a cover image
                         </label>
                         <input id="file-upload" className='cover-input' onChange={handleCoverChange} type="file" />
-                        <input id='title' placeholder='Add a catchy title' style={{ ...styles.titleInput, textAlign: 'left', fontWeight: 'bold', padding: '0', margin: '20px 0', display: 'block' }}></input>
+                        <input id='title' placeholder='Add a catchy title' style={{ ...styles.titleInput, textAlign: 'left', fontWeight: 'bold', padding: '0', margin: '20px 0', display: 'block', width: '100%' }}></input>
                         <input id='tags' placeholder='Tags, comma, spaced, values' style={{ ...styles.titleInput, fontSize: '1em', width: '100%', textAlign: 'left', fontWeight: 'lighter', padding: '0', margin: '20px 0', display: 'block' }}></input>
                     </div>
                     <EditorJs
