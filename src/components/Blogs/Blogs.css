@@ -263,8 +263,8 @@
 .search_user_div{
     display: flex;
     flex-direction: column; 
-    width: 100%; 
-    align-items: center; 
+    width: 88%; 
+    align-items:center;
 }
 
 .selected{
@@ -273,5 +273,5 @@
 }
 
 .search_results_div{
-    width: 90%; 
+    width: 90%;
 }

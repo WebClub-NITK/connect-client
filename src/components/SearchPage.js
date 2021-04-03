@@ -2,8 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { getSearchBlogs } from "../services/blogsService";
 import { search, RetreiveInfo } from "../services/connectService";
 import BlogTile from "../components/Blogs/BlogTile";
-import ProfileCard from "../components/Connect/ProfileCard";
 import "../components/Blogs/Blogs.css";
+import ProfileCard from "../components/Connect/ProfileCard";
+import ProfileTile from "../components/Blogs/ProfileTile";
 
 const SearchPage = () => {
     const [searchItem, setSearchItem] = useState("");
@@ -29,6 +30,7 @@ const SearchPage = () => {
             let query = { username: searchItem };
             let searchUsers = await search({ query });
             setUsers(searchUsers);
+            console.log(searchUsers);
         }
     };
 
@@ -71,8 +73,8 @@ const SearchPage = () => {
                     {check ? (
                         <div className="search_user_div">
                             {users.length > 0 ? (
-                                users.map((user) => (
-                                    <ProfileCard user={user} jsonInfo={jsonInfo} />
+                                users.map((user,i) => (
+                                    <ProfileTile key={i} user={user} jsonInfo={jsonInfo} />
                                 ))
                             ) : (
                                 <h3 style={{ textAlign: "center" }}>Users not found</h3>
