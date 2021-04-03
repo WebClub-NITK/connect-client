@@ -16,7 +16,7 @@ const ProfileTile = ({ user, jsonInfo }) => {
 
                         <Card.Body>
                             <Row>
-                                <Image height="50px" style={{ marginRight: '1rem' }} src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fcdn.onlinewebfonts.com%2Fsvg%2Fdownload_87237.png&f=1&nofb=1" roundedCircle />
+                                <Image height="50px" style={{ marginRight: '1rem' }} src={profileurl} roundedCircle />
                                 <Card.Title>
                                     <span style={{ opacity: '0.5', fontSize: '1rem', margin: '0' }}>{user.Username}</span><br />
                                     {user.Profile.Name}
