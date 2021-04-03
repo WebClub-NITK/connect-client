@@ -82,7 +82,8 @@ const leaderboard = async () => {
     return users.data;
 }
 
-const updateProfile = async ({ email, name, ptype, branch, semester }) => {
+const updateProfile = async ( email, name, ptype, branch, semester ) => {
+    console.log(email,name,ptype,branch,semester)
     if (localStorage.getItem("accessToken") === null) {
         return null;
     }
@@ -116,6 +117,16 @@ const forgotpass = async({username}) => {
     return axios.post(baseUrl + "/forgotpass",{"username":username});
 }
 
+const uploadprofilepic = async(selectedfile,user) => {
+    let formData = new FormData()
+        formData.append('profile', selectedfile)
+        let options = {
+            method: "post",
+            body: formData,
+        }
+        await fetch(`${baseUrl}/upload_profilepic/${user.Username}`, options)
+}
+
 export {
     authLogin,
     signup,
@@ -125,5 +136,6 @@ export {
     leaderboard,
     updateProfile,
     updatepass,
-    forgotpass
+    forgotpass,
+    uploadprofilepic
 }
