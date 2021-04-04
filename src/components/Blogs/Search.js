@@ -5,6 +5,7 @@ import BlogTile from "../Blogs/BlogTile";
 import Pagination from "./Pagination";
 import LiveSearch from "./LiveSearch";
 import LoadingComponent from "./LoadingComponent";
+import NewBlogTile from "./NewBlogTile";
 
 const Search = () => {
     const [searchBlogs, setBlogs] = useState([]);
@@ -45,14 +46,14 @@ const Search = () => {
     };
 
     return (
-        <div>
+        <div style={{maxWidth: '800px', margin: '20px auto'}}>
             <LiveSearch />
             <h2 style={{ textAlign: "center" }}>Search results: {title}</h2>
             {searchBlogs.length != 0 ? (
                 searchBlogs
                     .slice(0, 10)
                     .map((blog) => (
-                        <BlogTile
+                        <NewBlogTile
                             key={blog._id}
                             details={blog}
                             description={JSON.parse(blog.body).blocks}

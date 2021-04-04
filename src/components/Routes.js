@@ -23,6 +23,9 @@ const Routes = () => {
             <Route path="/connect">
                 <ConnectRouter />
             </Route>
+            <Route path="/search">
+                <SearchPage />
+            </Route>
             <Route exact path="/">
                 <Home />
             </Route>

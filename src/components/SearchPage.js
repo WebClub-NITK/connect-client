@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { getSearchBlogs } from "../services/blogsService";
 import { search, RetreiveInfo } from "../services/connectService";
-import BlogTile from "../components/Blogs/BlogTile";
+import NewBlogTile from "../components/Blogs/NewBlogTile";
 import "../components/Blogs/Blogs.css";
-import ProfileCard from "../components/Connect/ProfileCard";
 import ProfileTile from "../components/Blogs/ProfileTile";
 
 const SearchPage = () => {
@@ -51,7 +50,7 @@ const SearchPage = () => {
 
     return (
         <div className="search_div">
-            <h2>Search</h2>
+            <h2 style={{textAlign:'center'}}>Search</h2>
             <form className="live_search_div" onSubmit={handleSubmit}>
                 <div className="form_div">
                     <input
@@ -81,10 +80,10 @@ const SearchPage = () => {
                             )}
                         </div>
                     ) : (
-                        <div>
+                        <div style={{maxWidth: '800px', margin: '20px auto'}}>
                             {blogs.length > 0 ? (
                                 blogs.map((blog) => (
-                                    <BlogTile
+                                    <NewBlogTile
                                         key={blog._id}
                                         details={blog}
                                         profile={false}
