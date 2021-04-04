@@ -7,6 +7,7 @@ import styles from './blogStyles'
 import { Prompt } from 'react-router-dom'
 import { SERVER_URL } from '../../services/config'
 import ErrorMessage from './ErrorMessage';
+import {Helmet} from "react-helmet";
 
 const NewBlog = () => {
     let history = useHistory();
@@ -152,6 +153,10 @@ const NewBlog = () => {
                     return true
                 }}
             />
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Create a new blog!</title>
+            </Helmet>
             <ErrorMessage message={errorMessage} setMessage={setErrorMessage} />
             <div style={{ background: 'lightgray', padding: '50px' }}>
                 <div style={{ maxWidth: '800px', margin: '10px auto', padding: '50px', background: 'white', borderRadius: '10px' }}>

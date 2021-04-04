@@ -10,6 +10,7 @@ import Pagination from "./Pagination";
 import LiveSearch from "./LiveSearch";
 import LoadingComponent from "./LoadingComponent";
 import { getAllBlogs } from "../../services/blogsService";
+import NewBlogTile from "./NewBlogTile";
 
 const Blogs = () => {
     const [blogs, setBlogs] = useState([]);
@@ -77,17 +78,25 @@ const Blogs = () => {
                 <button className="new-blog-button">Share an idea</button>
             </Link>
             <LiveSearch />
-            <div>
+            <div style={{maxWidth: '800px', margin: '20px auto'}}>
                 {blogs ? (
                     blogs
                         .slice(0, 10)
                         .map((blog) => (
-                            <BlogTile
+                            <div>
+                                <NewBlogTile
                                 key={blog._id}
                                 details={blog}
                                 profile={false}
                                 description={JSON.parse(blog.body).blocks}
-                            />
+                                />
+                                {/* <BlogTile
+                                    key={blog._id}
+                                    details={blog}
+                                    profile={false}
+                                    description={JSON.parse(blog.body).blocks}
+                                /> */}
+                            </div>
                         ))
                 ) : (
                     <p>No blogs to display</p>

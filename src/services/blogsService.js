@@ -123,6 +123,79 @@ const getUserBlogs = async (userId) => {
     }
 }
 
+//blog date
+const getDateString = (date_string) => {
+    let date = new Date(date_string);
+    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return date.toLocaleDateString("en-US", options);
+}
+
+const sanitiseText = (text) => {
+    // remove html tags
+    const regex_tag = /(<([^>]+)>)/ig
+    text = text.replace(regex_tag, '')
+    // remove character encodings, eg: &amp;
+    const regex_encoding = /&([^\s]+)*;/g
+    text = text.replace(regex_encoding, '')
+    return text
+}
+
+const getDescription = (blocks) => {
+    let description = ''
+    for (const block of blocks) {
+        if(description.length > 30){
+            break
+        }
+        if(block.type == 'paragraph') {
+            description += sanitiseText(block.data.text) + ' '
+        } else if(block.type == 'header') {
+            description += sanitiseText(block.data.text) + ' '
+        } else if(block.type == 'list') {
+            for (const item of block.data.items) {
+                description += sanitiseText(item) + ' '
+            }
+        }
+    }
+    
+    if(description.length > 100) {
+        description = description.substring(0, 100)
+        description += '...'
+    }
+
+    return description
+}
+
+const countMinutesToRead = (blocks) => {
+    console.log('started calculating no of minutes')
+    let seconds = 0
+    let description = ''
+    for (const block of blocks) {
+        if(block.type == 'paragraph') {
+            description += block.data.text
+        } else if(block.type == 'header') {
+            description += block.data.text
+        } else if(block.type == 'list') {
+            for (const item of block.data.items) {
+                description += item
+            }
+        } else if(block.type == 'image') {
+            seconds += 12
+        }
+    }
+
+    const reading_speed = 22 // char per second (265 wpm)
+
+    seconds += (description.length / reading_speed)
+
+    const no_of_minutes = Math.floor(seconds / 60)
+
+
+
+    return no_of_minutes > 1 ? no_of_minutes : 1
+
+}
+
+
 export {
     saveBlog,
     updateBlog,
@@ -134,5 +207,9 @@ export {
     getBlogTitles,
     likeBlog,
     unlikeBlog,
-    getUserBlogs
+    getUserBlogs,
+    getDateString,
+    sanitiseText,
+    getDescription,
+    countMinutesToRead,
 };

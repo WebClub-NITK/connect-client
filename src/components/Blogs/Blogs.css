@@ -221,3 +221,16 @@
   border: none;
   border-radius: 5px;
 }
+
+.details-container p{
+    margin-bottom: 5px;
+}
+
+.gray{
+    color: rgba(117, 117, 117, 1);
+}
+
+.blogs-meta-details p {
+    margin: 0 10px;
+    color: rgba(117, 117, 117, 1);
+}
