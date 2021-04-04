@@ -6,6 +6,7 @@ import EditorJs from 'react-editor-js';
 import { tools } from './editorConfig'
 import styles from './blogStyles'
 import Confetti from 'react-dom-confetti';
+import {Helmet} from 'react-helmet'
 
 import SyntaxHighlighter from 'react-syntax-highlighter';
 // other good themes: monokai, sunburst
@@ -88,6 +89,11 @@ const ViewBlog = (props) => {
 
     return (
         <div style={{ overflowX: 'hidden' }}>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>{blog.title}</title>
+                <description>Check out this blog written by {blog.author_name}</description>
+            </Helmet>
             <Confetti className='confeti' active={confeti} config={config} />
             <div style={{ textAlign: 'center' }}>
                 <img style={{ maxWidth: '500px', margin: '50px 0', borderRadius: '5px' }} src={blog.coverImageUrl}></img>
@@ -101,7 +107,7 @@ const ViewBlog = (props) => {
                 })}</p>
                 <img style={{ width: '50px', borderRadius: '5px' }} src={`${SERVER_URL}/profiles/${blog.author_username}`} />
                 <p>{blog.author_name} <Link style={styles.nameLink} to={`/blogs/profile/${blog.author_id}`}>@{blog.author_username}</Link></p>
-                <Link style={styles.link} to={`/blogs/${blogId}/update`}><button style={{ padding: '5px 10px', color: 'gray', border: '1px solid gray', background: 'white', borderRadius: '2px' }} >Update</button></Link>
+                {/* <Link style={styles.link} to={`/blogs/${blogId}/update`}><button style={{ padding: '5px 10px', color: 'gray', border: '1px solid gray', background: 'white', borderRadius: '2px' }} >Update</button></Link> */}
             </div>
             <EditorJs
                 tools={tools}

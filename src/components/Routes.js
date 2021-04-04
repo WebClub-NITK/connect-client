@@ -9,6 +9,7 @@ import Home from './Home'
 import BlogsRouter from './Blogs/BlogsRouter'
 import ResourceRouter from './Resources/ResourceRouter'
 import ConnectRouter from './Connect/ConnectRouter'
+import PageNotFound from './PageNotFound'
 
 
 const Routes = () => {
@@ -25,8 +26,11 @@ const Routes = () => {
             <Route path="/connect">
                 <ConnectRouter />
             </Route>
-            <Route path="/">
+            <Route exact path="/">
                 <Home />
+            </Route>
+            <Route>
+                <PageNotFound />
             </Route>
         </Switch>
 
