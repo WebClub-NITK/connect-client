@@ -1,8 +1,6 @@
-import React from 'react'
+import React from "react";
 
-import {
-    Switch, Route,
-} from "react-router-dom"
+import { Switch, Route } from "react-router-dom";
 
 import Home from './Home'
 
@@ -11,11 +9,10 @@ import ResourceRouter from './Resources/ResourceRouter'
 import ConnectRouter from './Connect/ConnectRouter'
 import PageNotFound from './PageNotFound'
 
+import SearchPage from "./SearchPage";
 
 const Routes = () => {
-
     return (
-
         <Switch>
             <Route path="/blogs">
                 <BlogsRouter />
@@ -26,6 +23,9 @@ const Routes = () => {
             <Route path="/connect">
                 <ConnectRouter />
             </Route>
+            <Route path="/search">
+                <SearchPage />
+            </Route>
             <Route exact path="/">
                 <Home />
             </Route>
@@ -33,8 +33,7 @@ const Routes = () => {
                 <PageNotFound />
             </Route>
         </Switch>
+    );
+};
 
-    )
-}
-
-export default Routes
+export default Routes;

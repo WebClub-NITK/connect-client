@@ -26,7 +26,7 @@ const NewBlogTile = (props) => {
                 </div>
                 <div className='blogs-meta-details' style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                     <AuthorProfile
-                        author_id={props.details.author_username}
+                        author_id={props.details.author_id}
                         author_name={props.details.author_name}
                         author_username={props.details.author_username}
                     />

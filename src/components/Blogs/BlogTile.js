@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import  {Link, useHistory } from "react-router-dom";
+import {deleteBlog} from "../../services/blogsService";
 import styles from "./blogStyles";
 import "./Blogs.css";
 import { Button, DropdownButton,Dropdown } from "react-bootstrap";
@@ -8,7 +9,7 @@ import PropTypes from "prop-types";
 
 const BlogTile = (props) => {
     const pRef = useRef();
-    // const updateURL = `/blogs/${props.details._id}/update`;
+    const updateURL = `/blogs/${props.details._id}/update`;
     let history = useHistory();
     const imageURL =
         props.details.coverImageUrl ||
@@ -51,6 +52,25 @@ const BlogTile = (props) => {
                             {props.details.title}
                         </Link></h3>
                     </div>
+                    {props.options ? 
+                     <div className="col-2"><DropdownButton
+                            className="dropdownButton"
+                            id="dropdown-basic-button"
+                            title="Options"
+                            variant="secondary"
+                        >
+                            <Dropdown.Item href={updateURL}>Update</Dropdown.Item>
+                            <span
+                                onClick={() => {
+                                    props.handleBlogDelete(props.details._id);
+                                }}
+             
+                            >
+                                <Dropdown.Item>Delete</Dropdown.Item>
+                            </span>
+                        </DropdownButton></div>
+                     :""}
+                   
                 </div>
                     
                 
@@ -92,22 +112,4 @@ BlogTile.propTypes = {
 
 export default BlogTile;
 
-// Options 
-
-{/* <DropdownButton
-                            className="dropdownButton"
-                            id="dropdown-basic-button"
-                            title="Options"
-                            variant="secondary"
-                        >
-                            <Dropdown.Item href={updateURL}>Update</Dropdown.Item>
-                            <span
-                                onClick={() => {
-             
-                                    props.handleBlogDelete(props.details._id);
-                                }}
-             
-                            >
-                                <Dropdown.Item>Delete</Dropdown.Item>
-                            </span>
-                        </DropdownButton> */}
+ 

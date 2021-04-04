@@ -32,7 +32,7 @@ const MainNavbar = () => {
                     <LinkContainer to="/connect/profile">
                         <Nav.Link>Profile</Nav.Link>
                     </LinkContainer>
-                    <LinkContainer to="/connect/search">
+                    <LinkContainer to="/search">
                         <Nav.Link>Search</Nav.Link>
                     </LinkContainer>
                     <NavDropdown
