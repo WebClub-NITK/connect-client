@@ -195,6 +195,42 @@ const countMinutesToRead = (blocks) => {
 
 }
 
+const bookmarkBlog = async (accessToken, id) => {
+    try {
+        const headers = { 'Authorization': `Bearer ${accessToken}` }
+        const response = axios.put(`${url}/${id}/bookmark`, {}, { headers })
+
+        return response
+    } catch (err) {
+        console.log(err)
+        throw new Error('Couldn\'t bookmark the blog')
+    }
+}
+
+const removeBookmarkBlog = async (accessToken, id) => {
+    try {
+        const headers = { 'Authorization': `Bearer ${accessToken}` }
+        const response = axios.put(`${url}/${id}/removebookmark`, {}, { headers })
+
+        return response
+    } catch (err) {
+        console.log(err)
+        throw new Error('Couldn\'t remove this bookmark')
+    }
+}
+
+const getBookmarkedBlogs = async (accessToken) => {
+    try {
+        const headers = { 'Authorization': `Bearer ${accessToken}` }
+        const response = await axios.get(`${url}/bookmarks`, {headers})
+
+        return response.data 
+    } catch (err) {
+        console.log(err)
+        throw new Error('Something went wrong')
+    }
+}
+
 
 export {
     saveBlog,
@@ -212,4 +248,7 @@ export {
     sanitiseText,
     getDescription,
     countMinutesToRead,
+    bookmarkBlog,
+    removeBookmarkBlog,
+    getBookmarkedBlogs
 };
