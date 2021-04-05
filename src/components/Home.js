@@ -1,106 +1,71 @@
 import React, { useEffect, useState } from "react";
-import Navigation from "./Navigation";
-import Logo from "../assets/logo.png";
-import toggel from "../components/Connect/Toggel";
-import logout from "../components/Connect/Logout";
-import Spinner from "react-bootstrap/Spinner";
-import { leaderboard } from "../services/connectService";
+import { Button, Card, Container, Jumbotron, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { getAllBlogs } from "../services/blogsService";
+import { getAllResources } from "../services/resourceService";
+import LoadingComponent from "./Blogs/LoadingComponent";
 
 const Home = () => {
-    const [isLoading, setIsLoading] = useState(true);
-    const [users, setUsers] = useState(null);
+
+    const [blogs, setBlogs] = useState(null)
+    const [resources, setResources] = useState(null)
+    const [loaded, setLoaded] = useState(false)
+
     useEffect(async () => {
-        const response = await leaderboard();
-        setUsers(response);
-        setIsLoading(false);
-    }, []);
-    if (isLoading) {
+        const resource_data = await getAllResources()
+        setResources(resource_data)
+
+        const blogs = await getAllBlogs(1)
+        setBlogs(blogs)
+
+        // console.log(resources)
+
+        setLoaded(true)
+    }, [])
+
+    if(!loaded) {
         return (
-            <div className="mx-auto my-auto">
-                <Spinner
-                    as="span"
-                    animation="grow"
-                    size="lg"
-                    role="status"
-                    aria-hidden="true"
-                />
-            </div>
-        );
-    } else {
-        return (
-
-
-            <div
-                style={{
-                    width: "100vw",
-                    marginTop: "60px",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                }}
-            >
-                <img src={Logo} alt={"logo"} style={{ objectFit: "contain" }} />
-                <h1>Connect</h1>
-                <Navigation />
-                {(localStorage.getItem("accessToken") !== null && localStorage.getItem("secondaryToken") !== null && localStorage.getItem("secondaryToken") !== '') ? (
-                    <div>
-                        <button type="submit" onClick={toggel}>
-                            Toggel
-                        </button>
-                        <br />
-                        <button type="submit" onClick={logout}>
-                            Logout
-                        </button>
-                    </div>
-                ) : (
-                    <Link
-                        className="btn btn-primary"
-                        style={{ marginTop: "1em" }}
-                        to="/connect/login"
-                    >
-                        Login
-                    </Link>
-                )}
-                <div
-                    className="col-sm-12 col-md-12 col-xs-12"
-                    style={{
-                        paddingTop: "4em",
-                        paddingLeft: "36em",
-                        paddingRight: "36em",
-                    }}
-                >
-                    <table className="table table-dark">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Username</th>
-                                <th scope="col">Respect</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {users ? (
-                                users.map((user, i) => (
-                                    <tr key={i}>
-                                        <td scope="col">{i + 1}</td>
-                                        <td scope="col">{user.Username}</td>
-                                        <td scope="col">{user.Respect}</td>
-                                    </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan="100" style={{ textAlign: "center" }}>
-                                        No users to display currently!
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-        );
+            <LoadingComponent/>
+        )
     }
+
+    return (
+        <div className="homepage">
+            <Jumbotron>
+                <Container>
+                    <h1 class="display-1">Connect NITK</h1>
+                    <p><Link to="/blogs"><Button>Blogs</Button></Link></p>
+                    <p><Link to="/resourcehub"><Button>Resource Hub</Button></Link></p>
+                </Container>
+            </Jumbotron>
+
+            <div className="even-section text-center popular-resources">
+                <h1 className="py-5 mb-5">Popular Resources</h1>
+                <Container>
+                    <Row className="justify-content-center">
+                        {Array(5).fill(1).map((el, i) =>
+                            <div className="col-12 col-sm-6 col-md-4">
+                                <Card className="my-4">
+                                    <Card.Header>
+                                        <h4>Resource Name</h4>
+                                    </Card.Header>
+                                    <Card.Body>
+                                        <div className="mb-3">Description</div>
+                                        <div className="user">Uploaded By: <strong>Username</strong></div>
+                                        <Button className="mt-4">Download</Button>
+                                    </Card.Body>
+                                </Card>
+                            </div>
+                        )}
+                    </Row>
+                </Container>
+            </div>
+
+            <div className="odd-section text-center popular-blogs">
+
+            </div>
+        </div>
+    );
 };
 
 export default Home;
