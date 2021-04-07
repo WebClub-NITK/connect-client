@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Toast from "react-bootstrap/Toast";
 import "./login.css";
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { authLogin } from '../../services/connectService';
 
 const Login = () => {
@@ -90,23 +90,21 @@ const Login = () => {
     }
     else {
         return (
-            <div className="Login">
+            <div className="container">
                 <Toast onClose={() => setShowToast(false)} show={showToast} delay={2000} autohide>
                     <Toast.Header>
                         <strong className="mr-auto">Incorrect details</strong>
                     </Toast.Header>
                     <Toast.Body>{toastMessage}</Toast.Body>
                 </Toast>
-                <h1 style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center"
-                }}>Login Form</h1><br />
+                <div className = 'form-wrap'>
+                    <h1>Log In</h1>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group controlId="username">
-                        <div className="col-sm-6 col-md-6 col-lg-6 mx-auto">
-                            <Form.Label>Username</Form.Label>
+                        <div className="form-group">
+                            <Form.Label className = "label">Username</Form.Label>
                             <Form.Control
+                                className="input"
                                 autoFocus
                                 type="username"
                                 value={username}
@@ -116,10 +114,11 @@ const Login = () => {
                         </div>
                     </Form.Group>
                     <br />
-                    <Form.Group controlId="password">
-                        <div className="col-sm-6 col-md-6 col-lg-6 mx-auto">
-                            <Form.Label>Password</Form.Label>
+                    <Form.Group controlId="password" className="form-group">
+                        <div >
+                            <Form.Label className='label'>Password</Form.Label>
                             <Form.Control
+                                className='input'
                                 type="password"
                                 value={password}
                                 placeholder="Enter your password"
@@ -128,18 +127,23 @@ const Login = () => {
                         </div>
                     </Form.Group>
                     <br />
-                    <div className="col-sm-3 col-md-3 col-lg-3 mx-auto">
-                        <Button block type="submit">
+                        <Button className='btn'block type="submit">
                             Login
                         </Button>
-                    </div>
                     <br />
-                    <div className="col-sm-3 col-md-3 col-lg-3 mx-auto">
+                    {/* <div className="col-sm-3 col-md-3 col-lg-3 mx-auto">
                         <Button block onClick={() => setForgotPass(true)}>
                             Forgot Password
                         </Button>
-                    </div>
+                    </div> */}
                 </Form>
+                <footer>
+                     <Link className='link'to='/connect/forgotpassword'>
+                            Forgot Password?
+                    </Link>
+                </footer>
+                </div>
+                
             </div>
         );
     }
