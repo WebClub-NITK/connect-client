@@ -6,7 +6,7 @@ import AuthorProfile from "./AuthorProfile";
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import TimelapseIcon from '@material-ui/icons/Timelapse';
-import { getDateString, countMinutesToRead, getDescription, sanitiseText } from "../../services/blogsService";
+import { getDateString, countMinutesToRead, getDescription, deleteBlog } from "../../services/blogsService";
 import {DropdownButton, Dropdown} from 'react-bootstrap'
 import BookmarkButton from "./BookmarkButton";
 
@@ -43,16 +43,8 @@ const NewBlogTile = (props) => {
                         title=""
                         variant="light"
                     >
-                        <Dropdown.Item href={'/test'}>Update</Dropdown.Item>
-                        <span
-                            onClick={() => {
-            
-                                props.handleBlogDelete(props.details._id);
-                            }}
-            
-                        >
-                            <Dropdown.Item>Delete</Dropdown.Item>
-                        </span>
+                        <Dropdown.Item><Link to={`/blogs/${props.details._id}/update`}>Update</Link></Dropdown.Item>
+                        <Dropdown.Item onClick={() => {props.handleBlogDelete(props.details._id)}}>Delete</Dropdown.Item>
                     </DropdownButton> : null}
                 </div>
             </div>

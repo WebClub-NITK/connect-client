@@ -11,15 +11,16 @@ import LiveSearch from "./LiveSearch";
 import LoadingComponent from "./LoadingComponent";
 import { getAllBlogs } from "../../services/blogsService";
 import NewBlogTile from "./NewBlogTile";
+import { Button } from "react-bootstrap";
 
 const Blogs = () => {
     const [blogs, setBlogs] = useState([]);
-    // const [blogsUpdate, setBlogsUpdate] = useState(false);
     const [numberOfBlogs, setNumberOfBlogs] = useState(0);
     const [loaded, setLoaded] = useState(false);
 
     const [pageNumber, setPageNumber] = useState(1);
     const [blogsPerPage] = useState(10);
+    const userId = localStorage.getItem('UserId')
 
     useEffect(() => {
         setLoaded(false);
@@ -30,32 +31,6 @@ const Blogs = () => {
             setLoaded(true);
         }, 300);
     }, [pageNumber]);
-
-    //Toast message for blog deletion
-    // toast.configure();
-    // const notify = (message) =>
-    //     toast.info(message, {
-    //         position: "bottom-left",
-    //         autoClose: 5000,
-    //         hideProgressBar: false,
-    //         closeOnClick: true,
-    //         pauseOnHover: true,
-    //         draggable: false,
-    //         progress: undefined,
-    //     });
-
-    // //function to delete blogs
-    // const handleBlogDelete = async (blogId) => {
-    //     if (confirm("Are you sure you want to delete the blog?")) {
-    //         const deletedBlog = await deleteBlog(blogId);
-    //         if (deletedBlog.status == 204) {
-    //             notify("Blog deleted");
-    //         } else {
-    //             notify("Couldn't delete the blog. Try again");
-    //         }
-    //         setBlogsUpdate(true);
-    //     }
-    // };
 
     //function to navigate to other pages
     const paginate = (currentPageNumber) => {
@@ -74,9 +49,20 @@ const Blogs = () => {
 
     return (
         <div className="blogs_div">
-            <Link to="/blogs/new">
-                <button className="new-blog-button">Share an idea</button>
-            </Link>
+            <p style={{textAlign: 'center'}}>
+                <Link to="/blogs/new">
+                    <button className="new-blog-button">Share an idea</button>
+                </Link>
+                <Link to={`/blogs/profile/${userId}`}>
+                    <button className="new-blog-button">Manage Blogs</button>
+                </Link>
+
+            </p>
+            {/* <p style={{textAlign: 'center', margin: '10px'}}>
+                
+                    <Button><b>Manage Blogs</b></Button>
+                </Link>
+            </p> */}
             <LiveSearch />
             <div style={{maxWidth: '800px', margin: '20px auto'}}>
                 {blogs ? (
