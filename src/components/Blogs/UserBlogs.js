@@ -11,7 +11,7 @@ const UserBlogs = () => {
     const [loading, setLoading] = useState(false);
     const [bookmarkedBlogs, setBookmarkedBlogs] = useState([]);
     const [alert, setAlert] = useState(null)
-    const accessToken = localStorage.getItem('accessToken').toString();
+    const accessToken = localStorage.getItem('accessToken')
 
     let params = useParams();
 
