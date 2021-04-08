@@ -115,7 +115,7 @@ const unlikeBlog = async (accessToken, id) => {
 
 const getUserBlogs = async (userId) => {
     try {
-        const userBlogs = await axios.get(`${url}//profile/${userId}`);
+        const userBlogs = await axios.get(`${url}/profile/${userId}`);
         return userBlogs.data;
     } catch (e) {
         console.log(e);

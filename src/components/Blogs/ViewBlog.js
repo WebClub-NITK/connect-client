@@ -148,7 +148,7 @@ const ViewBlog = (props) => {
             />
 
 
-<div className="padding">
+<div className="padding" style={{maxWidth: '800px', margin: '0 auto'}}>
                     <h2>Comments</h2>
                     <div className="comments">
                         <InputGroup className="mb-4">

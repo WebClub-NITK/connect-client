@@ -3,6 +3,8 @@ import { getBookmarkedBlogs, getUserBlogs } from "../../services/blogsService";
 import { useParams } from "react-router-dom";
 import LoadingComponent from "./LoadingComponent";
 import BlogTile from "./BlogTile";
+import {Jumbotron} from 'react-bootstrap'
+import NewBlogTile from "./NewBlogTile";
 
 const UserBlogs = () => {
 
@@ -37,36 +39,45 @@ const UserBlogs = () => {
 
     return (
         <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
-            <h2>User Blogs</h2>
-            {userBlogs ? (
-                userBlogs
-                    .map((blog) => (
-                        <BlogTile
-                            key={blog._id}
-                            details={blog}
-                            profile={false}
-                            description={JSON.parse(blog.body).blocks}
-                        />
-                    ))
-            ) : (
-                <p>No blogs to display</p>
-            )}
+            <Jumbotron style={{width: '100%'}}>
+                <h2>Your Blogs</h2>
+            </Jumbotron>
+            <div style={{maxWidth: '800px', margin: '20px auto'}}>
+                {userBlogs.length != 0 ? (
+                    userBlogs
+                        .map((blog) => (
+                            <NewBlogTile
+                                key={blog._id}
+                                details={blog}
+                                profile={false}
+                                description={JSON.parse(blog.body).blocks}
+                                withoptions
+                            />
+                        ))
+                ) : (
+                    <p>No blogs to display</p>
+                )}
+            </div>
             {isLooggedInUser ? (
                 <>
-                    <h2>Bookmarks</h2>
-                    {bookmarkedBlogs ? (
-                        bookmarkedBlogs
-                            .map((blog) => (
-                                <BlogTile
-                                    key={blog._id}
-                                    details={blog}
-                                    profile={false}
-                                    description={JSON.parse(blog.body).blocks}
-                                />
-                            ))
-                    ) : (
-                        <p>You don't have any bookmarks.</p>
-                    )}
+                    <Jumbotron style={{width: '100%'}} >
+                        <h2>Bookmarks</h2>
+                    </Jumbotron>
+                    <div style={{maxWidth: '800px', margin: '20px auto'}}>
+                        {bookmarkedBlogs.length != 0 ? (
+                            bookmarkedBlogs
+                                .map((blog) => (
+                                    <NewBlogTile
+                                        key={blog._id}
+                                        details={blog}
+                                        profile={false}
+                                        description={JSON.parse(blog.body).blocks}
+                                    />
+                                ))
+                        ) : (
+                            <p>You don't have any bookmarks.</p>
+                        )}
+                    </div>
                 </>
             ) : null}
         </div>
