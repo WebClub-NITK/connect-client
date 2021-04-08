@@ -90,12 +90,6 @@ const Blogs = () => {
                                 profile={false}
                                 description={JSON.parse(blog.body).blocks}
                                 />
-                                {/* <BlogTile
-                                    key={blog._id}
-                                    details={blog}
-                                    profile={false}
-                                    description={JSON.parse(blog.body).blocks}
-                                /> */}
                             </div>
                         ))
                 ) : (

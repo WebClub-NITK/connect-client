@@ -69,16 +69,6 @@ const BlogTile = (props) => {
                 <p style={styles.date}>{blogDate}</p>
                 <img style={{width: '50px', borderRadius: '5px'}} src={`${SERVER_URL}/profiles/${props.details.author_username}`} />
                 <p>{props.details.author_name} <Link style={styles.nameLink} to={`/blogs/profile/${props.details.author_id}`}>@{props.details.author_username}</Link></p>
-                <Button
-                    onClick={() => {
-                        history.push(`/blogs/${props.details._id}`);
-                    }}
-                    bg="dark"
-                    variant="dark"
-                >
-                    Read more
-     
-                </Button>
             </div>
         </div>
     );

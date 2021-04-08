@@ -6,6 +6,8 @@ import BookmarkBorderIcon from '@material-ui/icons/BookmarkBorder';
 
 const BookmarkButton = (props) => {
 
+    if(!props.bookmarks) return null
+
     const userId = localStorage.getItem('UserId')
 
     const accessToken = localStorage.getItem('accessToken')
@@ -39,7 +41,7 @@ const BookmarkButton = (props) => {
 
     return (
         <>
-            <button style={{background: 'none', border: '0px'}} disabled={disable} onClick={handleBookmark}>{bookmarked ? <BookmarkIcon /> : <BookmarkBorderIcon />}</button>
+            <button style={{background: 'none', border: '0px', ...props.style}} disabled={disable} onClick={handleBookmark}>{bookmarked ? <BookmarkIcon /> : <BookmarkBorderIcon />}</button>
         </>
     )
 
