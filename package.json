@@ -1,7 +1,7 @@
 {
   "name": "connect-client",
   "version": "0.1.0",
-  "homepage": "https://nitkconnect.ml/index.html/",
+  "homepage": "https://nitkconnect.ml",
   "private": true,
   "dependencies": {
     "@editorjs/code": "^2.7.0",
