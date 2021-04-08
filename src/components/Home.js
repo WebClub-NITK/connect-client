@@ -102,8 +102,10 @@ const Home = () => {
                 </Container>
             </div>
 
-            <div className="odd-section text-center popular-blogs">
-                <h1 className="py-5 mb-5">Popular Blogs</h1>    
+            <div className="odd-section popular-blogs">
+                <div className="text-center">
+                    <h1 className="py-5 mb-5">Popular Blogs</h1>   
+                </div> 
                 <Container>
                     <Tabs 
                         id="controlled-tab-example"
