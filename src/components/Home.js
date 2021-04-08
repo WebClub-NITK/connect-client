@@ -33,7 +33,7 @@ const Home = () => {
         <div className="homepage">
             <Jumbotron>
                 <Container>
-                    <h1 class="display-1">Connectt NITK</h1>
+                    <h1 class="display-1">Connect NITK</h1>
                     <p><Link to="/blogs"><Button>Blogs</Button></Link></p>
                     <p><Link to="/resourcehub"><Button>Resource Hub</Button></Link></p>
                 </Container>
