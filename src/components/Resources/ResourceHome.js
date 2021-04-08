@@ -10,10 +10,14 @@ const ResourceHome = () => {
             <Jumbotron>
                 <h1 className="p-5 display-4">Resource Module</h1>
             </Jumbotron>
-            <Container>
-                <Branches/>
-            </Container>
-            <CourseSearch/>
+            <div className="even-section">
+                <Container>
+                    <Branches/>
+                </Container>
+            </div>
+            <div className="odd-section">
+                <CourseSearch/>
+            </div>
         </div>
     )
 }

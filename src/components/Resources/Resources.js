@@ -6,6 +6,7 @@ import { Button, Card, Container, Form, InputGroup, Jumbotron, Row } from 'react
 import Comments from './Comments/Comments'
 import { Link } from "react-router-dom"
 import BlogsFromTag from '../Blogs/BlogsFromTag'
+import LoadingComponent from '../Blogs/LoadingComponent'
 
 
 const Resources = () => {
@@ -96,9 +97,7 @@ const Resources = () => {
 
     if(!loaded){
         return (
-            <div className="loader-container">
-                <div className="loader mt-5"></div>
-            </div>
+            <LoadingComponent/>
         )
     }
 

@@ -3,6 +3,7 @@ import CourseTile from './Tiles/CourseTile'
 import { createNewCourse, getBranch, getCoursesForBranch } from '../../services/resourceService'
 import { useParams } from 'react-router-dom'
 import { Button, Card, Container, Form, Jumbotron, Row } from 'react-bootstrap'
+import LoadingComponent from '../Blogs/LoadingComponent'
 
 
 const Courses = () => {
@@ -42,9 +43,7 @@ const Courses = () => {
 
     if(!loaded){
         return (
-            <div className="loader-container">
-                <div className="loader mt-5"></div>
-            </div>
+            <LoadingComponent/>
         )
     }
 
