@@ -8,8 +8,8 @@ import { signup } from '../../services/connectService';
 import { SERVER_URL } from "../../services/config";
 import GoogleLogin from 'react-google-login'
 
-const baseUrl = "http://localhost:3000/connect";
-// const baseUrl = `${SERVER_URL}/connect`
+// const baseUrl = "http://localhost:3001/connect";
+const baseUrl = `${SERVER_URL}/connect`
 
 const Signup = () => {
     const [username, setUsername] = useState("");
