@@ -93,7 +93,7 @@ const Login = () => {
             <div className="container">
                 <Toast onClose={() => setShowToast(false)} show={showToast} delay={2000} autohide>
                     <Toast.Header>
-                        <strong className="mr-auto">Incorrect details</strong>
+                        <strong className="label">Incorrect details</strong>
                     </Toast.Header>
                     <Toast.Body>{toastMessage}</Toast.Body>
                 </Toast>
