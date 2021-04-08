@@ -37,13 +37,16 @@ const updateBlog = async (accessToken, id, { title, body, tags, coverImageUrl })
     }
 };
 
-const deleteBlog = async (id) => {
+const deleteBlog = async (accessToken, id) => {
     try {
-        const deleteBlog = await axios.delete(`${url}/${id}`);
+        const headers = { 'Authorization': `Bearer ${accessToken}` }
+        const deleteBlog = await axios.delete(`${url}/${id}`, {
+            headers
+        });
         return deleteBlog;
     } catch (err) {
-        console.log("error");
         console.log(err);
+        throw new Error('Cannot delete the Blog')
     }
 };
 
@@ -115,7 +118,7 @@ const unlikeBlog = async (accessToken, id) => {
 
 const getUserBlogs = async (userId) => {
     try {
-        const userBlogs = await axios.get(`${url}//profile/${userId}`);
+        const userBlogs = await axios.get(`${url}/profile/${userId}`);
         return userBlogs.data;
     } catch (e) {
         console.log(e);
@@ -166,7 +169,6 @@ const getDescription = (blocks) => {
 }
 
 const countMinutesToRead = (blocks) => {
-    console.log('started calculating no of minutes')
     let seconds = 0
     let description = ''
     for (const block of blocks) {
@@ -195,6 +197,42 @@ const countMinutesToRead = (blocks) => {
 
 }
 
+const bookmarkBlog = async (accessToken, id) => {
+    try {
+        const headers = { 'Authorization': `Bearer ${accessToken}` }
+        const response = axios.put(`${url}/${id}/bookmark`, {}, { headers })
+
+        return response
+    } catch (err) {
+        console.log(err)
+        throw new Error('Couldn\'t bookmark the blog')
+    }
+}
+
+const removeBookmarkBlog = async (accessToken, id) => {
+    try {
+        const headers = { 'Authorization': `Bearer ${accessToken}` }
+        const response = axios.put(`${url}/${id}/removebookmark`, {}, { headers })
+
+        return response
+    } catch (err) {
+        console.log(err)
+        throw new Error('Couldn\'t remove this bookmark')
+    }
+}
+
+const getBookmarkedBlogs = async (accessToken) => {
+    try {
+        const headers = { 'Authorization': `Bearer ${accessToken}` }
+        const response = await axios.get(`${url}/bookmarks`, {headers})
+
+        return response.data 
+    } catch (err) {
+        console.log(err)
+        throw new Error('Something went wrong')
+    }
+}
+
 
 export {
     saveBlog,
@@ -212,4 +250,7 @@ export {
     sanitiseText,
     getDescription,
     countMinutesToRead,
+    bookmarkBlog,
+    removeBookmarkBlog,
+    getBookmarkedBlogs
 };

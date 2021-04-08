@@ -1,24 +1,47 @@
 import React, { useEffect, useState } from "react";
-import { getUserBlogs } from "../../services/blogsService";
+import { getBookmarkedBlogs, getUserBlogs, deleteBlog } from "../../services/blogsService";
 import { useParams } from "react-router-dom";
-import { deleteBlog } from "../../services/blogsService";
 import LoadingComponent from "./LoadingComponent";
-import BlogTile from "./BlogTile";
+import {Jumbotron, Alert} from 'react-bootstrap'
+import NewBlogTile from "./NewBlogTile";
 
 const UserBlogs = () => {
 
     const [userBlogs, setUserBlogs] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [userid, setUserid] = useState(localStorage.getItem('UserId') ? localStorage.getItem('UserId') : "");
-    const [checkBlogs, setCheck] = useState(false);
+    const [bookmarkedBlogs, setBookmarkedBlogs] = useState([]);
+    const [alert, setAlert] = useState(null)
+    const accessToken = localStorage.getItem('accessToken').toString();
 
     let params = useParams();
 
+    const userId = localStorage.getItem('UserId')
+    const isLooggedInUser = userId === params.userid
+
     useEffect(async () => {
+        setLoading(false)
         const blogs = await getUserBlogs(params.userid);
         setUserBlogs(blogs);
+        if(isLooggedInUser) {
+            const bookmarks = await getBookmarkedBlogs(accessToken)
+            setBookmarkedBlogs(bookmarks)
+        }
         setLoading(true);
-    }, [params, checkBlogs]);
+    }, [params]);
+
+    const handleBlogDelete = async (id) => {
+        try{
+            if (confirm("Are you sure you want to delete the blog?")) {
+                const accessToken = localStorage.getItem('accessToken')
+                await deleteBlog(accessToken, id)
+                setAlert('Blog Deleted')
+                setUserBlogs(userBlogs.filter((blog) => blog._id != id))
+            }
+        }catch(err) {
+            console.log(err)
+            setAlert('Could not delete the blog.')
+        }
+    }
 
     if (!loading) {
         return <LoadingComponent />
@@ -28,40 +51,51 @@ const UserBlogs = () => {
         return <h2>This user has not posted any blogs</h2>
     }
 
-    const handleBlogDelete = async (blogId) => {
-        if (confirm("Are you sure you want to delete the blog?")) {
-            const deletedBlog = await deleteBlog(blogId);
-            if (deletedBlog.status == 204) {
-                // notify("Blog deleted");
-                console.log("deleted");
-                let check = !checkBlogs;
-                setCheck(check);
-            } else {
-                // notify("Couldn't delete the blog. Try again");
-                console.log("error");
-            }
-
-        }
-    };
-
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-            <h2>User Blogs</h2>
-            {userBlogs ? (
-                userBlogs
-                    .map((blog) => (
-                        <BlogTile
-                            key={blog._id}
-                            details={blog}
-                            profile={false}
-                            description={JSON.parse(blog.body).blocks}
-                            options={userid === params.userid ? true : false}
-                            handleBlogDelete={handleBlogDelete}
-                        />
-                    ))
-            ) : (
-                <p>No blogs to display</p>
-            )}
+        <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+            {alert ? <Alert style={{width: '100%'}} variant='success' dismissible onClose={() => setAlert(null)}>{alert}</Alert> : null}
+            <Jumbotron style={{width: '100%'}}>
+                <h2>Published Blogs</h2>
+            </Jumbotron>
+            <div style={{maxWidth: '800px', margin: '20px auto'}}>
+                {userBlogs.length != 0 ? (
+                    userBlogs
+                        .map((blog) => (
+                            <NewBlogTile
+                                key={blog._id}
+                                details={blog}
+                                profile={false}
+                                description={JSON.parse(blog.body).blocks}
+                                withoptions={isLooggedInUser ? true : undefined}
+                                handleBlogDelete={handleBlogDelete}
+                            />
+                        ))
+                ) : (
+                    <p>No blogs to display</p>
+                )}
+            </div>
+            {isLooggedInUser ? (
+                <>
+                    <Jumbotron style={{width: '100%'}} >
+                        <h2>Bookmarks</h2>
+                    </Jumbotron>
+                    <div style={{maxWidth: '800px', margin: '20px auto'}}>
+                        {bookmarkedBlogs.length != 0 ? (
+                            bookmarkedBlogs
+                                .map((blog) => (
+                                    <NewBlogTile
+                                        key={blog._id}
+                                        details={blog}
+                                        profile={false}
+                                        description={JSON.parse(blog.body).blocks}
+                                    />
+                                ))
+                        ) : (
+                            <p>You don't have any bookmarks.</p>
+                        )}
+                    </div>
+                </>
+            ) : null}
         </div>
     );
 }

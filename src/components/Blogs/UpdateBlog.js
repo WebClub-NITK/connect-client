@@ -219,7 +219,7 @@ const UpdateBlog = () => {
                             Add a cover image
                         </label>
                         <input id="file-upload" className='cover-input' onChange={handleCoverChange} type="file" />
-                        <input id='title' placeholder='Add a catchy title' style={{ ...styles.titleInput, textAlign: 'left', fontWeight: 'bold', padding: '0', margin: '20px 0', display: 'block', width: '100%' }}></input>
+                        <input id='title' value={title} onChange={({target}) => setTitle(target.value)} placeholder='Add a catchy title' style={{ ...styles.titleInput, textAlign: 'left', fontWeight: 'bold', padding: '0', margin: '20px 0', display: 'block', width: '100%' }}></input>
                         <input id='tags' value={tags} placeholder='Tags, comma, spaced, values' onChange={({ target }) => setTags(target.value)} style={{ ...styles.titleInput, fontSize: '1em', width: '100%', textAlign: 'left', fontWeight: 'lighter', padding: '0', margin: '20px 0', display: 'block' }}></input>
                     </div>
                     <EditorJs
