@@ -52,6 +52,7 @@ const AnnoSignup = () => {
             localStorage.setItem('secondaryUserId', response.userId);
             localStorage.setItem('secondaryUsername', response.username);
             localStorage.setItem('secType', response.anonymous ? 1 : 2);
+            localStorage.setItem('upNav', '1');
             setSignup(true);
         } else {
             setShowToast(true);

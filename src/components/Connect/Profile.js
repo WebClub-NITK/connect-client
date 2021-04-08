@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Spinner from 'react-bootstrap/Spinner';
-import { RetreiveInfo, search, updateProfile } from '../../services/connectService';
+import { RetreiveInfo, search, updateProfile, uploadprofilepic } from '../../services/connectService';
 import { Redirect, Link } from 'react-router-dom';
 import ProfileCard from "./ProfileCard";
 import { Form } from "react-bootstrap";
@@ -27,7 +27,7 @@ const Profile = () => {
     const [Branch, setBranch] = useState("");
     const [Semester, setSemester] = useState("");
     const [noUser, setNoUser] = useState(false);
-
+    let selectedfile = null
     useEffect(async () => {
         const query = { id: userId.toString() }
         const user = await search({ query });
@@ -46,12 +46,9 @@ const Profile = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const email = document.getElementById("email").value;
-        const name = document.getElementById("name").value;
-        const ptype = document.getElementById("programmeType").value;
-        const branch = document.getElementById("branch").value;
-        const semester = document.getElementById("semester").value;
-        const response = await updateProfile({ email, name, ptype, branch, semester });
+        console.log(email, name, ProgrammeType, Branch, Semester)
+        const response = await updateProfile( email, name, ProgrammeType, Branch, Semester );
+        await uploadprofilepic(selectedfile,user)
         if (response === null) {
             setNoUser(true);
             return;
@@ -117,7 +114,7 @@ const Profile = () => {
                             <Form.Group controlId="programmeType">
                                 <div className="col-sm-12 col-md-12 col-lg-12 mx-auto">
                                     <Form.Label>Select ProgrammeType</Form.Label>
-                                    <Form.Control as="select" value={ProgrammeType} custom onChange={(e) => setProgrammeType(e.target.value)}>
+                                    <Form.Control as="select" value={ProgrammeType} custom onChange={(e) => {setProgrammeType(e.target.value); }}>
                                         {Object.entries(jsonInfo.ProgrammeType).map((option) =>
                                             <option key={option[0]} value={option[1]}>
                                                 {option[0]}
@@ -130,7 +127,7 @@ const Profile = () => {
                             <Form.Group controlId="branch">
                                 <div className="col-sm-12 col-md-12 col-lg-12 mx-auto">
                                     <Form.Label>Select Branch</Form.Label>
-                                    <Form.Control as="select" custom value={Branch} onChange={(e) => setBranch(e.target.value)}>
+                                    <Form.Control as="select" custom value={Branch} onChange={(e) => {setBranch(e.target.value); }}>
                                         {Object.entries(jsonInfo.Branch).map((option) =>
                                             <option key={option[0]} value={option[1]}>
                                                 {option[0]}
@@ -150,6 +147,12 @@ const Profile = () => {
                                             </option>
                                         )}
                                     </Form.Control>
+                                </div>
+                            </Form.Group>
+                            <Form.Group controlId="semester">
+                                <div className="col-sm-12 col-md-12 col-lg-12 mx-auto">
+                                    <Form.Label>Select Profile Pitchure</Form.Label>
+                                    <input type="file" onChange={(e) => { selectedfile = e.target.files[0];  }} />
                                 </div>
                             </Form.Group>
                             <br />

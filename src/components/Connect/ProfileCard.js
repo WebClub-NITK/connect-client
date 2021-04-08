@@ -11,6 +11,11 @@ const ProfileCard = (props) => {
     const jsonInfo = props.jsonInfo;
     if (user) {
         let profileurl = `${SERVER_URL}/profiles/${user.Username}`
+        let http = new XMLHttpRequest();
+        http.open('HEAD', profileurl, false);
+        http.send();
+        if(http.status == 404)
+            profileurl = profilepic
         if (user.Profile) {
             return (
                 <div style={{ width: '36rem', marginTop: '8em', marginRight: '4.8em', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

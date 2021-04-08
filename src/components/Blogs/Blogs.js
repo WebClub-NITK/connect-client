@@ -11,7 +11,6 @@ import LiveSearch from "./LiveSearch";
 import LoadingComponent from "./LoadingComponent";
 import { getAllBlogs } from "../../services/blogsService";
 import NewBlogTile from "./NewBlogTile";
-import { Button } from "react-bootstrap";
 
 const Blogs = () => {
     const [blogs, setBlogs] = useState([]);
@@ -58,11 +57,6 @@ const Blogs = () => {
                 </Link>
 
             </p>
-            {/* <p style={{textAlign: 'center', margin: '10px'}}>
-                
-                    <Button><b>Manage Blogs</b></Button>
-                </Link>
-            </p> */}
             <LiveSearch />
             <div style={{maxWidth: '800px', margin: '20px auto'}}>
                 {blogs ? (

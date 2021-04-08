@@ -6,3 +6,70 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+:root {
+    --color1: #E4FBFF;
+    --color2: #EDEEF7;
+    --color3: #B8B5FF;
+    --color4: #7868E6;
+    --color5: #161D6F; 
+}
+
+.even-section {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color: var(--color2);
+}
+
+.navbar {
+    background-color: var(--color5);
+}
+
+.homepage .jumbotron {
+    background-color: var(--color1);
+    margin-bottom: 0px;
+    height: 95vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.homepage .jumbotron h1 {
+    font-size: clamp(3rem,5vw,5rem);
+    color: var(--color5);
+    margin-bottom: 50px;
+}
+
+.homepage .jumbotron button {
+    font-size: 20px;
+    color: var(--color1);
+    background-color: var(--color4);
+}
+
+.popular-resources h1 {
+    color: var(--color5);
+}
+
+.popular-resources .card {
+    box-shadow: 0 2px 4px 0 rgba(22, 29, 11, 0.2), 0 5px 15px 0 rgba(22, 29, 11, 0.19);
+    border: 0px;
+}
+
+.popular-resources .card .card-header{
+    background-color: var(--color5);
+    color: var(--color2);
+}
+
+.popular-resources .card .card-body{
+    background-color: var(--color1);
+    color: var(--color5);
+}
+
+.popular-resources .card .card-body .user{
+    color: var(--color4);
+}
+
+.popular-resources .card .button {
+    background-color: var(--color4);
+    color: var(--color2);
+}

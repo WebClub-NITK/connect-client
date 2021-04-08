@@ -19,7 +19,6 @@ const Signup = () => {
     const [signupstate, setSignup] = useState(false);
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
-    let selectedfile = null
 
     const validateForm = () => {
         var regex = new RegExp('.*@nitk.edu.in$');
@@ -60,19 +59,13 @@ const Signup = () => {
         if (!validateForm()) {
             return false;
         }
-        let formData = new FormData()
-        formData.append('profile', selectedfile)
-        let options = {
-            method: "post",
-            body: formData,
-        }
-        await fetch(`${baseUrl}/upload_profilepic/${username}`, options)
         const response = await signup({ username, password, email });
         if (response && typeof response !== 'string' && !(response instanceof Array)) {
             localStorage.setItem('accessToken', response.accessToken);
             localStorage.setItem('UserId', response.userId);
             localStorage.setItem('username', response.username);
             localStorage.setItem('type', response.anonymous ? 1 : 2);
+            localStorage.setItem('upNav', '1');
             setSignup(true);
         } else {
             setShowToast(true);
@@ -142,18 +135,15 @@ const Signup = () => {
                     </Form.Group>
                     <Form.Group controlId="email">
                         <div className="col-sm-6 col-md-6 col-lg-6 mx-auto">
+                        <Form.Label>Confirm Password</Form.Label>
+                            <br />
                             <GoogleLogin
                                 clientId="85087114323-nmfhkspttd354dcpunkrkonclm1vobit.apps.googleusercontent.com"
-                                buttonText="Email"
+                                buttonText="Choose Email"
                                 onSuccess={responsegoogle}
                                 onFailure={responsegoogle}
                                 cookiePolicy={'single_host_origin'}
                             />
-                        </div>
-                    </Form.Group>
-                    <Form.Group controlId="selectedfile">
-                        <div className="col-sm-6 col-md-6 col-lg-6 mx-auto">
-                            <input type="file" onChange={(e) => { selectedfile = e.target.files[0]; console.log(selectedfile) }} />
                         </div>
                     </Form.Group>
                     <br />

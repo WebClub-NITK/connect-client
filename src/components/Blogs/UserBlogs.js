@@ -13,7 +13,7 @@ const UserBlogs = () => {
     const [alert, setAlert] = useState(null)
     const accessToken = localStorage.getItem('accessToken').toString();
 
-    let params  = useParams();
+    let params = useParams();
 
     const userId = localStorage.getItem('UserId')
     const isLooggedInUser = userId === params.userid
@@ -31,13 +31,15 @@ const UserBlogs = () => {
 
     const handleBlogDelete = async (id) => {
         try{
-            const accessToken = localStorage.getItem('accessToken')
-            await deleteBlog(accessToken, id)
-            setAlert('Blog Deleted')
-            setUserBlogs(userBlogs.filter((blog) => blog._id != id))
+            if (confirm("Are you sure you want to delete the blog?")) {
+                const accessToken = localStorage.getItem('accessToken')
+                await deleteBlog(accessToken, id)
+                setAlert('Blog Deleted')
+                setUserBlogs(userBlogs.filter((blog) => blog._id != id))
+            }
         }catch(err) {
             console.log(err)
-            alert('Could not delete the blog.')
+            setAlert('Could not delete the blog.')
         }
     }
 
@@ -48,7 +50,6 @@ const UserBlogs = () => {
     if (!userBlogs) {
         return <h2>This user has not posted any blogs</h2>
     }
-
 
     return (
         <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>

@@ -11,7 +11,7 @@ const getAllResources = async ()=>{
 
     const resources = await axios.get(`${url}/${resourceUrl}`);
     console.log(resources);
-    return resources.data;
+    return resources.data.resources;
 };
 
 const getAllBranches = async ()=>{

@@ -82,7 +82,7 @@ const LiveSearch = () => {
     return (
         <form ref={liveDiv} onSubmit={handleSubmit} className="live_search_div">
             <div
-                style={{ display: "flex", flexDirection: "row", position: "relative" }}
+                className="form_div"
             >
                 <input
                     onChange={handleChange}
