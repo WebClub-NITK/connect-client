@@ -6,7 +6,10 @@ import AuthorProfile from "./AuthorProfile";
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import TimelapseIcon from '@material-ui/icons/Timelapse';
-import { getDateString, countMinutesToRead, getDescription, sanitiseText } from "../../services/blogsService";
+import { getDateString, countMinutesToRead, getDescription, deleteBlog } from "../../services/blogsService";
+import {DropdownButton, Dropdown} from 'react-bootstrap'
+import BookmarkButton from "./BookmarkButton";
+
 
 const NewBlogTile = (props) => {
 
@@ -22,7 +25,7 @@ const NewBlogTile = (props) => {
                 <p style={{fontSize: '2em', fontWeight: 'bold', lineHeight: '90%'}}><Link to={`/blogs/${props.details._id}`}>{props.details.title}</Link></p>
                 <p className='gray'>{getDescription(JSON.parse(props.details.body).blocks)}</p>
                 <div>
-                    <p className='gray'>{props.details.tags.map(tag => <span>#{tag} </span>)}</p>
+                    <p className='gray'>{props.details.tags ? props.details.tags.map(tag => tag ? <span>#{tag} </span>: null) : null}</p>
                 </div>
                 <div className='blogs-meta-details' style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                     <AuthorProfile
@@ -33,6 +36,16 @@ const NewBlogTile = (props) => {
                     <p className='gray'>{getDateString(props.details.createdAt)}</p>
                     <p><VisibilityIcon /> {props.details.views}</p><p><ThumbUpIcon /> {props.details.likes.length}</p>
                     <p><TimelapseIcon /> {countMinutesToRead(JSON.parse(props.details.body).blocks)} mins</p>
+                    <BookmarkButton style={{marginLeft: 'auto'}} bookmarks={props.details.bookmarks} blogId={props.details._id} />
+                    {props.withoptions ? <DropdownButton
+                        className="dropdownButton"
+                        id="dropdown-basic-button"
+                        title=""
+                        variant="light"
+                    >
+                        <Dropdown.Item><Link to={`/blogs/${props.details._id}/update`}>Update</Link></Dropdown.Item>
+                        <Dropdown.Item onClick={() => {props.handleBlogDelete(props.details._id)}}>Delete</Dropdown.Item>
+                    </DropdownButton> : null}
                 </div>
             </div>
         </div>
@@ -41,8 +54,8 @@ const NewBlogTile = (props) => {
 };
 
 NewBlogTile.propTypes = {
-    details : PropTypes.node,
-    description: PropTypes.node,
+    details : PropTypes.any,
+    description: PropTypes.any,
 }
 
 export default NewBlogTile;

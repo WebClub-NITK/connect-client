@@ -14,6 +14,10 @@ import { vs2015 } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { SERVER_URL } from '../../services/config';
 import LikeButton from './LikeButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import { getAllComments, addComment } from '../../services/commentsService';
+import { Button, Form, InputGroup } from 'react-bootstrap'
+import Comments from '../Comments/Comments'
+import BookmarkButton from './BookmarkButton';
 
 const Component = (props) => {
     const codeString = props.code
@@ -43,12 +47,17 @@ const ViewBlog = (props) => {
     const [loaded, setLoaded] = useState(false)
     let { blogId } = useParams();
     const [confeti, setConfeti] = useState(false)
+    const [comments, setComments] = useState(null)
+    const [newComment, setNewComment] = useState("")
 
     useEffect(async () => {
         window.scrollTo(0, 0)
         const blog = await getBlogById(blogId)
         const params = new URLSearchParams(window.location.search);
         const url_parts = window.location.hash.split('?')
+        const comments = await getAllComments(blogId)
+
+        if(comments) setComments(comments)
 
         setLoaded(true)
         if (blog) {
@@ -75,6 +84,27 @@ const ViewBlog = (props) => {
         }
     }
 
+    const resetComments = async () => {
+       
+        const comments = await getAllComments(blogId)
+        
+        if(comments)
+            setComments(comments)
+    }
+
+    const postComment = async () => {
+
+        if (!localStorage.getItem('UserId')) {
+            history.push('/connect/login')
+        }
+
+        await addComment(newComment, blogId)
+
+        await resetComments()
+        
+        setNewComment("")
+    }
+
     if (!loaded) {
         return (
             <h1>Loading</h1>
@@ -98,7 +128,7 @@ const ViewBlog = (props) => {
             <div style={{ textAlign: 'center' }}>
                 <img style={{ maxWidth: '500px', margin: '50px 0', borderRadius: '5px' }} src={blog.coverImageUrl}></img>
                 <h1>{blog.title}</h1>
-                <p><VisibilityIcon /> {blog.views} <LikeButton likes={blog.likes} blogId={blogId} /></p>
+                <p><VisibilityIcon /> {blog.views} <LikeButton likes={blog.likes} blogId={blogId} /> <BookmarkButton bookmarks={blog.bookmarks} blogId={blogId} /></p>
                 <p>{blog.tags.map((tag, index) => <span className="badge bg-secondary" key={index} style={styles.tag}>{tag}</span>)}</p>
                 <p>Updated On: {new Date(blog.createdAt).toLocaleDateString("en-US", {
                     month: "short",
@@ -116,6 +146,32 @@ const ViewBlog = (props) => {
                 logLevel='ERROR'
                 onReady={formatCodeBlocks}
             />
+
+
+<div className="padding" style={{maxWidth: '800px', margin: '0 auto'}}>
+                    <h2>Comments</h2>
+                    <div className="comments">
+                        <InputGroup className="mb-4">
+                            <Form.Control 
+                                type="text" 
+                                placeholder="Add a public comment"
+                                value={newComment}
+                                onChange={(e)=>setNewComment(e.target.value)}
+                            />
+                            <InputGroup.Append>
+                                <Button onClick={postComment}>
+                                    Comment
+                                </Button>
+                            </InputGroup.Append>
+                        </InputGroup>
+
+                        {comments.map((item, index) => {
+                            return (
+                                <Comments key={index} comment={item} resetComments={resetComments}/>
+                            )
+                        })}
+                    </div>
+                </div>
         </div>
     )
 }
