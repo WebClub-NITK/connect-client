@@ -8,8 +8,8 @@ import { signup } from '../../services/connectService';
 import { SERVER_URL } from "../../services/config";
 import GoogleLogin from 'react-google-login'
 
-// const baseUrl = "http://localhost:3001/connect";
-const baseUrl = `${SERVER_URL}/connect`
+const baseUrl = "http://localhost:3000/connect";
+// const baseUrl = `${SERVER_URL}/connect`
 
 const Signup = () => {
     const [username, setUsername] = useState("");
@@ -87,24 +87,22 @@ const Signup = () => {
     }
     else {
         return (
-            <div className="Login">
+            <div className="container">
                 <Toast onClose={() => setShowToast(false)} show={showToast} delay={2000} autohide>
                     <Toast.Header>
                         <strong className="mr-auto">Incorrect details</strong>
                     </Toast.Header>
                     <Toast.Body>{toastMessage}</Toast.Body>
                 </Toast>
-                <h1 style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center"
-                }}>Sign Up</h1>
+                <div className = 'form-wrap'>
+                <h1 >Sign Up</h1>
                 <Form onSubmit={handleSubmit}>
                     <br />
                     <Form.Group controlId="username">
-                        <div className="col-sm-6 col-md-6 col-lg-6 mx-auto">
-                            <Form.Label>User Name</Form.Label>
+                        <div className="form-group">
+                            <Form.Label className='label'>User Name</Form.Label>
                             <Form.Control
+                                className='input'
                                 type="username"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
@@ -113,9 +111,10 @@ const Signup = () => {
                     </Form.Group>
                     <br />
                     <Form.Group controlId="password">
-                        <div className="col-sm-6 col-md-6 col-lg-6 mx-auto">
-                            <Form.Label>Password</Form.Label>
+                        <div className="form-group">
+                            <Form.Label className='label'>Password</Form.Label>
                             <Form.Control
+                                className='input'
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -124,9 +123,10 @@ const Signup = () => {
                     </Form.Group>
                     <br />
                     <Form.Group controlId="repassword">
-                        <div className="col-sm-6 col-md-6 col-lg-6 mx-auto">
-                            <Form.Label>Confirm Password</Form.Label>
+                        <div className="form-group">
+                            <Form.Label className='label'>Confirm Password</Form.Label>
                             <Form.Control
+                                className='input'
                                 type="password"
                                 value={repassword}
                                 onChange={(e) => setRepassword(e.target.value)}
@@ -134,8 +134,8 @@ const Signup = () => {
                         </div>
                     </Form.Group>
                     <Form.Group controlId="email">
-                        <div className="col-sm-6 col-md-6 col-lg-6 mx-auto">
-                        <Form.Label>Confirm Password</Form.Label>
+                        <div className="form-wrap">
+                        {/* <Form.Label>Confirm Password</Form.Label> */}
                             <br />
                             <GoogleLogin
                                 clientId="85087114323-nmfhkspttd354dcpunkrkonclm1vobit.apps.googleusercontent.com"
@@ -147,10 +147,11 @@ const Signup = () => {
                         </div>
                     </Form.Group>
                     <br />
-                    <Button block className="col-sm-6 col-md-6 col-lg-6 mx-auto" type="submit">
+                    <Button block className="btn" type="submit">
                         Signup
                     </Button>
                 </Form>
+                </div>
             </div>
         );
     }

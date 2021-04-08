@@ -6,6 +6,9 @@
 body {
   color: #fff;
   line-height: 1.8;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
 }
 Link {
   text-decoration: none;
@@ -30,6 +33,7 @@ Link {
 .form-wrap .form-group .label {
   display: block;
   color: #161d6f;
+  margin-top: -25px;
 }
 .form-wrap .form-group .input {
   width: 100%;
