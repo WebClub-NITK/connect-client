@@ -19,7 +19,7 @@ const ForgotPassword = () => {
     }
 
     return(
-        <div className="Login">
+        <div className="container">
             <Toast onClose={() => setShowToast(false)} show={showToast} delay={2000} autohide>
                 <Toast.Header>
                     <strong className="mr-auto">Incorrect details</strong>
@@ -31,11 +31,13 @@ const ForgotPassword = () => {
                 justifyContent: "center",
                 alignItems: "center"
             }}>Reset Password</h1><br />
+            <div className='form-wrap'>
             <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="username">
-                    <div className="col-sm-6 col-md-6 col-lg-6 mx-auto">
-                        <Form.Label>Username</Form.Label>
+                    <div className="form-wrap">
+                        <Form.Label className='label'>Username</Form.Label>
                         <Form.Control
+                            className='input'
                             autoFocus
                             type="username"
                             value={username}
@@ -44,12 +46,13 @@ const ForgotPassword = () => {
                         />
                     </div>
                 </Form.Group>
-                <div className="col-sm-3 col-md-3 col-lg-3 mx-auto">
-                    <Button block type="submit">
+                
+                    <Button className='btn'block type="submit">
                         Send Email
                     </Button>
-                </div>
+                
             </Form>
+            </div>
         </div>
     )
 }
