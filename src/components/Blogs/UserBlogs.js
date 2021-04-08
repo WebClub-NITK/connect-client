@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { getBookmarkedBlogs, getUserBlogs } from "../../services/blogsService";
+import { getBookmarkedBlogs, getUserBlogs, deleteBlog } from "../../services/blogsService";
 import { useParams } from "react-router-dom";
 import LoadingComponent from "./LoadingComponent";
-import BlogTile from "./BlogTile";
-import {Jumbotron} from 'react-bootstrap'
+import {Jumbotron, Alert} from 'react-bootstrap'
 import NewBlogTile from "./NewBlogTile";
 
 const UserBlogs = () => {
@@ -11,6 +10,7 @@ const UserBlogs = () => {
     const [userBlogs, setUserBlogs] = useState([]);
     const [loading, setLoading] = useState(false);
     const [bookmarkedBlogs, setBookmarkedBlogs] = useState([]);
+    const [alert, setAlert] = useState(null)
     const accessToken = localStorage.getItem('accessToken').toString();
 
     let params  = useParams();
@@ -19,6 +19,7 @@ const UserBlogs = () => {
     const isLooggedInUser = userId === params.userid
 
     useEffect(async () => {
+        setLoading(false)
         const blogs = await getUserBlogs(params.userid);
         setUserBlogs(blogs);
         if(isLooggedInUser) {
@@ -27,6 +28,18 @@ const UserBlogs = () => {
         }
         setLoading(true);
     }, [params]);
+
+    const handleBlogDelete = async (id) => {
+        try{
+            const accessToken = localStorage.getItem('accessToken')
+            await deleteBlog(accessToken, id)
+            setAlert('Blog Deleted')
+            setUserBlogs(userBlogs.filter((blog) => blog._id != id))
+        }catch(err) {
+            console.log(err)
+            alert('Could not delete the blog.')
+        }
+    }
 
     if (!loading) {
         return <LoadingComponent />
@@ -39,8 +52,9 @@ const UserBlogs = () => {
 
     return (
         <div style={{display:'flex', flexDirection:'column', alignItems:'center'}}>
+            {alert ? <Alert style={{width: '100%'}} variant='success' dismissible onClose={() => setAlert(null)}>{alert}</Alert> : null}
             <Jumbotron style={{width: '100%'}}>
-                <h2>Your Blogs</h2>
+                <h2>Published Blogs</h2>
             </Jumbotron>
             <div style={{maxWidth: '800px', margin: '20px auto'}}>
                 {userBlogs.length != 0 ? (
@@ -51,7 +65,8 @@ const UserBlogs = () => {
                                 details={blog}
                                 profile={false}
                                 description={JSON.parse(blog.body).blocks}
-                                withoptions
+                                withoptions={isLooggedInUser ? true : undefined}
+                                handleBlogDelete={handleBlogDelete}
                             />
                         ))
                 ) : (

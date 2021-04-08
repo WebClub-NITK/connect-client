@@ -37,13 +37,16 @@ const updateBlog = async (accessToken, id, { title, body, tags, coverImageUrl })
     }
 };
 
-const deleteBlog = async (id) => {
+const deleteBlog = async (accessToken, id) => {
     try {
-        const deleteBlog = await axios.delete(`${url}/${id}`);
+        const headers = { 'Authorization': `Bearer ${accessToken}` }
+        const deleteBlog = await axios.delete(`${url}/${id}`, {
+            headers
+        });
         return deleteBlog;
     } catch (err) {
-        console.log("error");
         console.log(err);
+        throw new Error('Cannot delete the Blog')
     }
 };
 
@@ -166,7 +169,6 @@ const getDescription = (blocks) => {
 }
 
 const countMinutesToRead = (blocks) => {
-    console.log('started calculating no of minutes')
     let seconds = 0
     let description = ''
     for (const block of blocks) {
