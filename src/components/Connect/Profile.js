@@ -151,8 +151,8 @@ const Profile = () => {
                             </Form.Group>
                             <Form.Group controlId="semester">
                                 <div className="col-sm-12 col-md-12 col-lg-12 mx-auto">
-                                    <Form.Label>Select Profile Pitchure</Form.Label>
-                                    <input type="file" onChange={(e) => { selectedfile = e.target.files[0];  }} />
+                                    <Form.Label >Select Profile Picture</Form.Label>
+                                    <input className='btn'type="file" onChange={(e) => { selectedfile = e.target.files[0];  }} />
                                 </div>
                             </Form.Group>
                             <br />
