@@ -10,7 +10,9 @@ const Replies = ({replies, commentId, resetComments}) => {
 
     const history = useHistory()
 
-    const postReply = async () => {
+    const postReply = async (e) => {
+
+        e.preventDefault()
 
         if (!localStorage.getItem('UserId')) {
             history.push('/connect/login')
@@ -25,15 +27,15 @@ const Replies = ({replies, commentId, resetComments}) => {
 
     return (
         <div>
-            <Accordion>
+            <Accordion className="reply">
                 <Card>
-                    <Card.Header className="bg-white">
+                    <Card.Header>
                         <Accordion.Toggle as={Button} variant="link" eventKey="0">
                             Replies
                         </Accordion.Toggle>
                     </Card.Header>
                     <Accordion.Collapse eventKey="0">
-                        <Card.Body className="bg-light">
+                        <Card.Body>
                             <InputGroup className="mb-3">
                                 <Form.Control 
                                     type="text" 

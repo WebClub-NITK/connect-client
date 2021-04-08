@@ -14,7 +14,7 @@ import BookmarkButton from "./BookmarkButton";
 const NewBlogTile = (props) => {
 
     return (
-        <div style={{width: '100%', border: '1px solid gray', borderRadius: '10px', padding: '20px', margin: '10px 0'}}>
+        <div className="new-blog-card" style={{width: '100%', padding: '20px', margin: '30px 0'}}>
             {
                 !props.details.coverImageUrl ? null : 
                 <div style={{width: '60%', margin: '10px auto'}}>

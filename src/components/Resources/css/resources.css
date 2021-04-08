@@ -22,6 +22,9 @@ a:focus {
 
 .jumbotron {
     text-align: center;
+    background-color: var(--color1);
+    color: var(--color5);
+    margin-bottom: 0px;
 }
 
 .padding {
@@ -31,7 +34,7 @@ a:focus {
 }
 
 .branch-tile {
-    background-color: white;
+    background-color: var(--color1);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     -webkit-transition: all 0.4s;
     -o-transition: all 0.4s;
@@ -39,11 +42,16 @@ a:focus {
     transition: all 0.4s;
 }
 
+.branch-tile h4 {
+    color: var(--color5);
+}
+
 .branch-tile:hover {
     transform: scale(1.02);
 }
 
 .course-tile, .resource-tile {
+    background-color: var(--color1);
     text-align: left;
     margin-top: 10px;
     margin-bottom: 10px;
@@ -54,36 +62,30 @@ a:focus {
 }
 
 .course-tile:hover, .resource-tile:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 .form-card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
+.form-card .card-header {
+    background-color: var(--color5);
+    color: var(--color1);
+}
+
 .form-card .card-body {
+    background-color: var(--color2);
     text-align: left;
 }
 
-.loader-container {
-    text-align: center;
+.form-card .card-body input {
+    background-color: var(--color1);
 }
 
-.loader {
-    position: absolute;
-    left: 50%;
-    border: 16px solid #f3f3f3; /* Light grey */
-    border-top: 16px solid #3498db; /* Blue */
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    animation: spin 2s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+.form-card .card-body button {
+    background-color: var(--color5);
+}
 
 .comments {
     text-align: left;
@@ -91,4 +93,32 @@ a:focus {
 
 .comments .card {
     border: none;
+}
+
+.comments input {
+    background-color: var(--color2);
+}
+
+.comments .card-header {
+    background-color: var(--color1);
+}
+
+.comments .card-body {
+    background-color: var(--color2);
+}
+
+.course-search .outer-row{
+    background-color: var(--color5);
+}
+
+.comments .username {
+    color: var(--color4);
+}
+
+.comments {
+    color: var(--color5);
+}
+
+.course-search .inner-row {
+    background-color: var(--color2);
 }

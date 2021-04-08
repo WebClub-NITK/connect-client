@@ -47,7 +47,7 @@ const MainNavbar = () => {
                         <NavDropdown.Item>{`${localStorage.getItem('type') === '1' ? 'Public' : localStorage.getItem('type') === '2' ? 'Anonymous' : 'Guest'} User`}</NavDropdown.Item>
                         <NavDropdown.Item href="#/connect/profile">Profile</NavDropdown.Item>
                         {(localStorage.getItem("secondaryToken") !== null && localStorage.getItem("secondaryToken") !== '') ? (
-                            <NavDropdown.Item onClick={Toggel}>Toggle</NavDropdown.Item>) : (<NavDropdown.Item href="#/connect/login">Add Account</NavDropdown.Item>)}
+                            <NavDropdown.Item onClick={Toggel}>Toggle</NavDropdown.Item>) : (<NavDropdown.Item href="#/connect/signup">Signup</NavDropdown.Item>)}
                         <NavDropdown.Divider />
                         {localStorage.getItem("accessToken") !== null ? (
                             <NavDropdown.Item onClick={logout}>Logout</NavDropdown.Item>) : (<NavDropdown.Item href="#/connect/login">Login</NavDropdown.Item>)}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import BranchTile from './Tiles/BranchTile'
 import { getAllBranches } from '../../services/resourceService'
 import { Row } from 'react-bootstrap'
+import LoadingComponent from '../Blogs/LoadingComponent'
 
 
 const Branches = () => {
@@ -16,7 +17,7 @@ const Branches = () => {
         <div className="padding">
             <h2 className="mb-5">Departments</h2>
             <Row className="justify-content-center">
-                {branches ? branches.map(b => <BranchTile key={b._id} details={b} />) : <p>No branches to display</p>} 
+                {branches ? branches.map(b => <BranchTile key={b._id} details={b} />) : <LoadingComponent/>} 
             </Row>
         </div>
     )

@@ -58,7 +58,11 @@ const getCoursesForBranch = async (branchId) => {
 }
 
 const createNewCourse = async(code,name,branch)=>{
-    const courseStatus = await axios.post(`${url}/${courseUrl}`,{code,name,branch});
+    const courseStatus = await axios.post(`${url}/${courseUrl}`,{code,name,branch}, {
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem("accessToken")}`
+        }
+    });
     console.log(courseStatus);
     if(courseStatus.statusCode == 422)
     {

@@ -1,33 +1,74 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Container, Jumbotron, Row } from "react-bootstrap";
+import { Button, Card, Container, Jumbotron, Row, Tab, Tabs } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { getAllBlogs } from "../services/blogsService";
+import { SERVER_URL } from "../services/config";
 import { getAllResources } from "../services/resourceService";
 import LoadingComponent from "./Blogs/LoadingComponent";
+import NewBlogTile from "./Blogs/NewBlogTile";
 
 const Home = () => {
 
     const [blogs, setBlogs] = useState(null)
     const [resources, setResources] = useState(null)
     const [loaded, setLoaded] = useState(false)
+    const [blogs_order, setBlogsOrder] = useState('recent')
 
-    useEffect(async () => {
-        const resource_data = await getAllResources()
-        setResources(resource_data)
+    useEffect(() => {
+        
+        setTimeout(async () => {
+            const resource_data = await getAllResources()
+            const blogs_data = await getAllBlogs()
 
-        const blogs = await getAllBlogs(1)
-        setBlogs(blogs)
+            console.log(resource_data)
 
-        // console.log(resources)
+            blogs_data.blogs.reverse()
 
-        setLoaded(true)
+            setResources(resource_data)
+            setBlogs(blogs_data.blogs)
+
+            setLoaded(true)
+        }, 300);
+        
     }, [])
+
+    const changeBlogsOrder = (order) => {
+
+        const blogs_data = blogs;
+
+        if(order==='recent') {
+            blogs_data.sort(function(a,b){
+                    return new Date(a.createdAt).getTime() - 
+                    new Date(b.createdAt).getTime();
+                }
+            );
+            blogs_data.reverse()
+        }
+        else if (order==='most-viewed') {
+            blogs_data.sort(function(a,b){
+                    return a.views - b.views;
+                }
+            );
+            blogs_data.reverse()
+        } 
+        else if(order==='most-liked') {
+            blogs_data.sort(function(a, b) {
+                return a.likes.length - b.likes.length;
+            })
+            blogs_data.reverse()
+        }
+
+        setBlogs(blogs_data)
+        setBlogsOrder(order)
+    }
 
     if(!loaded) {
         return (
             <LoadingComponent/>
         )
     }
+
+    const url = `${SERVER_URL}/resource_module`
 
     return (
         <div className="homepage">
@@ -43,16 +84,16 @@ const Home = () => {
                 <h1 className="py-5 mb-5">Popular Resources</h1>
                 <Container>
                     <Row className="justify-content-center">
-                        {Array(5).fill(1).map((el, i) =>
+                        {resources.slice(0, 5).map((item) =>
                             <div className="col-12 col-sm-6 col-md-4">
                                 <Card className="my-4">
                                     <Card.Header>
-                                        <h4>Resource Name</h4>
+                                        <h4>{item.title}</h4>
                                     </Card.Header>
                                     <Card.Body>
-                                        <div className="mb-3">Description</div>
-                                        <div className="user">Uploaded By: <strong>Username</strong></div>
-                                        <Button className="mt-4">Download</Button>
+                                        <div className="mb-3">{item.description}</div>
+                                        <div className="user">Uploaded By: <strong>{item.user.Username}</strong></div>
+                                        <Button className="mt-4" href={`${url}/docs/${item.files[0]}`}>Download</Button>
                                     </Card.Body>
                                 </Card>
                             </div>
@@ -62,7 +103,54 @@ const Home = () => {
             </div>
 
             <div className="odd-section text-center popular-blogs">
-
+                <h1 className="py-5 mb-5">Popular Blogs</h1>    
+                <Container>
+                    <Tabs 
+                        id="controlled-tab-example"
+                        activeKey={blogs_order}
+                        onSelect={(k) => changeBlogsOrder(k)}
+                    >
+                        <Tab eventKey="recent" title="Recent">
+                            {blogs.slice(0, 5).map((blog) => {
+                                return (
+                                    <div>
+                                        <NewBlogTile
+                                        key={blog._id}
+                                        details={blog}
+                                        description={JSON.parse(blog.body).blocks}
+                                        />
+                                    </div>
+                                )
+                            })}
+                        </Tab>
+                        <Tab eventKey="most-viewed" title="Most Viewed">
+                            {blogs.slice(0, 5).map((blog) => {
+                                return (
+                                    <div>
+                                        <NewBlogTile
+                                        key={blog._id}
+                                        details={blog}
+                                        description={JSON.parse(blog.body).blocks}
+                                        />
+                                    </div>
+                                )
+                            })}
+                        </Tab>
+                        <Tab eventKey="most-liked" title="Most Liked">
+                            {blogs.slice(0, 5).map((blog) => {
+                                return (
+                                    <div>
+                                        <NewBlogTile
+                                        key={blog._id}
+                                        details={blog}
+                                        description={JSON.parse(blog.body).blocks}
+                                        />
+                                    </div>
+                                )
+                            })}
+                        </Tab>
+                    </Tabs>
+                </Container>
             </div>
         </div>
     );

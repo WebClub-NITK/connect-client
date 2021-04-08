@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color1);
 }
 
 :root {
@@ -19,6 +20,12 @@ body {
     padding-top: 50px;
     padding-bottom: 50px;
     background-color: var(--color2);
+}
+
+.odd-section {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color: var(--color1);
 }
 
 .navbar {
@@ -72,4 +79,8 @@ body {
 .popular-resources .card .button {
     background-color: var(--color4);
     color: var(--color2);
+}
+
+.nav-tabs .nav-link .active {
+    background-color: var(--color4);
 }
