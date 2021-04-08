@@ -65,6 +65,7 @@ const Signup = () => {
             localStorage.setItem('UserId', response.userId);
             localStorage.setItem('username', response.username);
             localStorage.setItem('type', response.anonymous ? 1 : 2);
+            localStorage.setItem('upNav', '1');
             setSignup(true);
         } else {
             setShowToast(true);

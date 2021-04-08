@@ -8,7 +8,7 @@ import Toggel from "./Connect/Toggel";
 
 const MainNavbar = () => {
     return (
-        <Navbar style={{ color: "white" }} bg="dark" variant="dark" expand="lg">
+        <Navbar variant="dark" expand="lg">
 
             <Navbar.Brand as={Link} to="/">
                 <img
@@ -32,8 +32,11 @@ const MainNavbar = () => {
                     <LinkContainer to="/connect/profile">
                         <Nav.Link>Profile</Nav.Link>
                     </LinkContainer>
-                    <LinkContainer to="/connect/search">
+                    <LinkContainer to="/search">
                         <Nav.Link>Search</Nav.Link>
+                    </LinkContainer>
+                    <LinkContainer to="/leaderboard">
+                        <Nav.Link>Leaderboard</Nav.Link>
                     </LinkContainer>
                     <NavDropdown
                         className="ml-auto"
