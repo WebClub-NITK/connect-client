@@ -106,7 +106,7 @@ const Resources = () => {
         <div>
             <Jumbotron>
                 <h1 className="p-5 display-4">{course.name}</h1>
-                <Link to={`/blogs/new?tag=${course.code}`}>Add Blog here</Link>
+                <Link to={`/blogs/new?tag=${course.code}`}><Button className="btn-dark">Add Blog here</Button></Link>
             </Jumbotron>
             <Container>
                 <div className="padding"> 

@@ -64,7 +64,6 @@ const UserBlogs = () => {
                             <NewBlogTile
                                 key={blog._id}
                                 details={blog}
-                                profile={false}
                                 description={JSON.parse(blog.body).blocks}
                                 withoptions={isLooggedInUser ? true : undefined}
                                 handleBlogDelete={handleBlogDelete}
@@ -86,7 +85,6 @@ const UserBlogs = () => {
                                     <NewBlogTile
                                         key={blog._id}
                                         details={blog}
-                                        profile={false}
                                         description={JSON.parse(blog.body).blocks}
                                     />
                                 ))

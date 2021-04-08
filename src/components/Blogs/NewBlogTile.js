@@ -25,7 +25,7 @@ const NewBlogTile = (props) => {
                 <p style={{fontSize: '2em', fontWeight: 'bold', lineHeight: '90%'}}><Link to={`/blogs/${props.details._id}`}>{props.details.title}</Link></p>
                 <p className='gray'>{getDescription(JSON.parse(props.details.body).blocks)}</p>
                 <div>
-                    <p className='gray'>{props.details.tags.map(tag => <span>#{tag} </span>)}</p>
+                    <p className='gray'>{props.details.tags ? props.details.tags.map(tag => tag ? <span>#{tag} </span>: null) : null}</p>
                 </div>
                 <div className='blogs-meta-details' style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                     <AuthorProfile
@@ -54,8 +54,8 @@ const NewBlogTile = (props) => {
 };
 
 NewBlogTile.propTypes = {
-    details : PropTypes.node,
-    description: PropTypes.node,
+    details : PropTypes.any,
+    description: PropTypes.any,
 }
 
 export default NewBlogTile;

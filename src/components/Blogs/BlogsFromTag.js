@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import BlogTile from "./BlogTile";
 import Pagination from "./Pagination";
 import LoadingComponent from "./LoadingComponent";
 import { getBlogsByTags } from "../../services/blogsService";
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom'
 import "./Blogs.css";
+import NewBlogTile from "./NewBlogTile";
 
 const BlogsFromTag = (props) => {
     const [blogs, setBlogs] = useState([]);
@@ -63,7 +63,7 @@ const BlogsFromTag = (props) => {
             </div>
             
             {blogs.slice(0, 10).map((blog) => (
-                <BlogTile
+                <NewBlogTile
                     key={blog._id}
                     details={blog}
                     description={JSON.parse(blog.body).blocks}

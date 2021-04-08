@@ -52,10 +52,9 @@ const Blogs = () => {
                 <Link to="/blogs/new">
                     <button className="new-blog-button">Share an idea</button>
                 </Link>
-                <Link to={`/blogs/profile/${userId}`}>
+                {userId ? <Link to={`/blogs/profile/${userId}`}>
                     <button className="new-blog-button">Manage Blogs</button>
-                </Link>
-
+                </Link> : null}
             </p>
             <LiveSearch />
             <div style={{maxWidth: '800px', margin: '20px auto'}}>
@@ -67,7 +66,6 @@ const Blogs = () => {
                                 <NewBlogTile
                                 key={blog._id}
                                 details={blog}
-                                profile={false}
                                 description={JSON.parse(blog.body).blocks}
                                 />
                             </div>

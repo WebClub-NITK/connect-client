@@ -86,7 +86,6 @@ const SearchPage = () => {
                                     <NewBlogTile
                                         key={blog._id}
                                         details={blog}
-                                        profile={false}
                                         description={JSON.parse(blog.body).blocks}
                                     />
                                 ))
