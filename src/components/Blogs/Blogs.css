@@ -7,6 +7,10 @@
   flex: 5;
 }
 
+.blogs_div {
+    background-color: var(--color1);
+}
+
 .nav_blogs {
   /* color: white;
     background-color:#75cfb8;
@@ -277,4 +281,16 @@
 .blogs-meta-details p {
     margin: 0 10px;
     color: rgba(117, 117, 117, 1);
+}
+
+.new-blog-card {
+    box-shadow: 0 2px 4px 0 rgba(22, 29, 11, 0.2), 0 5px 15px 0 rgba(22, 29, 11, 0.19);
+    background-color: var(--color2);
+    -webkit-transition: all 0.4s;
+    -o-transition: all 0.4s;
+    transition: all 0.4s;
+}
+
+.new-blog-card:hover {
+    transform: scale(1.015);
 }

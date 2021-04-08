@@ -34,16 +34,16 @@ const CourseSearch = () => {
     }
 
     return (
-        <div>
+        <div className="course-search">
             <Container className="padding">
-                <Row className="bg-dark">
+                <Row className="outer-row">
                     <div className="col-12" style={{textAlign: "center"}}>
-                        <h2 className="text-white mt-5">Search your Course</h2>
+                        <h2 className="mt-5 text-white">Search your Course</h2>
                     </div>
                     <div className="col-12">
-                        <div className="m-4 bg-light p-5">
+                        <div className="m-4 inner-row p-5">
                             <Row>
-                                <div className="form-group col-md-8" style={{textAlign: "center"}}>
+                                <div className="form-group col-md-12" style={{textAlign: "center"}}>
                                     <input 
                                         type="text" 
                                         className="form-control"
@@ -67,9 +67,6 @@ const CourseSearch = () => {
                                         </Card>
                                         : <div></div> 
                                     }
-                                </div>
-                                <div className="form-group col-md-4" style={{textAlign: "center"}}>
-                                    <button className="btn btn-dark">Search Course</button>
                                 </div>
                             </Row>
                         </div>

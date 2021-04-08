@@ -4,8 +4,8 @@ import Replies from './Replies'
 
 const Comments = ({comment, resetComments}) => {
     return (
-        <div>
-            <div><strong>{comment.user.Username}</strong></div>
+        <div className="comment-box">
+            <div className="username"><strong>{comment.user.Username}</strong></div>
             {comment.text}
             <Replies replies={comment.replies} commentId={comment._id} resetComments={resetComments} />
         </div>
