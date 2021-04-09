@@ -5,6 +5,7 @@ import Toast from "react-bootstrap/Toast";
 import "./login.css";
 import { Redirect } from 'react-router-dom';
 import { authLogin } from '../../services/connectService';
+import { Link } from "react-router-dom"
 
 const Login = () => {
     const [username, setUsername] = useState("");
@@ -132,6 +133,12 @@ const Login = () => {
                         <Button block type="submit">
                             Login
                         </Button>
+                    </div>
+                    <br />
+                    <div className="col-sm-3 col-md-3 col-lg-3 mx-auto">
+                        <Link to='/connect/signup'><Button block type="submit">
+                            Signup
+                        </Button></Link>
                     </div>
                     <br />
                     <div className="col-sm-3 col-md-3 col-lg-3 mx-auto">
