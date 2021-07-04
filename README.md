@@ -4,11 +4,10 @@ client side application for Connect: A platform to encourage informal connection
 This project was created using create-react-app
 
 ## Setup Instructions
-```bash
-$ git clone https://github.com/WebClub-NITK/connect-client
-$ cd connect-client
-$ npm install
-```
+
+1. Clone the repository
+2. Add server URL in `./src/service/config.js`
+3. Run `npm install`
 
 ## Available Scripts
 In the project directory, you can run:
